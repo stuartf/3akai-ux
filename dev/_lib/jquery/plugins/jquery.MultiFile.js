@@ -153,7 +153,7 @@
 								// Create a wrapper for the list
 								// * OPERA BUG: NO_MODIFICATION_ALLOWED_ERR ('list' is a read-only property)
 								// this change allows us to keep the files in the order they were selected
-								MultiFile.wrapper.append( '<div class="MultiFile-list" id="'+MultiFile.wrapID+'_list"><p id="fileupload_filename_label">' + sakai.api.i18n.General.getValueForKey('FILE_NAME') + '</p></div>' );
+								MultiFile.wrapper.append( '<div class="MultiFile-list" id="'+MultiFile.wrapID+'_list"><p id="fileupload_filename_label">' + sakai.api.i18n.General.getValueForKey('SELECTED_FILES_TO_UPLOAD') + ':</p></div>' );
 								MultiFile.list = $('#'+MultiFile.wrapID+'_list');
 							};
        MultiFile.list = $(MultiFile.list);
@@ -306,12 +306,12 @@
          r = $('<div class="MultiFile-label"></div>'),
          v = String(slave.value || ''/*.attr('value)*/),
          b = $('<a class="MultiFile-remove" href="#'+MultiFile.wrapID+'">'+ 'Remove' +'</a>');
-         c = $('<span class="fileupload_file_name"><input type="text" id="' + MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0]).replace(".", "_") + '" value="' + MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0]) + '"></input></span>')
+         c = $('<span class="fileupload_file_name"><input type="text" id="' + MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0]).replace(".", "_") + '" value="' + MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0]) + '"></input></span><div class="fileupload_name_error" style="display:none;"></div>')
 
 
         // Insert label
         MultiFile.list.append(
-         r.append(b, c)
+         r.append(c, b)
         );
 
         b
@@ -546,4 +546,4 @@
 
 /*# AVOID COLLISIONS #*/
 })(jQuery);
-/*# AVOID COLLISIONS #*/
+/*# AVOID COLLISIONS #*/

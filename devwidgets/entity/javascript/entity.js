@@ -419,7 +419,10 @@ sakai.entity = function(tuid, showSettings){
             entityconfig.data.profile["sakai:group-id"], function (success, data) {
             if (success) {
                 sakai.api.Util.notification.show("Group Membership", "You have successfully been added to the group.");
-                showGroupMembershipButton("leave");
+                // wait for two seconds and then redirect
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2000);
             } else {
                 fluid.log("entity.js/joinGroup() ERROR: Could not add member: " +
                     sakai.data.me.user.userid + " to groupid: " +
@@ -588,6 +591,9 @@ sakai.entity = function(tuid, showSettings){
             // Get the correct input value from the user
             var inputValue = $entity_profile_status_input.hasClass(entity_profile_status_input_dummy) ? "" : $.trim($entity_profile_status_input.val());
 
+            // Escape html
+            inputValue = sakai.api.Security.escapeHTML(inputValue);
+
             if (profile_status_value !== inputValue) {
                 profile_status_value = inputValue;
 
@@ -655,6 +661,15 @@ sakai.entity = function(tuid, showSettings){
             showHideListLinkMenu(tagsLinkMenu, tagsLink, false);
         });
     };
+    
+    // Add the click listener to the document
+ 	$(document).click(function(e){
+ 	    var $clicked = $(e.target);
+ 	    // if element clicked is not tag Link only then hide the menu.
+ 	    if (!$clicked.parents().is(tagsLink)) {
+ 	        showHideListLinkMenu(tagsLinkMenu, tagsLink, true);
+ 	    }
+ 	});
 
     /**
      * Add binding to elements related to locations drop down
@@ -887,6 +902,9 @@ sakai.entity = function(tuid, showSettings){
                 entityconfig.data.profile.mimetype = jcr_content["jcr:mimeType"];
             }
         }
+
+        // Set file extension
+        entityconfig.data.profile.extension = filedata["sakai:fileextension"];
 
         // Check if user is a manager or viewer
         entityconfig.data.profile["role"] = "viewer";

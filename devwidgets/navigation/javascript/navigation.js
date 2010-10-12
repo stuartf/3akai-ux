@@ -540,11 +540,14 @@ sakai.navigation = function(tuid, showSettings){
 
         // set up new jstree navigation tree
         var pluginArray = allowDnd ?
-            [ "themes", "json_data", "ui", "dnd" ] :
-            [ "themes", "json_data", "ui" ];
+            [ "themes", "json_data", "ui", "cookies", "dnd" ] :
+            [ "themes", "json_data", "ui", "cookies" ];
         $navigationTree.jstree({
             "core": {
                 "animation": 0
+            },
+            "cookies": {
+                "save_selected": false
             },
             "json_data": {
                 "data": navigationData
@@ -782,6 +785,9 @@ sakai.navigation = function(tuid, showSettings){
                 $navigationTree.jstree("deselect_node", $navigationTree.jstree("get_selected"));
                 $navigationTree.jstree("select_node", $lastNode);
             });
+
+            // update page count
+            $pageCount.html("(" + $navigationTree.jstree("get_json", -1).length + ")");
         }
     };
 
@@ -798,6 +804,9 @@ sakai.navigation = function(tuid, showSettings){
         if (nodeID) {
             var $nodeToDelete = $navigationTree.find("#nav_" + nodeID);
             $navigationTree.jstree("delete_node", $nodeToDelete);
+
+            // update page count
+            $pageCount.html("(" + $navigationTree.jstree("get_json", -1).length + ")");
         }
     };
 

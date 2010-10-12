@@ -91,11 +91,11 @@ sakai.config = {
         SEARCH_MY_FILES: "/var/search/files/myfiles.json",
         SEARCH_MY_SITES: "/var/search/files/mysites.json",
         SEARCH_GROUP_MEMBERS: "/var/search/groupmembers.json",
-        SEARCH_GROUPS: "/var/search/groups.json",
+        SEARCH_GROUPS: "/var/search/groups.infinity.json",
         SEARCH_PAGES: "/var/search/page.json",
         SEARCH_SITES: "/var/search/sites.json",
-        SEARCH_USERS_ACCEPTED: "/var/contacts/find.json",
-        SEARCH_USERS: "/var/search/users.json",
+        SEARCH_USERS_ACCEPTED: "/var/contacts/find.infinity.json",
+        SEARCH_USERS: "/var/search/users.infinity.json",
         SEARCH_USERS_GROUPS: "/var/search/usersgroups.json",
         SITE_ADD_MEMBERS_SERVICE: "/_rest/site/members/add/__SITE__",
         SITE_CONFIGFOLDER: "/sites/__SITEID__",
@@ -125,6 +125,71 @@ sakai.config = {
         USER_PREFIX: "/_user"
 
     },
+    
+    PageTitles: {
+        "prefix": "TITLE_PREFIX",
+        "pages": {
+            /**  403.html  **/
+            /**  404.html  **/
+            /**  500.html  **/
+            /**  account_preferences.html  **/
+            "/dev/account_preferences.html": "ACCOUNT_PREFERENCES",
+            /**  acknowledgements.html  **/
+            "/dev/acknowledgements.html": "ACKNOWLEDGEMENTS",
+            /**  content_profile.html  **/
+            "/dev/content_profile.html": "CONTENT_PROFILE",
+            /**  create_new_account.html  **/
+            "/dev/create_new_account.html": "CREATE_A_NEW_ACCOUNT",
+            /**  directory.html  **/
+            "/dev/directory.html": "DIRECTORY",
+            /**  group_edit.html  **/
+            "/dev/group_edit.html": "MANAGE_GROUP",
+            /**  inbox.html  **/
+            "/dev/inbox.html": "MY_MESSAGES",
+            /**  index.html  **/
+            "/": "SIGN_IN",
+            "/dev": "SIGN_IN",
+            "/dev/": "SIGN_IN",
+            "/index.html": "SIGN_IN",
+            "/dev/index.html": "SIGN_IN",
+            /**  logout.html  **/
+            "/dev/logout.html": "LOGGING_OUT",
+            /**  my_sakai.html  **/
+            "/dev/my_sakai.html": "MY_SAKAI",
+            /**  people.html  **/
+            "/dev/people.html": "PEOPLE",
+            /**  profile_edit.html  **/
+            "/dev/profile_edit.html": "EDIT_MY_PROFILE",
+            /**  search.html  **/
+            "/dev/search.html": "SEARCH_ALL",
+            /**  search_groups.html  **/
+            "/dev/search_groups.html": "SEARCH_GROUPS",
+            /**  search_people.html  **/
+            "/dev/search_people.html": "SEARCH_PEOPLE",
+            /**  search_content.html  **/
+            "/dev/search_content.html": "SEARCH_CONTENT_AND_MEDIA"
+            /**  show.html  **/
+        }
+    },
+
+    Domain: {
+        /*
+         * These domain labels can be used anywhere on the site (i.e in the video
+         * widget) to convert common domains into shorter, more readable labels
+         * for display purposes.
+         */
+        Labels: {
+            "youtube.com": "YouTube",
+            "www.youtube.com": "YouTube",
+            "youtube.co.uk": "YouTube",
+            "www.youtube.co.uk": "YouTube",
+            "vimeo.com": "Vimeo",
+            "www.vimeo.com": "Vimeo",
+            "vimeo.co.uk": "Vimeo",
+            "www.vimeo.co.uk": "Vimeo",
+            "video.google.com": "Google Video"
+        }
+    },
 
     Search: {
         MAX_CORRECT_SEARCH_RESULT_COUNT: 100
@@ -153,7 +218,9 @@ sakai.config = {
             }
         }
     },
-
+    
+    allowPasswordChange: true,
+    
     Profile: {
         /*
          * This is a collection of profile configuration functions and settings
@@ -178,12 +245,14 @@ sakai.config = {
                     "firstName": {
                         "label": "__MSG__PROFILE_BASIC_FIRSTNAME_LABEL__",
                         "required": true,
-                        "display": true
+                        "display": true,
+                        "limitDisplayLength": 50
                     },
                     "lastName": {
                         "label": "__MSG__PROFILE_BASIC_LASTNAME_LABEL__",
                         "required": true,
-                        "display": true
+                        "display": true,
+                        "limitDisplayLength": 50
                     },
                     "picture": {
                         "label": "__MSG__PROFILE_BASIC_PICTURE_LABEL__",
@@ -349,7 +418,7 @@ sakai.config = {
                         "label": "__MSG__PROFILE_PUBLICATIONS_URL__",
                         "required": false,
                         "display": true,
-                        "validation":"url"
+                        "validation":"appendhttp url"
                     }
                 }
             }
@@ -390,16 +459,20 @@ sakai.config = {
         }
     },
 
-    Connections: {
+    Relationships: {
         /*
-         * Email message that will be sent when inviting someone to become a connection.
-         * ${user} will be replaced by the name of the current user and ${comment} will
-         * be replaced by the personal message left by the inviter.
+         * Relationships used by the add contacts widget to define what relationship the contacts can have
          */
-        Invitation: {
-            title: "${user} has invited you to become a connection",
-            body: "Hi, \n\n ${user} has invited you to become a connection. \nHe/She has also left the following message: \n\n ${comment} \n\nTo accept this invitation, please click on the accept button. \n\nKind regards,\n\nThe Sakai Team"
-        }
+        "contacts": [
+            {"name": "Classmate", "definition": "is my classmate", "selected": true},
+            {"name": "Supervisor", "inverse": "Supervised", "definition": "is my supervisor", "selected": false},
+            {"name": "Supervised", "inverse": "Supervisor", "definition": "is being supervised by me", "selected": false},
+            {"name": "Lecturer", "inverse": "Student", "definition": "is my lecturer", "selected": false},
+            {"name": "Student", "inverse": "Lecturer", "definition": "is my student", "selected": false},
+            {"name": "Colleague", "definition": "is my colleague", "selected": false},
+            {"name": "College Mate", "definition": "is my college mate", "selected": false},
+            {"name": "Shares Interests", "definition": "shares an interest with me", "selected": false}
+        ]
     },
 
     Site: {
@@ -454,6 +527,10 @@ sakai.config = {
             URL: "/dev/_images/mimetypes/doc.png",
             description: "Word document"
         },
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+            URL: "/dev/_images/mimetypes/doc.png",
+            description: "Word document"
+        },
         "application/pdf": {
             URL: "/dev/_images/mimetypes/pdf.png",
             description: "PDF document"
@@ -463,6 +540,10 @@ sakai.config = {
             description: "PDF document"
         },
         "application/vnd.ms-powerpoint": {
+            URL: "/dev/_images/mimetypes/pps.png",
+            description: "PowerPoint document"
+        },
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
             URL: "/dev/_images/mimetypes/pps.png",
             description: "PowerPoint document"
         },
@@ -477,6 +558,14 @@ sakai.config = {
         "application/zip": {
             URL: "/dev/_images/mimetypes/zip.png",
             description: "Archive file"
+        },
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+            URL: "/dev/_images/mimetypes/spreadsheet.png",
+            description: "Spreadsheet document"
+        },
+        "application/vnd.ms-excel": {
+            URL: "/dev/_images/mimetypes/spreadsheet.png",
+            description: "Spreadsheet document"
         },
         "text/plain": {
             URL: "/dev/_images/mimetypes/txt.png",

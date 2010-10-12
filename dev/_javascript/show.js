@@ -139,6 +139,8 @@ sakai.show = function() {
         }
         postDataRetrieval();
         sakai.api.Security.showPage();
+        var pageTitle = sakai.api.i18n.General.getValueForKey(sakai.config.PageTitles.prefix);
+        document.title = pageTitle + entityData.authprofile["sakai:group-title"];
     };
 
     /**
@@ -194,6 +196,10 @@ sakai.show = function() {
             postDataRetrieval();
             sakai.api.Security.showPage();
         }
+        
+        var pageTitle = sakai.api.i18n.General.getValueForKey(sakai.config.PageTitles.prefix);
+        document.title = pageTitle + sakai.api.User.getDisplayName(sakai.profile.main.data);
+        
     };
 
     var getEntityData = function() {
@@ -230,7 +236,7 @@ sakai.show = function() {
                 entityPath = entityPrefix + sakai.profile.main.data.path;
                 break;
             case "group":
-                entityPath = entityPrefix + "/" + entityID.substring(0,1) + "/" + entityID.substring(0,2) + "/" + entityID;
+                entityPath = entityPrefix + sakai.currentgroup.data.authprofile.path;
                 break;
         }
     };

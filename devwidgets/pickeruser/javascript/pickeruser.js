@@ -110,6 +110,7 @@ sakai.pickeruser = function(tuid, showSettings) {
     var reset = function() {
         $pickeruser_content_search.html("");
         $pickeruser_content_search.unbind("scroll");
+        $pickeruser_message.val("");
         pickerData.selected = {};
         pickerData.currentElementCount = 0;
         pickerData.selectCount = 0;
@@ -123,7 +124,7 @@ sakai.pickeruser = function(tuid, showSettings) {
      * @returns void
      */
     var render = function(iConfig) {
-
+        $pickeruser_add_button.attr("disabled", "disabled");
         clearAutoSuggest();
         // Merge user defined config with defaults
         for (var element in iConfig) {
@@ -153,6 +154,8 @@ sakai.pickeruser = function(tuid, showSettings) {
         $pickeruser_add_button.unbind("click");
         $pickeruser_add_button.bind("click", function(){
             addPeople(iConfig);
+            //reset form
+            reset();
         });
     };
 
@@ -291,6 +294,16 @@ sakai.pickeruser = function(tuid, showSettings) {
 
     $(window).unbind("sakai-pickeruser-init");
     $(window).bind("sakai-pickeruser-init", function(e, config, callbackFn) {
+
+        // position dialog box at users scroll position
+        var htmlScrollPos = $("html").scrollTop();
+        var docScrollPos = $(document).scrollTop();
+        if (htmlScrollPos > 0) {
+            $(".dialog").css({"top": htmlScrollPos + 50 + "px"});
+        } else if (docScrollPos > 0) {
+            $(".dialog").css({"top": docScrollPos + 50 + "px"});
+        }
+
         $pickeruser_container.jqmShow();
         render(config);
         $(window).unbind("sakai-pickeradvanced-finished");
@@ -306,6 +319,8 @@ sakai.pickeruser = function(tuid, showSettings) {
     });
 
     $pickeruser_close_button.bind("click", function() {
+        // reset form.
+        reset();
         $pickeruser_container.jqmHide();
         //$("li#as-values-" + tuid).val();
     });

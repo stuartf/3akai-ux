@@ -116,10 +116,15 @@ sakai.search = function() {
     var showSearchContent = function() {
         $(searchConfig.global.searchTerm).html(sakai.api.Security.saneHTML(sakai.api.Security.escapeHTML(searchterm)));
         if (tagterm) {
-            $(searchConfig.global.tagTerm).text(sakai.api.Security.saneHTML(tagterm.replace("/tags/", "").replace("directory/", "")));
+            var tags = tagterm.replace("/tags/", "").split("/");
+            if(tags[0] === "directory"){
+                $(searchConfig.global.tagTerm).html($("#search_result_results_located_in").html() + " " + tags.splice(1,tags.length).toString().replace(/,/g, "<span class='search_directory_seperator'>&raquo;</span>"));
+            } else {
+                $(searchConfig.global.tagTerm).html($("#search_result_results_tagged_under").html() + " " + sakai.api.Security.saneHTML(tagterm.replace("/tags/", "")));
+            }
         }
         $(searchConfig.global.numberFound).text("0");
-        $(searchConfig.results.header).show();
+        $(searchConfig.results.header).hide();
         $(searchConfig.results.tagHeader).hide();
         $(searchConfig.results.container).html($(searchConfig.global.resultTemp).html());
     };
@@ -218,6 +223,7 @@ sakai.search = function() {
             $(searchConfig.global.pagerClass).hide();
         }
 
+        $(searchConfig.results.header).show();
         // Render the results.
         $(searchConfig.results.container).html($.TemplateRenderer(searchConfig.results.template, finaljson));
         $(".search_results_container").show();
@@ -416,6 +422,10 @@ sakai.search = function() {
     var thisFunctionality = {
         "doHSearch" : sakai._search.doHSearch
     };
+    
+    $(window).bind("sakai-fileupload-complete", function(){
+       window.location = window.location + "&_=" + Math.random(); 
+    });
 
     var mainSearch = sakai._search(searchConfig, thisFunctionality);
 

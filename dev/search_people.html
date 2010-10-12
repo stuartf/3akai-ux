@@ -4,7 +4,7 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Sakai 3 RC 1 - __MSG__SEARCH__: __MSG__PEOPLE__</title>
+        <title></title>
 
         <!-- Sakai Core CSS -->
         <link rel="stylesheet" type="text/css" href="_css/FSS/fss-base.css" />
@@ -46,6 +46,7 @@
         <script type="text/javascript" src="/dev/_lib/jquery/plugins/jquery.pager.js"></script>
         <script type="text/javascript" src="/dev/_lib/jquery/plugins/jquery.ba-bbq.js"></script>
         <script type="text/javascript" src="_javascript/_history/search_history.js"></script>
+        <script type="text/javascript" src="_lib/jquery/plugins/jquery.threedots.js"></script>
         <script type="text/javascript" src="/dev/_lib/jquery/plugins/jquery.autoSuggest.sakai-edited.js"></script>
 
     </head>
@@ -120,9 +121,11 @@
                                     <span class="keyword" id="search_mysearchterm"></span>
                                 </div>
                                 <div class="search_result_title" id="search_results_tag_header">
-                                    __MSG__RESULTS_TAGGED_UNDER__
                                     <span class="keyword" id="search_mytagterm"></span> 
                                 </div>
+
+                                <div id="search_result_results_tagged_under" style="display:none;"><span style="font-weight:normal">__MSG__RESULTS_TAGGED_UNDER__</span></div>
+                                <div id="search_result_results_located_in" style="display:none;"><span style="font-weight:normal">__MSG__RESULTS_LOCATED_IN__</span></div>
 
                                 <!-- CONTAINER FOR THE RESULTS -->
                                 <div id="search_results_container"></div>
@@ -139,7 +142,7 @@
                                         {else}
                                         <a href="/~${i.userid}" class="search_result_person_picture" title="__MSG__TO_SEE_THE_PERSON_PROFILE__"><img alt="__MSG__TO_SEE_THE_PERSON_PROFILE__" src="${i.picture}" width="60px" height="60px"/></a>
                                         {/if}
-                                        <a href="/~${i.userid}" class="search_result_person_name">${i.name}</a>
+                                        <a href="/~${i.userid}" class="search_result_person_name">${sakai.api.Util.shortenString(i.name, 25)}</a>
                                         {if i.extra}
                                         <a href="javascript:;" class="search_result_person_dept">${i.extra}</a>
                                         {else}
@@ -151,8 +154,14 @@
                                             {if ! i.connected}
                                             <a href="javascript:;" class="search_result_person_link link_add_to_contacts" id="link_add_to_contacts_${i.userid}">__MSG__ADD_TO_CONTACTS__</a>
                                             <a href="javascript:;" id="link_add_to_contacts_${i.userid}_divider" class="search_result_person_link search_result_person_divider">|</a>
-                                            {/if}
+                                            <a href="javascript:;" class="search_result_person_link search_result_person_link_message search_result_person_link_divider_message" id="search_result_person_link_message_${i.userid}">__MSG__MESSAGE__</a>
+                                            {elseif i.invited}
+                                            <a href="javascript:;" class="search_result_person_link link_accept_invitation" id="link_accept_invitation_${i.userid}">__MSG__ACCEPT_INVITATION__</a>
+                                            <a href="javascript:;" id="link_add_to_contacts_${i.userid}_divider" class="search_result_person_link search_result_person_divider">|</a>
+                                            <a href="javascript:;" class="search_result_person_link search_result_person_link_message search_result_person_link_divider_message" id="search_result_person_link_message_${i.userid}">__MSG__MESSAGE__</a>
+                                            {else}
                                             <a href="javascript:;" class="search_result_person_link search_result_person_link_message" id="search_result_person_link_message_${i.userid}">__MSG__MESSAGE__</a>
+                                            {/if}
                                         {/if}
                                         </div>
                                     </div>

@@ -45,6 +45,11 @@
     top: -15px;
 }
 
+/* Button */	
+.search_add_content_button, .search_add_group_button {
+    float:right;
+}
+
 .search_content_wrapper {
     padding: 0;
     margin: 0 0 20px 0;
@@ -240,7 +245,9 @@ a.search_results_part_title {
     color: #000;
     font-size: .85em;
 }
-
+.search_result_person_link_divider_message {
+    margin: 0 0 0 10px;
+}
 .search_result_person_divider {
     color: #ddd;
     /*padding: 10px;*/
@@ -284,3 +291,5 @@ a.search_results_part_title {
 .site_heading { border-bottom:none; }
 
 .search_no_results {padding:10px;}
+
+.search_result_person_threedots {display:block; width:150px;}

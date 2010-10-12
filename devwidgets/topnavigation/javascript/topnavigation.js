@@ -41,7 +41,6 @@ sakai.topnavigation = function(tuid, showSettings){
     var currentChatStatus = "";
 
     // Links and labels
-    var hiLabel = "#hispan";
     var myprofileName = "#myprofile_name";
     var onlineButton = "#online_button";
     var pictureHolder = "#picture_holder";
@@ -70,6 +69,7 @@ sakai.topnavigation = function(tuid, showSettings){
     var chatUnreadMessages = "#chat_unreadMessages";
 
     // Search
+    var $general_search_container = $("#general_search_container");
     var $general_search_form = $("#general_search_container form");
     var $general_search_input = $("#general_search_input");
     var $general_search_default_value = $("#general_search_default_value");
@@ -335,6 +335,9 @@ sakai.topnavigation = function(tuid, showSettings){
         $(".personal .sign_out").hide();
         $(".help").hide();
         $("#user_link_container").hide();
+        
+        // Hide search bar
+ 	    $general_search_container.hide();
 
         // Show anonymous elements
         $("#other_logins_button_container").show();
@@ -459,8 +462,7 @@ sakai.topnavigation = function(tuid, showSettings){
 
         // Fill in the name of the user in the different fields
         if (sakai.api.User.getDisplayName(person.profile) !== "") {
-            $(userIdLabel).text(sakai.api.User.getDisplayName(person.profile));
-            $(hiLabel).text(sakai.api.User.getProfileBasicElementValue(person.profile, "firstName"));
+            $(userIdLabel).text(sakai.api.Util.shortenString(sakai.api.User.getDisplayName(person.profile), 25));
         }
 
         // Show the profile picture on the dashboard page

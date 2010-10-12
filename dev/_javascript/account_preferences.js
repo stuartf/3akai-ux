@@ -233,7 +233,10 @@ sakai.account_preferences = function(){
 
                     if (language !== me.user.locale.language + "_" + me.user.locale.country) {
                         // Reload the page if the language for a user has changed
-                        document.location.reload();
+                        sakai.api.Util.notification.show($(messageChangeLang).html(), $(messageChangeLang).html());
+                            window.setTimeout(function(){
+                            document.location.reload();
+                        },2000);
                     }
                     else {
                         // Show successful regional setting change through gritter
@@ -270,6 +273,11 @@ sakai.account_preferences = function(){
                     required: true,
                     minlength: 4,
                     equalTo: "#new_pass"
+                }
+            },
+            messages: {
+                retype_pass:{
+                    "equalTo": "Please enter the same password twice."
                 }
             },
             debug:true
@@ -349,6 +357,11 @@ sakai.account_preferences = function(){
             selectTimezone(me.user.locale.timezone);
             getLanguages();
             initValidation();
+        }
+        
+        // if allowpasswordchange is false then hide the regional setting
+        if(!sakai.config.allowPasswordChange){
+            $(passChangeContainer).hide();
         }
     };
 

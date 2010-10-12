@@ -52,6 +52,7 @@ sakai.addtocontacts = function(tuid, showSettings){
     // Form elements
     var addToContactsForm = addToContacts + "_form";
     var addToContactsFormButtonInvite = addToContactsForm + "_invite";
+    var addToContactsFormButtonCancel = addToContactsForm + "_cancel";
     var addToContactsFormPersonalNote = addToContactsForm + "_personalnote";
     var addToContactsFormPersonalNoteTemplate = addToContactsFormPersonalNote + "_template";
     var addToContactsFormType = addToContactsForm + "_type";
@@ -78,7 +79,7 @@ sakai.addtocontacts = function(tuid, showSettings){
      * It renders the contacts types and the personal note
      */
     var renderTemplates = function(){
-        $.TemplateRenderer(addToContactsFormTypeTemplate.replace(/#/gi, ""), Widgets, $(addToContactsInfoTypes));
+        $.TemplateRenderer(addToContactsFormTypeTemplate.replace(/#/gi, ""), sakai.config.Relationships, $(addToContactsInfoTypes));
         var json = {
             me: me
         };
@@ -108,8 +109,8 @@ sakai.addtocontacts = function(tuid, showSettings){
      * @param {String} relationshipName
      */
     var getDefinedRelationship = function(relationshipName){
-        for (var i = 0, j = Widgets.relationships.length; i < j; i++) {
-            var definedRelationship = Widgets.relationships[i];
+        for (var i = 0, j = sakai.config.Relationships.contacts.length; i < j; i++) {
+            var definedRelationship = sakai.config.Relationships.contacts[i];
             if (definedRelationship.name === relationshipName) {
                 return definedRelationship;
             }
@@ -145,8 +146,8 @@ sakai.addtocontacts = function(tuid, showSettings){
             // send message to other person
             var userstring = sakai.api.User.getDisplayName(me.profile);
 
-            var title = sakai.config.Connections.Invitation.title.replace(/\$\{user\}/gi, userstring);
-            var message = sakai.config.Connections.Invitation.body.replace(/\$\{user\}/gi, userstring).replace(/\$\{comment\}/gi, personalnote);
+            var title = $("#addtocontacts_invitation_title").html().replace(/\$\{user\}/gi, userstring);
+            var message = $("#addtocontacts_invitation_body").html().replace(/\$\{user\}/gi, userstring).replace(/\$\{comment\}/gi, personalnote);
 
             // Do the invite and send a message
             $.ajax({
@@ -162,6 +163,8 @@ sakai.addtocontacts = function(tuid, showSettings){
                     $(addToContactsDialog).jqmHide();
                     sakai.api.Communication.sendMessage(userid, title, message, "invitation");
                     callbackWhenDone(friend);
+                    //reset the form to set original note 
+                    $(addToContactsForm)[0].reset();
                     sakai.api.Util.notification.show("", $(addToContactsDone).text());
                 },
                 error: function(xhr, textStatus, thrownError){
@@ -258,6 +261,11 @@ sakai.addtocontacts = function(tuid, showSettings){
         // Invite this person.
         doInvite(friend.uuid);
     });
+    
+    // Bind the cancel button
+ 	$(addToContactsFormButtonCancel).click(function(){
+ 	    $(addToContactsForm)[0].reset();
+ 	});
 
     // Bind the jqModal
     $(addToContactsDialog).jqm({

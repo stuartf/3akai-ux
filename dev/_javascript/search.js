@@ -135,7 +135,12 @@ sakai.search = function() {
         // Set searching messages
         $(searchConfig.global.searchTerm).html(sakai.api.Security.saneHTML(sakai.api.Security.escapeHTML(searchterm)));
         if (tagterm) {
-            $(searchConfig.global.tagTerm).text(sakai.api.Security.saneHTML(tagterm.replace("/tags/", "").replace("directory/", "")));
+            var tags = tagterm.replace("/tags/", "").split("/");
+            if(tags[0] === "directory"){
+                $(searchConfig.global.tagTerm).html($("#search_result_results_located_in").html() + " " + tags.splice(1,tags.length).toString().replace(/,/g, "<span class='search_directory_seperator'>&raquo;</span>"));
+            } else {
+                $(searchConfig.global.tagTerm).html($("#search_result_results_tagged_under").html() + " " + sakai.api.Security.saneHTML(tagterm.replace("/tags/", "")));
+            }
         }
         $(searchConfig.global.numberFound).text("0");
 
@@ -224,6 +229,13 @@ sakai.search = function() {
 
         }
         $(searchConfig.cm.searchResult).html($.TemplateRenderer(searchConfig.cm.searchResultTemplate, finaljson));
+        
+        $(".search_result_person_threedots").ThreeDots({
+            max_rows: 1,
+            text_span_class: "threedots",
+            alt_text_t: true
+        });
+
     };
 
     /**
@@ -286,6 +298,10 @@ sakai.search = function() {
                     }
                     finaljson.items[i]["pagepath"] = page_path;
 
+                    if (finaljson.items[i].picture && typeof finaljson.items[i].picture === "string") {
+                        finaljson.items[i].picture = $.parseJSON(finaljson.items[i].picture);
+                        finaljson.items[i].picture.picPath = "/~"+finaljson.items[i]["sakai:group-id"]+"/public/profile/"+finaljson.items[i].picture.name;
+                    }
                 }
             }
         }
@@ -391,7 +407,7 @@ sakai.search = function() {
                     page: 0,
                     items: peopleToSearch,
                     q: urlsearchterm,
-                    sortOn: "sakai:firstName",
+                    sortOn: "basic/elements/lastName/@value",
                     sortOrder: "ascending"
                 },
                 cache: false,

@@ -235,6 +235,8 @@ sakai._search = function(config, callback) {
             }
             // Modify the tags if there are any
             if(finaljson.items[i]["sakai:tags"]){
+                if (typeof(finaljson.items[i]["sakai:tags"]) === 'string')
+                    finaljson.items[i]["sakai:tags"] = finaljson.items[i]["sakai:tags"].split(",");
 
                 for(var k = 0, l = finaljson.items[i]["sakai:tags"].length; k < l; k++){
 
@@ -293,6 +295,7 @@ sakai._search = function(config, callback) {
                     }
                 }
                 user.connected = false;
+                user.invited = item.invited !== undefined ? item.invited : false;
                 // Check if this user is a friend of us already.
 
                 if (getMyFriends().results) {
