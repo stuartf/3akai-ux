@@ -38,6 +38,10 @@
         <script type="text/javascript" src="_lib/sakai_util/i18n.js"></script>
         <script type="text/javascript" src="_lib/sakai_util/site_authz.js"></script>
 
+        <!-- Sakai profiler JS -->
+        <script type="text/javascript">var profilerEvents = ["pageLoad"];</script>
+        <script type="text/javascript" src="/dev/_lib/sakai_util/profiler.js"></script>
+
         <!-- 3rd party JS -->
         <script type="text/javascript" src="/dev/_lib/sakai_util/trimpath.template.js"></script>
         <script type="text/javascript" src="/dev/_lib/sakai_util/querystring.js"></script>
@@ -55,6 +59,7 @@
 
     <body id="root" class="body-container fl-centered fl-container i18nable my-sakai">
 
+        <script type="text/javascript">$(window).trigger("pageLoadStart");</script>
         <!-- TOP BANNER -->
         <div id="top_banner"><!-- --></div>
 
@@ -112,6 +117,7 @@
 
         <script type="text/javascript" src="_javascript/mysakai.js"></script>
 
+        <script type="text/javascript">$(window).trigger("pageLoadEnd");</script>
     </body>
 
 </html>
