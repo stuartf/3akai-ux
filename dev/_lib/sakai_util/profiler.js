@@ -1,17 +1,21 @@
-var results = {};
+$(function() {
+  sakai = sakai || {};
+  sakai.performance = {};
+  sakai.performance.results = {};
 
-var timestamp = function(ev, code) {
-  var now = new Date().getTime();
-  if (results[ev] === undefined) {
-    results[ev] = [];
-  }
-  obj={};
-  obj[code]=now;
-  results[ev].push(obj);
-};
+  sakai.performance.timestamp = function(ev, code) {
+    var now = new Date().getTime();
+    if (sakai.performance.results[ev] === undefined) {
+      sakai.performance.results[ev] = [];
+    }
+    obj={};
+    obj[code]=now;
+    sakai.performance.results[ev].push(obj);
+  };
 
-$.each(profilerEvents, function(index, eventName) {
-  $(window).bind(eventName + "Start", timestamp(eventName, "start"));
-  //$(window).bind(eventName + "Checkpoint", timestamp(eventName, "checkpoint"));
-  $(window).bind(eventName + "End", timestamp(eventName, "end"));
+  $.each(sakai.profilerEvents, function(index, eventName) {
+    $(window).bind(eventName, function(e, type) {
+      sakai.performance.timestamp(eventName, type);
+    });
+  });
 });
