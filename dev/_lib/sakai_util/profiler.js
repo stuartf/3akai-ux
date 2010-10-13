@@ -17,7 +17,9 @@ $(function() {
             }
             sakai.performance.results[ev][code] = now;
             if (checkDone()) {
-                console.log("done with perf tests", sakai.performance.results);
+                if (parent && $(parent.document).length) {
+                    parent.$(parent.document).trigger("sakai-profiler-done", sakai.performance.results);
+                }
             }
         };
 

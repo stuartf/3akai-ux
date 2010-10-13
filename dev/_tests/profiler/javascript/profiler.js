@@ -12,3 +12,7 @@ $(document).ready(function() {
     $("#pframe").attr("src", url);
     $("#pbutton").click(function() { profile(); });
 });
+
+$(document).bind("sakai-profiler-done", function(e, data) {
+    console.log("its done", data);
+});
