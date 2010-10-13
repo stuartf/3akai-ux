@@ -831,7 +831,7 @@ sakai.api.i18n = sakai.api.i18n || {};
  */
 sakai.api.i18n.init = function(){
 
-    $(window).trigger("i18n","start");
+    $(window).trigger("sakai-profiler", {"module": "i18n", "code": "start"});
     /////////////////////////////
     // CONFIGURATION VARIABLES //
     /////////////////////////////
@@ -916,13 +916,13 @@ sakai.api.i18n.init = function(){
         if (sakai.data.me.user.anon) {
             if ($.inArray(currentPage, sakai.config.requireUser) > -1){
                 sakai.api.Security.sendToLogin();
-                $(window).trigger("i18n", "end");
+                $(window).trigger("sakai-profiler", {"module": "i18n", "code": "end"});
                 return false;
             }
         } else {
             if ($.inArray(currentPage, sakai.config.requireAnonymous) > -1){
                 document.location = sakai.config.URL.MY_DASHBOARD_URL;
-                $(window).trigger("i18n", "end");
+                $(window).trigger("sakai-profiler", {"module": "i18n", "code": "end"});
                 return false;
             }
         }
@@ -931,7 +931,7 @@ sakai.api.i18n.init = function(){
         }
         sakai.api.Widgets.Container.setReadyToLoad(true);
         sakai.api.Widgets.widgetLoader.insertWidgets(null, false);
-        $(window).trigger("i18n", "end");
+        $(window).trigger("sakai-profiler", {"module": "i18n", "code": "end"});
         return true;
     };
 
@@ -2210,7 +2210,7 @@ sakai.api.User.logout = function(callback) {
  * @return {Void}
  */
 sakai.api.User.loadMeData = function(callback) {
-    $(window).trigger("meService", "start");
+    $(window).trigger("sakai-profiler", {"module": "meService", "code": "start"});
     // Get the service url from the config file
     var data_url = sakai.config.URL.ME_SERVICE;
 
@@ -2250,7 +2250,7 @@ sakai.api.User.loadMeData = function(callback) {
             }
         }
     });
-    $(window).trigger("meService", "end");
+    $(window).trigger("sakai-profiler", {"module": "meService", "code": "start"});
 };
 
 
