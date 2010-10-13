@@ -8,7 +8,7 @@ $(function() {
     if (sakai.performance.results[ev] === undefined) {
       sakai.performance.results[ev] = [];
     }
-    obj={};
+    var obj={};
     obj[code]=now;
     sakai.performance.results[ev].push(obj);
   };

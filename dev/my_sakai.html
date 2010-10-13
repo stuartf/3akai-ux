@@ -33,14 +33,14 @@
         <script type="text/javascript" src="_lib/jquery/plugins/jquery.json.js"></script>
         <script type="text/javascript" src="/dev/_lib/google/html-sanitizer-minified.js"></script>
 
+        <!-- Sakai profiler JS -->
+        <script type="text/javascript" src="/dev/_lib/sakai_util/profiler.js"></script>
+        <script type="text/javascript" src="/dev/_configuration/profiler/my_sakai.js"></script>
+
         <!-- Sakai Core JS -->
         <script type="text/javascript" src="_lib/sakai_util/sakai_magic.js"></script>
         <script type="text/javascript" src="_lib/sakai_util/i18n.js"></script>
         <script type="text/javascript" src="_lib/sakai_util/site_authz.js"></script>
-
-        <!-- Sakai profiler JS -->
-        <script type="text/javascript" src="/dev/_lib/sakai_util/profiler.js"></script>
-        <script type="text/javascript" src="/dev/_configuration/profiler/my_sakai.js"></script>
 
         <!-- 3rd party JS -->
         <script type="text/javascript" src="/dev/_lib/sakai_util/trimpath.template.js"></script>
@@ -58,8 +58,6 @@
     </head>
 
     <body id="root" class="body-container fl-centered fl-container i18nable my-sakai">
-
-        <script type="text/javascript">$(window).trigger("pageLoad", "start");</script>
         <!-- TOP BANNER -->
         <div id="top_banner"><!-- --></div>
 
@@ -116,8 +114,6 @@
         <div id="widget_chat" class="widget_inline"></div>
 
         <script type="text/javascript" src="_javascript/mysakai.js"></script>
-
-        <script type="text/javascript">$(window).trigger("pageLoad", "end");</script>
     </body>
 
 </html>

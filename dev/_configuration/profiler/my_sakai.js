@@ -1,3 +1,3 @@
 $(function() {
-  sakai.performance.bindProfiler(["pageLoad"]);
+  sakai.performance.bindProfiler(["i18n", "meService"]);
 });
