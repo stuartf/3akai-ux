@@ -1,0 +1,7 @@
+// A list of pages to profile. my_sakai.html would be my_sakai
+sakai = sakai || {};
+sakai.profiler = sakai.profiler || {};
+sakai.profiler.config = {
+    "my_sakai": ["i18n", "meService"],
+    "show": ["i18n"]
+};

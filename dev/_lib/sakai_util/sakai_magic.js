@@ -2250,7 +2250,7 @@ sakai.api.User.loadMeData = function(callback) {
             }
         }
     });
-    $(window).trigger("sakai-profiler", {"module": "meService", "code": "start"});
+    $(window).trigger("sakai-profiler", {"module": "meService", "code": "end"});
 };
 
 
