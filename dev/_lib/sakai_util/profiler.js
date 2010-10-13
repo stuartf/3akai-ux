@@ -13,9 +13,11 @@ $(function() {
     sakai.performance.results[ev].push(obj);
   };
 
-  $.each(sakai.profilerEvents, function(index, eventName) {
-    $(window).bind(eventName, function(e, type) {
-      sakai.performance.timestamp(eventName, type);
+  sakai.performance.bindProfiler = function(eventList){
+    $.each(eventList, function(index, eventName) {
+      $(window).bind(eventName, function(e, type) {
+        sakai.performance.timestamp(eventName, type);
+      });
     });
-  });
+  };
 });
