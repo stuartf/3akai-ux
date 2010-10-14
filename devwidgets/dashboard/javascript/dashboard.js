@@ -904,6 +904,7 @@ sakai.dashboard = function(tuid, showSettings) {
         $(".widget-content #widgetscontainer", $rootel).show();
 
         sakai.api.Widgets.loadWidgetData(tuid, decideExists);
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-dashboard", "code": "end"});
     };
 
     /**

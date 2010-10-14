@@ -484,6 +484,8 @@ sakai.topnavigation = function(tuid, showSettings){
 
         // Get chat status
         getChatStatus();
+
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-topnavigation", "code": "end"});
     };
 
     if (sakai.data.me.user.anon) {

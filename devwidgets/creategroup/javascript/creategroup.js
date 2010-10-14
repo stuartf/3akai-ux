@@ -357,6 +357,7 @@ sakai.creategroup = function(tuid, showSettings){
         }
 
         $(createGroupAddUrl).text(sakai.api.Security.saneHTML(url));
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-creategroup", "code": "end"});
     };
 
     doInit();

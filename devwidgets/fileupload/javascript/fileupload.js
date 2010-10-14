@@ -721,6 +721,7 @@ sakai.fileupload = function(tuid, showSettings){
                 }
             });
         });
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-fileupload", "code": "end"});
     };
 
     $("#fileupload_form_submit").live("click", function(){

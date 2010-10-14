@@ -3454,6 +3454,7 @@ sakai.api.Widgets.widgetLoader = {
          */
         var informOnLoad = function(widgetname){
 
+            $(window).trigger("sakai-profiler", {"module": "loadWidget-" + widgetname, "code": "start"});
             var doDelete;
 
             // Check if the name of the widget is inside the widgets object.
