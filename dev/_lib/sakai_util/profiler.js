@@ -12,13 +12,15 @@ $(function() {
 
         sakai.performance.timestamp = function(ev, code) {
             var now = new Date().getTime();
-            if (sakai.performance.results[ev] === undefined) {
-                sakai.performance.results[ev] = {};
-            }
-            sakai.performance.results[ev][code] = now;
-            if (checkDone()) {
-                if (parent && $(parent.document).length) {
-                    parent.$(parent.document).trigger("sakai-profiler-done", sakai.performance.results);
+            if ($.inArray(ev, sakai.profiler.config[page]) {
+                if (sakai.performance.results[ev] === undefined) {
+                    sakai.performance.results[ev] = {};
+                }
+                sakai.performance.results[ev][code] = now;
+                if (checkDone()) {
+                    if (parent && $(parent.document).length) {
+                        parent.$(parent.document).trigger("sakai-profiler-done", sakai.performance.results);
+                    }
                 }
             }
         };
