@@ -181,11 +181,7 @@ sakai.sitespages.site_admin = function(){
             "pageType": type,
             "fullwidth": fullwidth,
             "pagePosition": position,
-            "_pages": {},  // child pages
-            "pageContent": {
-                "sling:resourceType": "sakai/pagecontent",
-                "sakai:pagecontent": content
-            }
+            "_pages": {}
         });
 
         $.ajax({
@@ -196,17 +192,29 @@ sakai.sitespages.site_admin = function(){
                 ":contentType": "json",
                 ":content": page_data,
                 ":replace": true,
-                ":replaceProperties": true,
                 "_charset_": "utf-8"
             },
             success: function(data) {
-
-                callback(true, data);
+                // add pageContent in non-replace mode to support versioning
+                $.ajax({
+                    url: i_url + "/pageContent",
+                    type: "POST",
+                    data: {
+                        "sling:resourceType": "sakai/pagecontent",
+                        "sakai:pagecontent": content
+                    },
+                    success: function (data) {
+                        callback(true, data);
+                    },
+                    error: handleError
+                });
             },
-            error: function(xhr, textStatus, thrownError) {
-                callback(false, xhr);
-            }
+            error: handleError
         });
+
+        var handleError = function (xhr, textStatus, thrownError) {
+            callback(false, xhr);
+        };
     };
 
     /**
@@ -248,7 +256,7 @@ sakai.sitespages.site_admin = function(){
      */
     var updateRevisionHistory = function (pageUrl, callback) {
         $.ajax({
-            url: pageUrl + "/pageContent.save.html",
+            url: pageUrl + "/pageContent.save.json",
             type: "POST",
             success: function(data) {
                 if (callback && typeof(callback) === "function") {
@@ -318,6 +326,7 @@ sakai.sitespages.site_admin = function(){
             valid_elements : ""+
                 "@[id|class|style|title|dir<ltr?rtl|lang|xml::lang|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],"+
                 "a[href|rel|rev|target|title|type],"+
+                "address[],"+
                 "b[],"+
                 "blink[],"+
                 "blockquote[align|cite|clear|height|type|width],"+
@@ -455,21 +464,21 @@ sakai.sitespages.site_admin = function(){
             $(elm1_menu_formatselect).css(tinyMCEmenuCSS);
             $(elm1_menu_fontselect).css(tinyMCEmenuCSS);
             $(elm1_menu_fontsizeselect).css(tinyMCEmenuCSS);
-            
+
             // Set the position for the text color menu
             var textColorMenu = $("#elm1_forecolor_menu");
             if (textColorMenu.css("position") === "fixed"){
                 textColorMenu.css("position", "absolute");
                 textColorMenu.css("top", "334px");
             };
-            
+
             // Set the position for the background-color menu
             var backColorMenu = $("#elm1_backcolor_menu");
             if (backColorMenu.css("position") === "fixed"){
                 backColorMenu.css("position", "absolute");
                 backColorMenu.css("top", "334px");
             };
- 
+
         }
         else {
 
@@ -481,21 +490,21 @@ sakai.sitespages.site_admin = function(){
 
             $toolbarcontainer.css({"position":"fixed", "top":"0px"});
             $insert_more_menu.css({"position": "fixed", "top":"28px"});
-            
+
             // Set the position for the text color menu
             var textColorMenu = $("#elm1_forecolor_menu");
             if (textColorMenu.css("position") === "absolute"){
                 textColorMenu.css("position", "fixed");
                 textColorMenu.css("top", "30px");
             };
-            
+
             // Set the position for the background-color menu
             var backColorMenu = $("#elm1_backcolor_menu");
             if (backColorMenu.css("position") === "absolute"){
                 backColorMenu.css("position", "fixed");
                 backColorMenu.css("top", "30px");
             };
-            
+
         }
 
         var $insert_more_dropdown_main = $("#insert_more_dropdown_main");
@@ -526,7 +535,7 @@ sakai.sitespages.site_admin = function(){
                 $("#placeholderforeditor").css("height", docHt + 60 + "px");
                 window.scrollTo(0, sakai.sitespages.curScroll);
                 // get position of place holder. if it is called in placetoolbar method,
-                // the position changes based on scroll bar position in IE 8. 
+                // the position changes based on scroll bar position in IE 8.
                 sakai.sitespages.minTop = $("#toolbarplaceholder").position().top;
                 placeToolbar();
             }
@@ -649,8 +658,8 @@ sakai.sitespages.site_admin = function(){
         pagetitle = sakai.sitespages.site_info._pages[sakai.sitespages.selectedpage]["pageTitle"];
 
 
-        // Prefill page title
-        $(".title-input").val(pagetitle);
+        // Prefill page title -- $("<div></div>").append(pagetitle).text(): getting rid of HTML special entities on display - there might be better ways...
+        $("#title-input").val($("<div></div>").append(pagetitle).text());
 
         // Generate the page location
         showPageLocation();
@@ -851,7 +860,7 @@ sakai.sitespages.site_admin = function(){
 
         // Remove autosave
         removeAutoSaveFile();
-        
+
         $(window).trigger("sakai_sitespages_exitedit");
 
         $("#sitespages_page_options #page_save_options").hide();
@@ -1187,7 +1196,7 @@ sakai.sitespages.site_admin = function(){
                 }
                 sakai.sitespages.newwidget_uid = nuid;
                 $("#dialog_content").html(sakai.api.Security.saneHTML('<img src="' + Widgets.widgets[type].img + '" id="' + nuid + '" class="widget_inline" border="1"/>'));
-                $("#dialog_title").text(Widgets.widgets[type].name);
+                $("#dialog_title").html(Widgets.widgets[type].name);
                 sakai.api.Widgets.widgetLoader.insertWidgets("dialog_content", true,sakai.sitespages.config.basepath + "_widgets/");
                 $("#dialog_content").show();
                 $insert_more_menu.hide();
@@ -1627,7 +1636,7 @@ sakai.sitespages.site_admin = function(){
             var id = "widget_" + widgetid + "_" + tuid;
             sakai.sitespages.newwidget_uid = id;
             $dialog_content.html(sakai.api.Security.saneHTML('<img src="' + Widgets.widgets[widgetid].img + '" id="' + id + '" class="widget_inline" border="1"/>'));
-            $("#dialog_title").text(Widgets.widgets[widgetid].name);
+            $("#dialog_title").html(Widgets.widgets[widgetid].name);
             sakai.api.Widgets.widgetLoader.insertWidgets(tuid,true,sakai.sitespages.config.basepath + "_widgets/");
             $dialog_content.show();
             window.scrollTo(0,0);
@@ -2064,7 +2073,9 @@ sakai.sitespages.site_admin = function(){
     });
 
     $('#more_change_layout').live("click", function(){
-        sakai.dashboard.changeLayout();
+        // get page title
+        var title = sakai.sitespages.site_info._pages[sakai.sitespages.selectedpage]["pageTitle"];
+        sakai.dashboard.changeLayout(title);
     });
 
 

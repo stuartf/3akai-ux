@@ -307,12 +307,12 @@ sakai.search = function() {
         }
         foundPeople = finaljson.items;
         $(searchConfig.results.header).show();
-        
+
         //    Render the results.
         $(searchConfig.results.container).html($.TemplateRenderer(searchConfig.results.template, finaljson));
         $("#search_results_page1").show();
-        
-        
+
+
         $(".search_result_person_threedots").ThreeDots({
             max_rows: 1,
             text_span_class: "threedots",
@@ -403,7 +403,7 @@ sakai.search = function() {
                     page: (currentpage - 1),
                     items: resultsToDisplay,
                     q: urlsearchterm,
-                    sortOn: "basic/elements/lastName/@value",
+                    sortOn: "public/authprofile/basic/elements/lastName/@value",
                     sortOrder: "ascending"
                 }
             }
@@ -415,7 +415,7 @@ sakai.search = function() {
                     page: (currentpage - 1),
                     items: resultsToDisplay,
                     q: urlsearchterm,
-                    sortOn: "basic/elements/firstName/@value",
+                    sortOn: "public/authprofile/basic/elements/firstName/@value",
                     sortOrder: "ascending"
                 }
             }
@@ -461,7 +461,6 @@ sakai.search = function() {
                     }
                     if (facet === "invited") {
                         for (var i = 0, j = data.results.length; i < j; i++) {
-                            console.log("setting invited");
                             data.results[i]["invited"] = true;
                         }
                     }
@@ -515,7 +514,6 @@ sakai.search = function() {
 
     var acceptInvitation = function(userid) {
         var $userContainer = $("div div a#link_accept_invitation_" + userid).parent("div").parent("div");
-        console.log("user", $userContainer);
         $.ajax({
             url: "/~" + sakai.data.me.user.userid + "/contacts.accept.html",
             type: "POST",
