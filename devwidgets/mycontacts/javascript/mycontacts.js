@@ -181,6 +181,7 @@ sakai.mycontacts = function(tuid,showSettings){
 
         // Get the contacts requests for the current user
         getContactRequests();
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-mycontacts", "code": "end"});
     };
 
     doInit();

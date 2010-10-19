@@ -156,6 +156,7 @@ sakai.footer = function(tuid,showSettings){
         var d = new Date();
         $footer_date_end.text(d.getFullYear());
 
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-footer", "code": "end"});
     };
 
     doInit();

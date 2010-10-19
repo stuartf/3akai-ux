@@ -12,7 +12,7 @@ $(function() {
 
         sakai.performance.timestamp = function(ev, code) {
             var now = new Date().getTime();
-            if ($.inArray(ev, sakai.profiler.config[page]) {
+            if ($.inArray(ev, sakai.profiler.config[page]) != -1) {
                 if (sakai.performance.results[ev] === undefined) {
                     sakai.performance.results[ev] = {};
                 }

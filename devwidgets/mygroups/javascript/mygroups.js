@@ -161,6 +161,7 @@ sakai.mygroups = function(tuid){
     var doInit = function(){
         //get groups list info from me object, filter and then render groups
         loadGroupList(sakai.data.me.groups);
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-mygroups", "code": "end"});
     };
 
 

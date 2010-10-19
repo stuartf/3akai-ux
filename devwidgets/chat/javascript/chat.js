@@ -813,7 +813,7 @@ sakai.chat = function(tuid, showSettings){
             restoreChatWindows();
         });
     }
-
+    $(window).trigger("sakai-profiler", {"module": "loadWidget-chat", "code": "end"});
 };
 
 sakai.api.Widgets.widgetLoader.informOnLoad("chat");

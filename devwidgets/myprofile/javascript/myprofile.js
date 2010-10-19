@@ -196,6 +196,7 @@ sakai.myprofile = function (tuid, showSettings) {
 
         // Show the widget after everything is loaded
         $(profileWidget).show();
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-myprofile", "code": "end"});
     };
 
     /**
