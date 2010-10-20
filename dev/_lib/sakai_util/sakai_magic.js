@@ -2251,6 +2251,7 @@ sakai.api.User.loadMeData = function(callback) {
             if (typeof callback === "function") {
                 callback(true, sakai.data.me);
             }
+            $(window).trigger("sakai-profiler", {"module": "meService", "code": "end"});
         },
         error: function(xhr, textStatus, thrownError) {
 
@@ -2265,9 +2266,9 @@ sakai.api.User.loadMeData = function(callback) {
             if (typeof callback === "function") {
                 callback(false, xhr);
             }
+            $(window).trigger("sakai-profiler", {"module": "meService", "code": "end"});
         }
     });
-    $(window).trigger("sakai-profiler", {"module": "meService", "code": "end"});
 };
 
 
