@@ -2,6 +2,8 @@ $(function(){
     var url = "";
     var times = 10;
     var count = 1;
+    var start;
+    var end;
     var results = {};
 
     var profile = function(){
@@ -11,6 +13,7 @@ $(function(){
         times = $("#times").val();
         $("#results").html('<img alt="loading" src="/dev/_images/ajax-loader-gray.gif" />');
         $("#csv").val("");
+        start = new Date().getTime();
         $("#pframe").attr("src", url);
         return false;
     };
@@ -22,9 +25,7 @@ $(function(){
         $("#url").val(url);
         $("#times").val(times);
         $("#pbutton").click(function() { profile(); });
-        $("#results").html("");
-        $("#pframe").attr("src", url);
-        $("#csv").val("");
+        profile();
     });
 
     var showResults = function() {
@@ -32,14 +33,14 @@ $(function(){
         $("#csv").val("");
         var csv = "";
         $.each(results, function(index, timings) {
-          var total = 0;
-          csv += index;
-          $.each(timings, function(n, time){
-              total = total + time;
-              csv += ", " + time;
-          });
-          csv += "\n";
-          $("#results").append(index + ": " + (total/timings.length).toFixed() + "ms<br />");
+            var total = 0;
+            csv += index;
+            $.each(timings, function(n, time){
+                total = total + time;
+                csv += ", " + time;
+            });
+            csv += "\n";
+            $("#results").append(index + ": " + (total/timings.length).toFixed() + "ms<br />");
         });
         showCsvWithDebugText(csv);
     };
@@ -59,13 +60,19 @@ $(function(){
         });
     };
 
+    var setResult = function(name, timeStarted, timeEnded){
+        var elapsed = timeEnded - timeStarted;
+        if (results[name] === undefined) {
+            results[name] = [];
+        }
+        results[name].push(elapsed);
+    };
+
     $(document).bind("sakai-profiler-done", function(e, data) {
+        end = new Date().getTime();
+        setResult("total", start, end);
         $.each(data, function(index, timing) {
-            var elapsed = timing.end - timing.start;
-            if (results[index] === undefined) {
-              results[index] = [];
-            }
-            results[index].push(elapsed);
+            setResult(index, timing.start, timing.end);
         });
         $(window).trigger("profilerPassComplete");
     });
@@ -74,6 +81,7 @@ $(function(){
         if (count < times) {
             count += 1;
             $("#pframe").attr("src", "");
+            start = new Date().getTime();
             $("#pframe").attr("src", url);
         } else {
             showResults();
