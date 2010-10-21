@@ -152,6 +152,9 @@ sakai.mycontacts = function(tuid,showSettings){
 
                 // Show the contact error
                 $(mycontactsErrorContactserver, rootel).show();
+            },
+            complete: function() {
+                $(window).trigger("sakai-profiler", {"module": "loadWidget-mycontacts", "code": "end"});
             }
         });
     };
@@ -181,7 +184,6 @@ sakai.mycontacts = function(tuid,showSettings){
 
         // Get the contacts requests for the current user
         getContactRequests();
-        $(window).trigger("sakai-profiler", {"module": "loadWidget-mycontacts", "code": "end"});
     };
 
     doInit();

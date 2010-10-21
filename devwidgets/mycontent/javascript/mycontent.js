@@ -142,6 +142,7 @@ sakai.mycontent = function(tuid, showSettings) {
             // display something useful to the user
             $(dataErrorMsg, rootel).show();
         }
+        $(window).trigger("sakai-profiler", {"module": "loadWidget-mycontent", "code": "end"});
     };
 
 
@@ -182,7 +183,6 @@ sakai.mycontent = function(tuid, showSettings) {
                 "items": "5"
             }
         );
-        $(window).trigger("sakai-profiler", {"module": "loadWidget-mycontent", "code": "end"});
     };
 
     // run init() function when sakai.content object loads

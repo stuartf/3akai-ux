@@ -1114,6 +1114,9 @@ sakai.entity = function(tuid, showSettings){
             },
             error: function(xhr, textStatus, thrownError){
                 alert("An error has occured");
+            },
+            complete: function() {
+                $(window).trigger("sakai-profiler", {"module": "loadWidget-entity", "code": "end"});
             }
         });
     };
@@ -1144,7 +1147,6 @@ sakai.entity = function(tuid, showSettings){
 
         //Get the content data
         getContentData(mode, data);
-        $(window).trigger("sakai-profiler", {"module": "loadWidget-entity", "code": "end"});
     };
 
     $(window).trigger("sakai.api.UI.entity.ready", {});
