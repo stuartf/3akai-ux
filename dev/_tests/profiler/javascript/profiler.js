@@ -1,37 +1,35 @@
 $(function(){
-    var url = "";
-    var times = 10;
     var count = 1;
     var start;
     var end;
     var results = {};
+
+    var qs = new Querystring();
+    var url = qs.get("url", "");
+    var times = qs.get("times", 10);
+
+    $("#url").val(url);
+    $("#times").val(times);
 
     var profile = function(){
         results = {};
         count = 1;
         url = $("#url").val();
         times = $("#times").val();
-        $("#results").html('<img alt="loading" src="/dev/_images/ajax-loader-gray.gif" />');
+        $("#loading").show();
         $("#csv").val("");
         start = new Date().getTime();
         $("#pframe").attr("src", url);
         return false;
     };
 
-    $(document).ready(function() {
-        var qs = new Querystring();
-        url = qs.get("url", "");
-        times = qs.get("times", 10);
-        $("#url").val(url);
-        $("#times").val(times);
-        $("#pbutton").click(function() { profile(); });
-        profile();
-    });
+    $("#pbutton").click(function() { profile(); });
 
     var showResults = function() {
-        $("#results").html("");
+        //$("#results").html("");
         $("#csv").val("");
         var csv = "";
+        var json = {"times": []};
         $.each(results, function(index, timings) {
             var totalElapsed = 0;
             var totalAt = 0;
@@ -42,8 +40,15 @@ $(function(){
                 csv += ", " + time.elapsed;
             });
             csv += "\n";
-            $("#results").append(index + ": " + (totalElapsed/timings.length).toFixed() + "ms @ " + (totalAt/timings.length).toFixed() + "ms<br />");
+            json.times.push({
+                "event": index,
+                "elapsed": (totalElapsed/timings.length).toFixed(),
+                "at": (totalAt/timings.length).toFixed()
+            });
         });
+        $("#loading").hide();
+        var html = $.TemplateRenderer($("#results_template"), json);
+        $("#results").html(html);
         showCsvWithDebugText(csv);
     };
 
@@ -90,4 +95,6 @@ $(function(){
             showResults();
         }
     });
+
+    profile();
 });

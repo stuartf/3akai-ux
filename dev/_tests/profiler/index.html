@@ -3,8 +3,28 @@
     <head>
         <title>JS Profiler</title>
         <link rel="stylesheet" type="text/css" href="/dev/_tests/profiler/css/profiler.css" />
+
+        <!-- Sakai Config JS -->
+        <script type="text/javascript" src="/dev/_configuration/widgets.js"></script>
+        <script type="text/javascript" src="/var/widgets.json?callback=sakai.storeWidgets"></script>
+        <script type="text/javascript" src="/dev/_configuration/config.js"></script>
+        <script type="text/javascript" src="/dev/_configuration/config_custom.js"></script>
+
+        <!-- Core 3rd-party JS -->
         <script type="text/javascript" src="/dev/_lib/jquery/jquery.js"></script>
+        <script type="text/javascript" src="/dev/_lib/jquery/jquery-ui.full.js"></script>
+        <script type="text/javascript" src="/dev/_lib/Fluid/3akai_Infusion.js"></script>
+        <script type="text/javascript" src="/dev/_lib/jquery/plugins/jquery.json.js"></script>
+        <script type="text/javascript" src="/dev/_lib/google/html-sanitizer-minified.js"></script>
+
+        <!-- Sakai Core JS -->
+        <script type="text/javascript" src="/dev/_lib/sakai_util/sakai_magic.js"></script>
+        <script type="text/javascript" src="/dev/_lib/sakai_util/i18n.js"></script>
+
+        <!-- 3rd party JS -->
+        <script type="text/javascript" src="/dev/_lib/sakai_util/trimpath.template.js"></script>
         <script type="text/javascript" src="/dev/_lib/sakai_util/querystring.js"></script>
+
         <script type="text/javascript" src="/dev/_tests/profiler/javascript/profiler.js"></script>
     </head>
     <body>
@@ -14,13 +34,30 @@
                 <input name="times" id="times" type="text" size="5">
                 <input type="button" id="pbutton" value="Load" />
             </form>
-            <div id="results">
+            <div id="loading" style="display:none;">
+                <img alt="loading" src="/dev/_images/ajax-loader-gray.gif" />
             </div>
+            <table id="results">
+            </table>
             <textarea id="csv" rows="24" cols="80">
             </textarea>
         </div>
         <div id="bottomPane">
             <iframe name="pframe" id="pframe" frameborder="0"></iframe>
         </div>
+<div id="results_template" style="display:none;"><!--
+    <tr>
+        <th>Event</th>
+        <th>Elapsed Time</th>
+        <th>Finished At</th>
+    </tr>
+    {for t in times}
+        <tr>
+          <td>${t.event}</td>
+          <td>${t.elapsed}ms</td>
+          <td>${t.at}ms</td>
+        </tr>
+    {/for}
+--></div>
     </body>
 </html>
