@@ -33,14 +33,16 @@ $(function(){
         $("#csv").val("");
         var csv = "";
         $.each(results, function(index, timings) {
-            var total = 0;
+            var totalElapsed = 0;
+            var totalAt = 0;
             csv += index;
             $.each(timings, function(n, time){
-                total = total + time;
-                csv += ", " + time;
+                totalElapsed += time.elapsed;
+                totalAt += time.at;
+                csv += ", " + time.elapsed;
             });
             csv += "\n";
-            $("#results").append(index + ": " + (total/timings.length).toFixed() + "ms<br />");
+            $("#results").append(index + ": " + (totalElapsed/timings.length).toFixed() + "ms @ " + (totalAt/timings.length).toFixed() + "ms<br />");
         });
         showCsvWithDebugText(csv);
     };
@@ -62,10 +64,11 @@ $(function(){
 
     var setResult = function(name, timeStarted, timeEnded){
         var elapsed = timeEnded - timeStarted;
+        var at = timeEnded - start;
         if (results[name] === undefined) {
             results[name] = [];
         }
-        results[name].push(elapsed);
+        results[name].push({"elapsed":elapsed, "at":at});
     };
 
     $(document).bind("sakai-profiler-done", function(e, data) {
