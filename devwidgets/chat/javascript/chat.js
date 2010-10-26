@@ -532,6 +532,8 @@ sakai.chat = function(tuid, showSettings){
         // Start polling regurarly to get new messages
         if (!loadNewMessagesTimer) {
 	        loadNewMessagesTimer = setInterval(checkNewMessages, loadNewMessagesInterval);
+
+            $(window).trigger("sakai-profiler", {"module": "loadWidget-chat", "code": "end"});
         }
     };
 
@@ -813,7 +815,6 @@ sakai.chat = function(tuid, showSettings){
             restoreChatWindows();
         });
     }
-    $(window).trigger("sakai-profiler", {"module": "loadWidget-chat", "code": "end"});
 };
 
 sakai.api.Widgets.widgetLoader.informOnLoad("chat");

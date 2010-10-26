@@ -2,6 +2,6 @@
 sakai = sakai || {};
 sakai.profiler = sakai.profiler || {};
 sakai.profiler.config = {
-    "my_sakai": ["i18n", "meService", "loadWidget-topnavigation", "loadWidget-entity", "loadWidget-creategroup", "loadWidget-fileupload", "loadWidget-dashboard", "loadWidget-footer", "loadWidget-chat", "loadWidget-mygroups", "loadWidget-mycontacts", "loadWidget-myprofile", "loadWidget-mycontent"],
+    "my_sakai": ["i18n", "meService", "loadWidget-topnavigation", "loadWidget-entity", "loadWidget-creategroup", "loadWidget-fileupload", "loadWidget-dashboard", "loadWidget-footer", "loadWidget-chat", "loadWidget-mygroups", "loadWidget-mycontacts", "loadWidget-myprofile", "loadWidget-mycontent", "loadWidget-changepic"],
     "show": ["i18n"]
 };

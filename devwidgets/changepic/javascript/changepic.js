@@ -500,6 +500,7 @@ sakai.changepic = function(tuid, showSettings){
     });
 
     $(window).trigger("sakai-changepic-ready");
+    $(window).trigger("sakai-profiler", {"module": "loadWidget-changepic", "code": "end"});
 };
 
 /**
