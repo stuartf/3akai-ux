@@ -18,6 +18,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 
 // Declare dependencies.
 /*global jQuery, YAHOO, opera*/
+$(window).trigger("sakai-profiler", {"module": "3akai-infusion", "code": "start"});
 
 var fluid_1_2 = fluid_1_2 || {};
 var fluid = fluid || fluid_1_2;
@@ -8168,3 +8169,5 @@ fluid_1_2 = fluid_1_2 || {};
         return fluid.reorderer(container, options);
     };    
 })(jQuery, fluid_1_2);
+
+$(window).trigger("sakai-profiler", {"module": "3akai-infusion", "code": "end"});

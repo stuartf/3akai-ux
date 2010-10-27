@@ -7,6 +7,8 @@
  *
  * http://docs.jquery.com/UI
  */
+$(window).trigger("sakai-profiler", {"module": "jquery-ui", "code": "start"});
+
 ;jQuery.ui || (function($) {
 
 //Helper functions and ui object
@@ -10969,3 +10971,4 @@ $.effects.transfer = function(o) {
 };
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-ui", "code": "end"});
