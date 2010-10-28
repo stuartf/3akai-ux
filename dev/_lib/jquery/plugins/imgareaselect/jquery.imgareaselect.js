@@ -10,7 +10,7 @@
  * http://odyniec.net/projects/imgareaselect/
  *
  */
-
+$(window).trigger("sakai-profiler", {"module": "jquery-ias", "code": "start"});
 (function($) {
 
 var abs = Math.abs,
@@ -711,3 +711,4 @@ $.fn.imgAreaSelect = function (options) {
 };
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-ias", "code": "end"});

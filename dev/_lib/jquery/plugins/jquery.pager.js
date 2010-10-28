@@ -29,6 +29,7 @@
 * modified by Oszkar Nagy (oszkar@caret.cam.ac.uk) for Sakai
 * modified by Simon Gaeremynck (sg555@caret.cam.ac.uk) for Sakai
 */
+$(window).trigger("sakai-profiler", {"module": "jquery-pager", "code": "start"});
 (function($) {
 
     $.fn.pager = function(options){
@@ -163,3 +164,4 @@
     };
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-pager", "code": "end"});

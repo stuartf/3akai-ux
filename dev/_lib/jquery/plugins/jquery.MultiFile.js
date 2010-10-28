@@ -8,7 +8,7 @@
  *   http://www.gnu.org/licenses/gpl.html
  ###
 */
-
+$(window).trigger("sakai-profiler", {"module": "jquery-multiFile", "code": "start"});
 /*# AVOID COLLISIONS #*/
 ;if(window.jQuery) (function($){
 /*# AVOID COLLISIONS #*/
@@ -547,3 +547,4 @@
 /*# AVOID COLLISIONS #*/
 })(jQuery);
 /*# AVOID COLLISIONS #*/
+$(window).trigger("sakai-profiler", {"module": "jquery-multiFile", "code": "end"});

@@ -5,6 +5,7 @@
 	License (Simplified BSD):
 	http://adamv.com/dev/javascript/qslicense.txt
 */
+$(window).trigger("sakai-profiler", {"module": "querystring", "code": "start"});
 function Querystring(qs) { // optionally pass a querystring to parse
 	this.params = {};
 	
@@ -38,3 +39,4 @@ Querystring.prototype.contains = function(key) {
 	var value = this.params[key];
 	return (value != null);
 }
+$(window).trigger("sakai-profiler", {"module": "querystring", "code": "end"});

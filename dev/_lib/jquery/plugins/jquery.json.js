@@ -22,7 +22,7 @@
  * to only parse the JSON if it is text. If it is already an object
  * it gets passed back as-is.
  */
-
+$(window).trigger("sakai-profiler", {"module": "jquery-json", "code": "start"});
 (function($) {
     /**
      * jQuery.toJSON( json-serializble )
@@ -120,3 +120,4 @@
     };
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-json", "code": "end"});

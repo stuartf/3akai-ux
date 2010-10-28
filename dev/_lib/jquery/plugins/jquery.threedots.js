@@ -188,6 +188,7 @@
 ******************************************************************************************************/
 
 
+$(window).trigger("sakai-profiler", {"module": "jquery-threedots", "code": "start"});
 (function($) {
 
 	/**********************************************************************************
@@ -647,3 +648,4 @@
 	}
 	
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-threedots", "code": "end"});

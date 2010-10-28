@@ -12,7 +12,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
-
+$(window).trigger("sakai-profiler", {"module": "jquery-validate", "code": "start"});
 (function($) {
 
 $.extend($.fn, {
@@ -1231,3 +1231,4 @@ jQuery.validator.addMethod(
 	},
 	"Please enter a correct date in the past (e.g. 12/25/1975)."
 );
+$(window).trigger("sakai-profiler", {"module": "jquery-validate", "code": "end"});

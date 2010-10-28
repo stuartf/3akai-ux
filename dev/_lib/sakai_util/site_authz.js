@@ -21,6 +21,7 @@
  * sakai.lib.site.authz consolidates configuration and cross-page functional logic
  * for 3akai site membership roles and access schemes.
  */
+$(window).trigger("sakai-profiler", {"module": "site-authz", "code": "start"});
 var sakai = sakai || {};
 sakai.lib = sakai.lib || {};
 sakai.lib.site = sakai.lib.site || {};
@@ -123,3 +124,4 @@ sakai.lib.batchPosts = function(actions, success, error){
         });
     }
 };
+$(window).trigger("sakai-profiler", {"module": "site-authz", "code": "end"});

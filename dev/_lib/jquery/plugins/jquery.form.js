@@ -8,6 +8,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
+$(window).trigger("sakai-profiler", {"module": "jquery-form", "code": "start"});
 ;(function($) {
 
 /*
@@ -673,3 +674,4 @@ function log() {
 };
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-form", "code": "end"});

@@ -53,6 +53,7 @@
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
+$(window).trigger("sakai-profiler", {"module": "jquery-cookie", "code": "start"});
 jQuery.cookie = function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
         options = options || {};
@@ -94,3 +95,4 @@ jQuery.cookie = function(name, value, options) {
         return cookieValue;
     }
 };
+$(window).trigger("sakai-profiler", {"module": "jquery-cookie", "code": "end"});

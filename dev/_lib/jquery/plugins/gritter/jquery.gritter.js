@@ -8,6 +8,7 @@
  * Date: December 1, 2009
  * Version: 1.6
  */
+$(window).trigger("sakai-profiler", {"module": "jquery-gritter", "code": "start"});
 (function($){
 
     /**
@@ -388,3 +389,4 @@
     }
 
 })(jQuery);
+$(window).trigger("sakai-profiler", {"module": "jquery-gritter", "code": "end"});
