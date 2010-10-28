@@ -30,6 +30,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+$(window).trigger("sakai-profiler", {"module": "trimpath", "code": "start"});
+
  if (typeof(TrimPath) == 'undefined')
      TrimPath = {};
 
@@ -396,3 +398,5 @@
         return TrimPath.parseDOMTemplate(elementId, optDocument, optEtc).process(context, optFlags);
     }
 }) ();
+
+$(window).trigger("sakai-profiler", {"module": "trimpath", "code": "end"});
