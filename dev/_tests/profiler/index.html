@@ -37,8 +37,8 @@
             <div id="loading" style="display:none;">
                 <img alt="loading" src="/dev/_images/ajax-loader-gray.gif" />
             </div>
-            <table id="results">
-            </table>
+            <div id="results">
+            </div>
             <textarea id="csv" rows="24" cols="80">
             </textarea>
         </div>
@@ -46,6 +46,7 @@
             <iframe name="pframe" id="pframe" frameborder="0"></iframe>
         </div>
 <div id="results_template" style="display:none;"><!--
+    <table>
     <tr>
         <th>Event</th>
         <th>Elapsed Time</th>
@@ -58,6 +59,7 @@
           <td>${t.at}ms</td>
         </tr>
     {/for}
+    </table>
 --></div>
     </body>
 </html>
