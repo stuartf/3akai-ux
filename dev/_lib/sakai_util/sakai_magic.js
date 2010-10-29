@@ -28,6 +28,7 @@
  * @description
  * Main sakai namespace. This is where all the initial namespaces should be defined
  */
+$(window).trigger("sakai-profiler", {"module": "sakai-magic", "code": "start"});
 var sakai = sakai || {};
 sakai.data = {};
 
@@ -4355,3 +4356,4 @@ sakai.api.autoStart = function() {
     });
 };
 sakai.api.autoStart();
+$(window).trigger("sakai-profiler", {"module": "sakai-magic", "code": "end"});

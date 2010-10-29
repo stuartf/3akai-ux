@@ -28,6 +28,7 @@
  * functions that can be used to localise times, dates and numbers throughout the
  * user interface.
  */
+$(window).trigger("sakai-profiler", {"module": "load-i18n", "code": "start"});
 (function($){
 
     $.L10N = {};
@@ -479,3 +480,4 @@ var SimpleDateFormat;
         return formattedString;
     };
 })();
+$(window).trigger("sakai-profiler", {"module": "load-i18n", "code": "end"});
