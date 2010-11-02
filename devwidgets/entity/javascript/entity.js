@@ -1146,6 +1146,6 @@ sakai.entity = function(tuid, showSettings){
             sakai.api.UI.entity.render("content", sakai.content_profile.content_data);
         }
     });
-
+    $(window).trigger("sakai-profiler", {"module": "loadWidget-entity", "code": "end"});
 };
 sakai.api.Widgets.widgetLoader.informOnLoad("entity");
