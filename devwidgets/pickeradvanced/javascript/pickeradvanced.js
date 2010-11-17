@@ -141,7 +141,7 @@ sakai.pickeradvanced = function(tuid, showSettings) {
         } else if (pickerData["type"] === "content") {
             $pickeradvanced_sort_on.hide();
             $pickeradvanced_search_files.show();
-            pickerData["searchIn"] = sakai.config.URL.POOLED_CONTENT_MANAGER.replace(".json", ".infinity.json") + "?page=0&items=12&_=&q=";
+            pickerData["searchIn"] = sakai.config.URL.SEARCH_ALL_FILES.replace(".json", ".infinity.json") + "?page=0&items=12&_=&q=";
         }
         $("ul.pickeradvanced_search_" + pickerData["type"]).show();
         $pickeradvanced_search_query.focus();
@@ -265,8 +265,10 @@ sakai.pickeradvanced = function(tuid, showSettings) {
                     if (rawData.results[i].profile) {
                         rawData.results[i] = rawData.results[i].profile;
                     }
-                    if ($.inArray(rawData.results[i].user, pickerlist) !== -1) {
-                        doAdd = false;
+                    if (pickerlist && pickerlist.length) {
+                        if ($.inArray(rawData.results[i].user, pickerlist) !== -1) {
+                            doAdd = false;
+                        }
                     }
                     if (rawData.results[i]['rep:userId'] && (rawData.results[i]['rep:userId'] === "admin" || rawData.results[i]['rep:userId'] === "anonymous")) {
                         doAdd = false;
@@ -474,6 +476,10 @@ sakai.pickeradvanced = function(tuid, showSettings) {
                break;
            case "groups_manager":
                searchURL = sakai.config.URL.GROUPS_MANAGER;
+               $pickeradvanced_sort_on.hide();
+               break;
+           case "files_all":
+               searchURL = sakai.config.URL.SEARCH_ALL_FILES.replace(".json", ".infinity.json");
                $pickeradvanced_sort_on.hide();
                break;
            case "files_mine":
