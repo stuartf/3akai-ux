@@ -15,7 +15,7 @@
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-/*global $, Config */
+/*global $ */
 
 var sakai = sakai || {};
 
@@ -514,7 +514,7 @@ sakai.sitemembers = function(tuid, showSettings){
      */
     var getContacts = function(){
         $.ajax({
-            url: sakai.config.URL.FRIEND_ACCEPTED_SERVICE,
+            url: sakai.config.URL.CONTACTS_FIND + "?state=ACCEPTED",
             success: function(data){
                 if (data.results) {
                     contacts = data.results;
@@ -522,7 +522,7 @@ sakai.sitemembers = function(tuid, showSettings){
                 }
             },
             error: function(xhr, textStatus, thrownError) {
-                alert("An error occured");
+                sakai.api.Util.notification.show(sakai.api.i18n.General.getValueForKey("AN_ERROR_HAS_OCCURRED"),"",sakai.api.Util.notification.type.ERROR);
             }
         });
     };
@@ -649,7 +649,7 @@ sakai.sitemembers = function(tuid, showSettings){
                 closeSettings();
             }
             else {
-                alert("Failed to save settings");
+                sakai.api.Util.notification.show(sakai.api.i18n.General.getValueForKey("FAILED_SAVE_SETTINGS"),"",sakai.api.Util.notification.type.ERROR);
             }
 
         });

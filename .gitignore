@@ -5,3 +5,5 @@
 nginx.*
 /dev-i
 .DS_Store
+*.swp
+/tests/speed/yslow/yslow_results.txt

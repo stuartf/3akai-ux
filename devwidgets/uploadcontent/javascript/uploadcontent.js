@@ -221,7 +221,7 @@ sakai.uploadcontent = function(tuid, showSettings){
         $uploadcontent_form_content.attr("action", defaultposturl.substr(0, defaultposturl.length -1));
         $uploadcontent_form_content.ajaxForm({
             beforeSubmit: function(a,f,o) {
-                $('#uploadOutput').html('Submitting...');
+                $('#uploadOutput').html(sakai.api.i18n.General.getValueForKey("SUBMITTING") + '...');
             },
             clearForm:true,
             success: function(data) {
@@ -261,7 +261,7 @@ sakai.uploadcontent = function(tuid, showSettings){
         if(!data || typeof data !== "object"){
 
             // If the parameters aren't valid, log an error message
-            fluid.log("Upload Content widget - sakai.uploadcontent.init - the supplied data parameter is invalid: '" + data + "'");
+            debug.warn("Upload Content widget - sakai.uploadcontent.init - the supplied data parameter is invalid: '" + data + "'");
 
             // Quit the execution of this function
             return;
@@ -285,7 +285,8 @@ sakai.uploadcontent = function(tuid, showSettings){
         // Initialise the jqModal
         $uploadcontent_dialog.jqm({
             modal: true,
-            toTop: true
+            toTop: true,
+            zIndex: 5000
         });
 
         // Render the templates

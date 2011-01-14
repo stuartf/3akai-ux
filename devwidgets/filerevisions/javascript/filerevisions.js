@@ -20,6 +20,12 @@
 
 var sakai = sakai || {};
 
+/**
+ * @name sakai.filerevisions
+ *
+ * @param {String} tuid Unique id of the widget
+ * @param {Boolean} showSettings Show the settings of the widget or not
+ */
 sakai.filerevisions = function(tuid, showSettings){
 
 
@@ -40,25 +46,11 @@ sakai.filerevisions = function(tuid, showSettings){
     var filerevisionsCloseButton = "#filerevisions_close";
 
     /**
-     * Convert given date object to readable date string
-     * @param {Object} date Date object
-     */
-    sakai.filerevisions.getFormattedDate = function(date){
-        date = new Date(date);
-        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-        var day = date.getDate();
-        var month = months[date.getMonth()];
-        var year = date.getFullYear();
-        var formattedDate = day + " " + month + " " + year;
-        return formattedDate;
-    };
-
-    /**
      * Render the template that displays all revision information
      */
     var renderRevisionData = function(){
         var data = [];
-        baseFileData.created = sakai.filerevisions.getFormattedDate(new Date(baseFileData.data["jcr:created"]));
+        baseFileData.created = sakai.api.l10n.transformDate(new Date(baseFileData.data["jcr:created"]));
         data.data = baseFileData;
         data.linkrevision = $("#content_profile_details_view_revisions").hasClass("link_revision");
 
@@ -92,12 +84,14 @@ sakai.filerevisions = function(tuid, showSettings){
      */
     var getRevisionInformationDetails = function(){
         var revisionInformationDetails = [];
-        for (i in baseFileData.revisions) {
-            var item = {
-                "url": baseFileData.path + ".version.," + baseFileData.revisions[i]["jcr:name"] + ",.json",
-                "method": "GET"
-            };
-            revisionInformationDetails[revisionInformationDetails.length] = item;
+        for (var i in baseFileData.versions.versions) {
+            if (baseFileData.versions.versions.hasOwnProperty(i)) {
+                var item = {
+                    "url": "/p/" + baseFileData.data["jcr:name"] + ".version.," + baseFileData.versions.versions[i]["jcr:name"] + ",.json",
+                    "method": "GET"
+                };
+                revisionInformationDetails[revisionInformationDetails.length] = item;
+            }
         }
         baseFileData.numberOfRevisions = revisionInformationDetails.length;
         // Do the Batch request
@@ -105,7 +99,7 @@ sakai.filerevisions = function(tuid, showSettings){
             url: sakai.config.URL.BATCH,
 
             type : "POST",
-            dataType: 'json',
+            dataType: "JSON",
             cache: false,
             data: {
                 requests: $.toJSON(revisionInformationDetails)
@@ -113,6 +107,7 @@ sakai.filerevisions = function(tuid, showSettings){
             success: function(data){
                 // Get file information out of results
                 var revisionFileDetails = [];
+                data = $.parseJSON(data);
                 for (var i in data.results){
                     if (data.results.hasOwnProperty(i)) {
                         revisionFileDetails.push($.parseJSON(data.results[i].body));
@@ -132,39 +127,28 @@ sakai.filerevisions = function(tuid, showSettings){
     };
 
     /**
-     * Get the revision information on the specified file
-     */
-    var getRevisionInformation = function(){
-        $.ajax({
-            url: baseFileData.path + ".versions.json",
-            type : "GET",
-            success: function(data){
-                var versions = [];
-                for (var i in data.versions){
-                    if (data.versions.hasOwnProperty(i)) {
-                        var splittedDate = data.versions[i]["jcr:created"].split("T")[0].split("-");
-                        data.versions[i]["jcr:created"] = sakai.filerevisions.getFormattedDate(new Date(splittedDate[0],splittedDate[1]-1,splittedDate[2]));
-                        versions.push(data.versions[i]);
-                    }
-                }
-
-                baseFileData.revisions = versions.reverse();
-                getRevisionInformationDetails();
-            },
-            error: function(){
-                sakai.api.Util.notification.show("Revision information not retrieved", "The revision information for the file could not be retrieved");
-            }
-        });
-    };
-
-    /**
      * Load the file revisions widget with the appropriate data
      * This function can be called from anywhere within Sakai
      * @param {Object} data Contains data needed to call all revisions for the file
      */
     sakai.filerevisions.initialise = function(data){
+        // position dialog box at users scroll position
+        var htmlScrollPos = $("html").scrollTop();
+        var docScrollPos = $(document).scrollTop();
+
+        if (htmlScrollPos > 0) {
+            $fileRevisionsDialog.css({
+                "top": htmlScrollPos + 100 + "px"
+            });
+        }
+        else if (docScrollPos > 0) {
+            $fileRevisionsDialog.css({
+                "top": docScrollPos + 100 + "px"
+            });
+        }
+ 
         baseFileData = data;
-        getRevisionInformation();
+        getRevisionInformationDetails();
         $fileRevisionsDialog.jqmShow();
     };
 

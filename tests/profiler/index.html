@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>JS Profiler</title>
+        <link rel="stylesheet" type="text/css" href="/tests/profiler/css/profiler.css" />
+
+        <!-- Sakai profiler & jquery -->
+        <script type="text/javascript" src="/dev/lib/jquery/jquery.js"></script>
+        <script type="text/javascript" src="/dev/configuration/profiler.json"></script>
+        <script type="text/javascript" src="/dev/javascript/sakai.performance.js"></script>
+
+        <!-- Sakai Config JS -->
+        <script type="text/javascript" src="/dev/configuration/widgets.js"></script>
+        <script type="text/javascript" src="/var/widgets.json?callback=sakai.storeWidgets"></script>
+        <script type="text/javascript" src="/dev/configuration/config.js"></script>
+        <script type="text/javascript" src="/dev/configuration/config_custom.js"></script>
+
+        <!-- Core 3rd-party JS -->
+        <script type="text/javascript" src="/dev/lib/jquery/jquery-ui.full.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.validate.sakai-edited.js"></script>
+        <script type="text/javascript" src="/dev/lib/fluid/3akai_Infusion.js"></script>
+        <script type="text/javascript" src="/dev/lib/misc/l10n/globalization.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.json.js"></script>
+        <script type="text/javascript" src="/dev/lib/misc/google/html-sanitizer-minified.js"></script>
+
+        <!-- Sakai Core JS -->
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.core.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.util.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.i18n.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.l10n.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.user.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.widgets.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.groups.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.communication.js"></script>
+        <script type="text/javascript" src="/dev/lib/sakai/sakai.api.content.js"></script>
+
+        <!-- 3rd party JS -->
+        <script type="text/javascript" src="/dev/lib/misc/trimpath.template.js"></script>
+        <script type="text/javascript" src="/dev/lib/misc/querystring.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jqmodal.sakai-edited.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.cookie.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.pager.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.threedots.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/imgareaselect/jquery.imgareaselect.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.form.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/jquery.MultiFile.js"></script>
+        <script type="text/javascript" src="/dev/lib/jquery/plugins/gritter/jquery.gritter.js"></script>
+
+        <script type="text/javascript" src="/tests/profiler/javascript/profiler.js"></script>
+    </head>
+    <body>
+        <div id="topPane">
+            <form name="pform">
+                <input name="url" id="url" type="text" size="20">
+                <input name="times" id="times" type="text" size="5">
+                <input type="button" id="pbutton" value="Load" />
+            </form>
+            <div id="loading" style="display:none;">
+                <img alt="loading" src="/dev/images/ajax-loader-gray.gif" />
+            </div>
+            <div id="results">
+            </div>
+            <textarea id="csv" rows="24" cols="80">
+            </textarea>
+        </div>
+        <div id="bottomPane">
+            <iframe name="pframe" id="pframe" frameborder="0"></iframe>
+        </div>
+<div id="results_template" style="display:none;"><!--
+    <table>
+    <tr>
+        <th>Event</th>
+        <th>Elapsed Time</th>
+        <th>Finished At</th>
+    </tr>
+    {for t in times}
+        <tr>
+          <td>${t.event}</td>
+          <td>${t.elapsed}ms</td>
+          <td>${t.at}ms</td>
+        </tr>
+    {/for}
+    </table>
+--></div>
+    </body>
+</html>

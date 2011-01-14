@@ -1,7 +1,0 @@
-// A list of pages to profile. my_sakai.html would be my_sakai
-var sakai = sakai || {};
-sakai.profiler = sakai.profiler || {};
-sakai.profiler.config = {
-    "my_sakai": ["i18n", "meService", "loadWidget-topnavigation", "loadWidget-entity", "loadWidget-creategroup", "loadWidget-fileupload", "loadWidget-dashboard", "loadWidget-footer", "loadWidget-chat", "loadWidget-mygroups", "loadWidget-mycontacts", "loadWidget-myprofile", "loadWidget-mycontent", "loadWidget-changepic", "3akai-infusion", "jquery-ui", "trimpath", "jquery-validate", "jquery-json", "html-sanitizer", "site-authz", "querystring", "jqmodal", "jquery-cookie", "jquery-pager", "jquery-threedots", "fluid-progressive", "jquery-ias", "jquery-form", "jquery-multiFile", "jquery-gritter", "load-i18n", "sakai-magic"],
-    "show": ["i18n"]
-};

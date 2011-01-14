@@ -16,9 +16,57 @@
  * specific language governing permissions and limitations under the License.
  */
 
-/*global , opensocial, Config, window, alert, $ */
+/*global $ */
 
 var sakai = sakai || {};
+
+var AIM = {
+
+    frame : function(c) {
+        var n = 'f' + Math.floor(Math.random() * 99999);
+        var d = document.createElement('DIV');
+        d.innerHTML = '<iframe style="display:none" src="about:blank" id="'+n+'" name="'+n+'" onload="AIM.loaded(\''+n+'\')"></iframe>';
+        document.body.appendChild(d);
+
+        var i = document.getElementById(n);
+        if (c && typeof(c.onComplete) === 'function') {
+            i.onComplete = c.onComplete;
+        }
+        return n;
+    },
+
+    form : function(f, name) {
+        f.setAttribute('target', name);
+    },
+
+    submit : function(f, c) {
+        AIM.form(f, AIM.frame(c));
+        if (c && typeof(c.onStart) === 'function') {
+            return c.onStart();
+        } else {
+            return true;
+        }
+    },
+
+    loaded : function(id) {
+        var i = document.getElementById(id);
+        var d = null;
+        if (i.contentDocument) {
+            d = i.contentDocument;
+        } else if (i.contentWindow) {
+            d = i.contentWindow.document;
+        } else {
+            d = window.frames[id].document;
+        }
+        if (d.location.href === "about:blank") {
+            return;
+        }
+
+        if (typeof(i.onComplete) === 'function') {
+            i.onComplete(d.body.innerHTML);
+        }
+    }
+};
 
 sakai.api.UI.changepic = sakai.api.UI.changepic || {};
 /**
@@ -85,6 +133,7 @@ sakai.changepic = function(tuid, showSettings){
     var thumbnailContainer = "#thumbnail_container";
     var profilePicture = "#profilepicture";
     var fileName = false;
+    var existingPicture = false;
 
     // An array with selectors pointing to images that need to be changed.
     var imagesToChange = ["#picture_holder img", "#entity_profile_picture", "#myprofile_pic", "#chat_available_me .chat_available_image img", "#profile_userinfo_picture"];
@@ -184,6 +233,8 @@ sakai.changepic = function(tuid, showSettings){
     // Since file upload form is reset every time overlay closes do this in init function
     $("#changepic_container .jqmClose").click(function(){
         resetUploadField();
+        // hide any tooltips if they are open
+        $(window).trigger("sakai-tooltip-close");
     });
 
     /**
@@ -193,7 +244,7 @@ sakai.changepic = function(tuid, showSettings){
     $(picForm).submit(function () {
         // validate args
         // file extension allow for image
-        var extensionArray = new Array(".png", ".jpg", ".jpeg",".gif");
+        var extensionArray = [".png", ".jpg", ".jpeg",".gif"];
         // get file name
         fileName = $(picInput).val();
         // get extension from the file name.
@@ -283,6 +334,7 @@ sakai.changepic = function(tuid, showSettings){
             // The user has already uploaded a picture.
             // Show the edit tab.
             // Show tab in header
+            existingPicture = true;
             $(tabSelect).show();
 
             // Set the unvisible image to the full blown image. (make sure to filter the # out)
@@ -359,6 +411,14 @@ sakai.changepic = function(tuid, showSettings){
             });
             showSelectTab();
 
+            // display help tooltip
+            var tooltipData = {
+                "tooltipSelector":"#save_new_selection",
+                "tooltipTitle":"TOOLTIP_ADD_MY_PHOTO",
+                "tooltipDescription":"TOOLTIP_ADD_MY_PHOTO_P4",
+                "tooltipArrow":"bottom"
+            };
+            $(window).trigger("sakai-tooltip-update", tooltipData);
         }
         else {
             // The user hasn't uploaded a picture yet.
@@ -370,7 +430,15 @@ sakai.changepic = function(tuid, showSettings){
 
     // Remove error notification when a new file is chosen
     $("#profilepicture").bind("change", function(){
-        $("#changepic_nofile_error").hide(); 
+        $("#changepic_nofile_error").hide();
+        // display help tooltip
+        var tooltipData = {
+            "tooltipSelector":"#profile_upload",
+            "tooltipTitle":"TOOLTIP_ADD_MY_PHOTO",
+            "tooltipDescription":"TOOLTIP_ADD_MY_PHOTO_P3",
+            "tooltipArrow":"bottom"
+        };
+        $(window).trigger("sakai-tooltip-update", tooltipData);
     });
 
     // This is the function that will be called when a user has cut out a selection
@@ -436,18 +504,34 @@ sakai.changepic = function(tuid, showSettings){
                             $(imagesToChange[i]).attr("src", "/~" + id + "/public/profile/" + tosave.name + "?sid=" + Math.random());
                         }
 
+                        // display help tooltip
+                        var tooltipData = {
+                            "tooltipSelector":"#systemtour_add_photo",
+                            "tooltipTitle":"TOOLTIP_ADD_MY_PHOTO",
+                            "tooltipDescription":"TOOLTIP_ADD_MY_PHOTO_P5",
+                            "tooltipArrow":"top",
+                            "tooltipTop":25,
+                            "tooltipLeft":40,
+                            "tooltipAutoClose":true
+                        };
+                        $(window).trigger("sakai-tooltip-update", tooltipData);
+
                         // Hide the layover.
                         $(container).jqmHide();
 
+                        if (mode !== "group") {
+                            // record that user uploaded their profile picture
+                            sakai.api.User.addUserProgress("uploadedProfilePhoto");
+                        }
                     },
                     error: function(xhr, textStatus, thrownError) {
-                        alert("An error has occured");
+                        sakai.api.Util.notification.show(sakai.api.i18n.General.getValueForKey("AN_ERROR_HAS_OCCURRED"),"",sakai.api.Util.notification.type.ERROR);
                     }
                 });
 
             },
             error: function(xhr, textStatus, thrownError) {
-                alert("An error has occured");
+                sakai.api.Util.notification.show(sakai.api.i18n.General.getValueForKey("AN_ERROR_HAS_OCCURRED"),"",sakai.api.Util.notification.type.ERROR);
             }
         });
 
@@ -463,7 +547,6 @@ sakai.changepic = function(tuid, showSettings){
      * @param {Object} hash the object that represents the layover
      */
     var hideArea = function(hash){
-
         // Remove the selecting of an area on an image.
         if (imageareaobject) {
             imageareaobject.setOptions({
@@ -484,6 +567,16 @@ sakai.changepic = function(tuid, showSettings){
     var showArea = function(hash){
         sakai.changepic.doInit();
         hash.w.show();
+        if (!existingPicture) {
+            // display help tooltip
+            var tooltipData = {
+                "tooltipSelector": "#profilepicture",
+                "tooltipTitle": "TOOLTIP_ADD_MY_PHOTO",
+                "tooltipDescription": "TOOLTIP_ADD_MY_PHOTO_P2",
+                "tooltipArrow": "top"
+            };
+            $(window).trigger("sakai-tooltip-update", tooltipData);
+        }
     };
 
     // This will make the widget popup as a layover.
@@ -518,55 +611,6 @@ sakai.changepic.completeCallback = function(response){
 
     // we have saved the profile, now do the widgets other stuff.
     sakai.changepic.doInit(true);
-};
-
-
-var AIM = {
-
-    frame : function(c) {
-        var n = 'f' + Math.floor(Math.random() * 99999);
-        var d = document.createElement('DIV');
-        d.innerHTML = '<iframe style="display:none" src="about:blank" id="'+n+'" name="'+n+'" onload="AIM.loaded(\''+n+'\')"></iframe>';
-        document.body.appendChild(d);
-
-        var i = document.getElementById(n);
-        if (c && typeof(c.onComplete) === 'function') {
-            i.onComplete = c.onComplete;
-        }
-        return n;
-    },
-
-    form : function(f, name) {
-        f.setAttribute('target', name);
-    },
-
-    submit : function(f, c) {
-        AIM.form(f, AIM.frame(c));
-        if (c && typeof(c.onStart) === 'function') {
-            return c.onStart();
-        } else {
-            return true;
-        }
-    },
-
-    loaded : function(id) {
-        var i = document.getElementById(id);
-        var d = null;
-        if (i.contentDocument) {
-            d = i.contentDocument;
-        } else if (i.contentWindow) {
-            d = i.contentWindow.document;
-        } else {
-            d = window.frames[id].document;
-        }
-        if (d.location.href === "about:blank") {
-            return;
-        }
-
-        if (typeof(i.onComplete) === 'function') {
-            i.onComplete(d.body.innerHTML);
-        }
-    }
 };
 
 sakai.api.Widgets.widgetLoader.informOnLoad("changepic");
