@@ -5,9 +5,8 @@ sakai.performance = function() {
     sakai.performance.results = sakai.performance.results || {};
 
     // show.html is the only one that doen't show itself in the window.location.pathname
-    var page = window.location.pathname.split("/dev/").length > 1 ?
-        window.location.pathname.split("/dev/")[1].split(".html")[0] :
-        "show";
+    var page = document.location.pathname.replace(/^\/dev\/(.*).html$/, "$1");
+    page.length > 1 ? page : "show";
 
     sakai.performance.timestamp = function(ev, code) {
         var now = new Date().getTime();
