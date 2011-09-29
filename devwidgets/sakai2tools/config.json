@@ -1,5 +1,5 @@
 {
-    "sakaidocs": false,
+    "sakaidocs": true,
     "ca":true,
     "hasSettings": false,
     "id":"sakai2tools",

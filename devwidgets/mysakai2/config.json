@@ -12,7 +12,7 @@
         }
     },
     "id":"mysakai2",
-    "personalportal":false,
+    "personalportal":true,
     "type":"sakai",
     "enabled":true,
     "hasSettings":false,
