@@ -58,8 +58,14 @@ define(
                     req["parameters"]["_charset_"] = "utf-8";
                 }
             });
+            // Don't submit a request when the batch is empty
+            if (_requests.length === 0) {
+                if ($.isFunction(_callback)) {
+                    _callback(true, {"results": []});
+                }
+            }
             // Don't issue a batch request for a single, cacheable request
-            if (_requests.length === 1) {
+            else if (_requests.length === 1) {
                 $.ajax({
                     url: _requests[0].url,
                     type: _requests[0].method || "GET",
@@ -77,6 +83,15 @@ define(
                         };
                         if ($.isFunction(_callback)) {
                             _callback(true, retObj);
+                        }
+                    },
+                    error: function(status){
+                        if ($.isFunction(_callback)) {
+                            _callback(false, {"results": [{
+                                "url": _requests[0].url,
+                                "success": false,
+                                "body": "{}"
+                            }]});
                         }
                     }
                 });

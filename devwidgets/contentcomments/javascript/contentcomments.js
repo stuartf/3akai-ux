@@ -129,6 +129,8 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
         var contentcommentsMainContainerTextarea = contentcommentsOutputContainer + " textarea";
         var contentcommentsTitlebar = contentcomments + "_titlebar";
 
+        var contentcomments_userCommentContainer_template = "#contentcomments_userCommentContainer_template";
+
         ////////////////////////
         // Utility  functions //
         ////////////////////////
@@ -142,20 +144,6 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
             str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             str = str.replace(/\n/g, '<br />');
             return str;
-        };
-
-        /**
-         * Show the users profile picture
-         */
-        var displayUserProfilePicture = function(){
-            if (me.profile) {
-                var profile = me.profile;
-                var picture = sakai.api.Util.constructProfilePicture(profile);
-                if (!picture) {
-                    picture = sakai.config.URL.USER_DEFAULT_ICON_URL;
-                }
-                $("#contentcomments_userProfileAvatarPicture", rootel).attr("src", picture);
-            }
         };
 
         /**
@@ -206,34 +194,21 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
                 comment["sakai:id"] = comment.commentId.substring((comment.commentId.lastIndexOf("/") + 1),comment.commentId.length);
 
                 var user = {};
+                user.pictureUrl = sakai.config.URL.USER_DEFAULT_ICON_URL;
                 // User
                 // Puts the userinformation in a better structure for trimpath
                 if (comment.userid) {
                     if (contentData.isManager){
                         comment.canDelete = true;
                     }
-                    var profile = comment;
-                    user.fullName = sakai.api.User.getDisplayName(profile);
-                    user.uid = profile.userid;
-                    user.pictureUrl = sakai.config.URL.USER_DEFAULT_ICON_URL;
+                    user.fullName = sakai.api.User.getDisplayName(comment);
+                    user.uid = comment.userid;
                     // Check if the user has a picture
-                    var pictureUrl = sakai.api.Util.constructProfilePicture(profile);
+                    var pictureUrl = sakai.api.Util.constructProfilePicture(comment);
                     if (pictureUrl){
                         user.pictureUrl = pictureUrl;
                     }
                     user.profile = "/~" + sakai.api.Util.safeURL(user.uid);
-                }
-                else {
-                    // This is an anonymous user.
-                    comment.profile = {};
-                    comment.profile.fullName = "Anonymous";
-                    comment.profile.email = "noreply@sakaiproject.org";
-                    if (widgetSettings["sakai:forcename"] === true) {
-                        comment.profile.fullName = comment['sakai:name'];
-                    }
-                    if (widgetSettings["sakai:forcemail"] === true) {
-                        comment.profile.email = comment['sakai:email'];
-                    }
                 }
 
                 comment.user = user;
@@ -284,7 +259,6 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
             }
 
             var url = "/p/" + contentData.data["_path"] + ".comments?sortOn=" + sortOn + "&sortOrder=" + sortOrder + "&page=" + (clickedPage - 1) + "&items=" + items;
-
             $.ajax({
                 url: url,
                 cache: false,
@@ -365,6 +339,9 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
                             if (success) {
                                 // update the entity widget with the new activity
                                 $(window).trigger("updateContentActivity.entity.sakai", "CONTENT_ADDED_COMMENT");
+                                if (!rootel.parents(".collectionviewer_collection_item_comments").length){
+                                    $(window).trigger("sakai.entity.updatecountcache", {increment: true});
+                                }
                             }
                         });
                         // Get the contentcomments.
@@ -580,9 +557,10 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
                 type: 'DELETE',
                 success: function(){
                     getComments();
+                    $(window).trigger("sakai.entity.updatecountcache", {increment: false});
                 },
                 error: function(xhr, textStatus, thrownError){
-                    sakai.api.Util.notification.show(sakai.api.i18n.getValueForKey("FAILED_TO_DELETE"),"",sakai.api.Util.notification.type.ERROR);
+                    sakai.api.Util.notification.show(sakai.api.i18n.getValueForKey("FAILED_TO_DELETE", "contentcomments"), "", sakai.api.Util.notification.type.ERROR);
                 }
             });
         };
@@ -607,13 +585,13 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
          * @param {Boolean} showSettings Show the settings of the widget or not
          */
         var doInit = function(){
-            addBinding();
             // Temporarily set these here, always allowing comments
+            //contentData.data = contentData.data || {};
             contentData.data["sakai:showcontentcomments"] = true;
             contentData.data["sakai:allowcontentcomments"] = true;
             $(contentcommentsEditorOptions, rootel).hide();
             if (sakai_global.content_profile && contentData){
-                contentPath = "/p/" + contentData.path.split("/")[2];
+                contentPath = "/p/" + contentData.data["_path"];
 
                 // check if contentcomments are allowed or shown and display the checkbox options for the manager
                 if (contentData.isManager){
@@ -638,7 +616,8 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
             }
             if (!showSettings) {
                 // Show the main view.
-                displayUserProfilePicture();
+                var picture = sakai.api.Util.constructProfilePicture(me.profile);
+                sakai.api.Util.TemplateRenderer("#contentcomments_userCommentContainer_template", {picture: picture}, $(contentcommentsUserCommentContainer, rootel));
                 $(contentcommentsSettingsContainer, rootel).hide();
                 $(contentcommentsOutputContainer, rootel).show();
                 var isLoggedIn = (me.user.anon && me.user.anon === true) ? false : true;
@@ -646,22 +625,33 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/content_profile.js"]
                     $(contentcommentsUserCommentContainer, rootel).hide();
                 }
             }
+            addBinding();
             checkCommentsPermissions(true);
         };
 
-        $(window).bind("ready.contentprofile.sakai", function(ev, data) {
-            contentData = data || sakai_global.content_profile.content_data;
-            doInit();
-        });
+        if (!rootel.parents(".collectionviewer_collection_item_comments").length){
+            $(window).bind("ready.contentprofile.sakai", function(ev, data) {
+                contentData = data || sakai_global.content_profile.content_data;
+                if (contentData) {
+                    doInit();
+                }
+            });
 
-        // listen for event if new content profile is loaded
-        $(window).bind("content_profile_hash_change", function(ev, data){
-            contentData = data || sakai_global.content_profile.content_data;
-            doInit();
-        });
+            // listen for event if new content profile is loaded
+            $(window).bind("content_profile_hash_change", function(ev, data){
+                contentData = data || sakai_global.content_profile.content_data;
+                if (contentData) {
+                    doInit();
+                }
+            });
+        } else {
+            $(window).bind("start.collectioncomments.sakai", function(ev, data){
+                contentData = data;
+                doInit();
+            });
+        }
 
         $(window).trigger("content_profile_hash_change");
-
     };
 
     sakai.api.Widgets.widgetLoader.informOnLoad("contentcomments");

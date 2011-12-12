@@ -111,7 +111,7 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/search_util.js"], fu
          * initiate an infinite scroll for each search
          */
         var doSearch = function(){
-            var params = sakai_global.data.search.getQueryParams();
+            var params = sakai_global.data.search.getQueryParams($rootel);
             var urlsearchterm = sakai_global.data.search.processSearchString(params);
 
             // Set all the input fields and paging correct.
@@ -136,12 +136,15 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/search_util.js"], fu
                 "sortOrder": params["sortby"]
             }, function(items, total){
                 // Adjust display global total
-                $(searchConfig.global.numberFound, $rootel).text("" + total);
+                $(searchConfig.global.numberFound, $rootel).text("" + (total || 0));
                 return sakai.api.Util.TemplateRenderer(searchConfig.results.template, {
                     "items": items,
                     "sakai": sakai
                 });
-            }, handleEmptyResultList, sakai.config.URL.INFINITE_LOADING_ICON, renderResults, false, function(data){
+            }, handleEmptyResultList, sakai.config.URL.INFINITE_LOADING_ICON, renderResults, function(){
+                // Initialize content draggable
+                sakai.api.Util.Draggable.setupDraggable({}, $(searchConfig.results.container));
+            }, false, function(data){
                 // Generate refine by tags
                 sakai_global.data.search.generateTagsRefineBy(data, params);
             });

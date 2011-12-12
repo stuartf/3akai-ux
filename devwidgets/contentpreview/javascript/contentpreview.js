@@ -40,6 +40,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
      */
     sakai_global.contentpreview = function(tuid,showSettings){
 
+        var $rootel = $("#" + tuid);
         var obj = {};
         obj.type = "showpreview";
         var contentData = {};
@@ -54,6 +55,8 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
             var user = contentData.data["_bodyLastModifiedBy"];
             if (user === "admin") {
                 user = contentData.data["sakai:pool-content-created-for"];
+            } else if (!user) {
+                user = contentData.data["_lastModifiedBy"];
             }
             sakai.api.User.getUser(user, function(success, userdata){
                 var mimeType = sakai.api.Content.getMimeType(contentData.data);
@@ -71,7 +74,10 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
                 }
                 obj.sakai = sakai;
                 obj.contentData = contentData;
-                sakai.api.Util.TemplateRenderer("contentpreview_widget_main_template", obj, $("#contentpreview_widget_main_container"));
+                if(sakai_global.content_profile.content_data.data.mimeType !== "x-sakai/collection"){
+                    $(".collectionviewer_widget .collectionviewer_collection_item_preview").remove();
+                }
+                sakai.api.Util.TemplateRenderer("contentpreview_widget_main_template", obj, $("#contentpreview_widget_main_container", $rootel));
                 if (callback) {
                     callback();
                 }
@@ -79,30 +85,43 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
         };
 
         var renderFullSizePreview = function(){
-            var fullSizeContainer = $("#contentpreview_fullsize_preview");
-            sakai.api.Util.TemplateRenderer($("#contentpreview_fullsize_template"), {}, fullSizeContainer);
-            sakai.api.Widgets.widgetLoader.insertWidgets(fullSizeContainer, false, false, [{cpFullSizePreview:contentData}]);
+            var fullSizeContainer = $("#contentpreview_fullsize_preview", $rootel);
+            var tuid = sakai.api.Util.generateWidgetId();
+            var data = {};
+            data[tuid] = contentData;
+            sakai.api.Util.TemplateRenderer($("#contentpreview_fullsize_template", $rootel), {tuid: tuid}, fullSizeContainer);
+            sakai.api.Widgets.widgetLoader.insertWidgets(fullSizeContainer, false, false, [data]);
         };
 
         var hidePreview = function(){
-            $("#contentpreview_widget_main_container").html("");
-            $("#contentpreview_image_preview").html("");
+            $("#contentpreview_widget_main_container", $rootel).html("");
+            $("#contentpreview_image_preview", $rootel).html("");
         };
 
-        $(window).bind("start.contentpreview.sakai", function(ev, data){
-            contentData = data;
-            determineDataType();
-        });
+        if (!$rootel.parents(".collectionviewer_collection_item_preview").length){
+            $(window).bind("start.contentpreview.sakai", function(ev, data){
+                contentData = data;
+                determineDataType();
+            });
 
-        $(window).bind("updated.version.content.sakai",function() {
-            determineDataType();
-        });
+            $(window).bind("updated.version.content.sakai",function() {
+                determineDataType();
+            });
 
-        // Indicate that the widget has finished loading
-        sakai_global.contentpreview.isReady = true;
-        $(window).trigger("ready.contentpreview.sakai", {});
+            // Indicate that the widget has finished loading
+            sakai_global.contentpreview.isReady = true;
+            $(window).trigger("ready.contentpreview.sakai", {});
+        } else {
+            $(window).bind("start.collectioncontentpreview.sakai", function(ev, data) {
+                contentData = {data: data};
+                determineDataType();
+            });
 
+            // Indicate that the widget has finished loading
+            sakai_global.contentpreview.isReady = true;
+            $(window).trigger("ready.collectioncontentpreview.sakai");
+        }
     };
-    
+
     sakai.api.Widgets.widgetLoader.informOnLoad("contentpreview");
 });

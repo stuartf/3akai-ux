@@ -147,7 +147,7 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/search_util.js"], fu
          * initiate an infinite scroll for each search
          */
         var doSearch = function(){
-            var params = sakai_global.data.search.getQueryParams();
+            var params = sakai_global.data.search.getQueryParams($rootel);
             var urlsearchterm = sakai_global.data.search.processSearchString(params);
 
             var facetedurl = "";
@@ -195,7 +195,7 @@ require(["jquery", "sakai/sakai.api.core", "/dev/javascript/search_util.js"], fu
                     "items": items,
                     "sakai": sakai
                 });
-            }, handleEmptyResultList, sakai.config.URL.INFINITE_LOADING_ICON, renderResults, false, function(data){
+            }, handleEmptyResultList, sakai.config.URL.INFINITE_LOADING_ICON, renderResults, false, false, function(data){
                 // Generate refine by tags
                 sakai_global.data.search.generateTagsRefineBy(data, params);
             });

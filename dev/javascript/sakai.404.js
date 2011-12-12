@@ -45,7 +45,7 @@ require(["jquery","sakai/sakai.api.core"], function($, sakai) {
             if (sakai.config.enableCategories) {
                 var catcount = 0;
                 for (var i in sakai.config.Directory) {
-                    if (sakai.config.Directory.hasOwnProperty(i)) {
+                    if (sakai.config.Directory.hasOwnProperty(i) && !sakai.config.Directory[i].divider) {
                         catcount+=1;
                     }
                 }
@@ -78,8 +78,6 @@ require(["jquery","sakai/sakai.api.core"], function($, sakai) {
             if (sakai.data.me.user.anon){
 
                 $signinbuttonwrapper.show();
-                $signinbutton.live("click", forceLoginOverlay);
-                $signinfromcontent.live("click", forceLoginOverlay);
 
                 $('html').addClass("requireAnon");
                 // the user is anonymous and should be able to log in
@@ -115,11 +113,6 @@ require(["jquery","sakai/sakai.api.core"], function($, sakai) {
             $searchButton.click(doSearch);
             sakai.api.Security.showPage();
             document.title = document.title + " " + sakai.api.i18n.getValueForKey("PAGE_NOT_FOUND");
-        };
-
-        var forceLoginOverlay = function(){
-            $("#topnavigation_user_options_login_fields").addClass("topnavigation_force_submenu_display");
-            $("#topnavigation_user_options_login_wrapper").addClass("topnavigation_force_submenu_display_title");
         };
 
         doInit();

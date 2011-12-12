@@ -35,12 +35,6 @@ require(["jquery","sakai/sakai.api.core"], function($, sakai) {
                     groupData.authprofile = data.properties;
                     groupData.authprofile.picture = sakai.api.Groups.getProfilePicture(groupData.authprofile);
                     sakai_global.group.groupData = groupData.authprofile;
-                    var directory = [];
-                    // When only one tag is put in this will not be an array but a string
-                    // We need an array to parse and display the results
-                    if (sakai_global.group.groupData && sakai_global.group.groupData['sakai:tags']) {
-                        sakai_global.group.groupData.saveddirectory = sakai.api.Util.getDirectoryTags(sakai_global.group.groupData["sakai:tags"].toString());
-                    }
                     sakai_global.group.groupId = groupId;
                     sakai.api.Security.showPage(function() {
                         if (groupData.authprofile["sakai:customStyle"]) {
@@ -179,10 +173,10 @@ require(["jquery","sakai/sakai.api.core"], function($, sakai) {
             });
             if (members.length) {
                 sakai.api.Groups.addUsersToGroup(groupId, members, sakai.api.User.data.me, false, function(){
-                    $(window).trigger("usersselected.addpeople.sakai");
+                    $(window).trigger("usersselected.addpeople.sakai", [members]);
                 });
             } else {
-                $(window).trigger("usersselected.addpeople.sakai");
+                $(window).trigger("usersselected.addpeople.sakai", []);
             }
         });
 

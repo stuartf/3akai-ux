@@ -38,7 +38,6 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
      */
     sakai_global.addpeople = function(tuid, showSettings, widgetData){
 
-
         /////////////////////////////
         // CONFIGURATION VARIABLES //
         /////////////////////////////
@@ -72,7 +71,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
         var currentTemplate = false;
         var hasbeenInit = false;
         var existingGroup = false;
-
+        var permissionsToChange = [];
 
         ///////////////
         // RENDERING //
@@ -169,7 +168,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
          */
         var finishAdding = function(){
             var managerSelected = false;
-            var permissionsToChange = [];
+            permissionsToChange = [];
             var newUsers = [];
             $.each(selectedUsers, function(index, user){
                 if (user.originalPermission && user.permission !== user.originalPermission) {
@@ -191,12 +190,6 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
                 });
             });
             if (managerSelected || !sakai_global.group) {
-                // This is called after toadd.addpeople.sakai completes
-                $(window).unbind("usersselected.addpeople.sakai").bind("usersselected.addpeople.sakai", function(e) {
-                    if (permissionsToChange.length) {
-                        $(window).trigger("usersswitchedpermission.addpeople.sakai", [tuid.replace("addpeople", ""), permissionsToChange]);
-                    }
-                });
                 $(window).trigger("toadd.addpeople.sakai", [tuid.replace("addpeople", ""), newUsers]);
                 if (sakai_global.group) {
                     $.each(newUsers, function(index, user){
@@ -359,7 +352,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
             };
             selectedUsers[userObj.userid] = userObj;
             renderSelectedContacts();
-            $(".as-close").click();
+            $(".as-close", $addpeopleContainer).click();
         };
 
 
@@ -377,6 +370,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
         };
 
         var prepareSelectedContacts = function(success, data){
+            data = data[sakai_global.group.groupData["sakai:group-id"]];
             for(var role in data){
                 for(var user in data[role].results){
                     if (data[role].results.hasOwnProperty(user)) {
@@ -415,7 +409,7 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
         };
 
         var fetchMembers = function(){
-            sakai.api.Groups.getMembers(sakai_global.group.groupData["sakai:group-id"], "", prepareSelectedContacts, true);
+            sakai.api.Groups.getMembers(sakai_global.group.groupData["sakai:group-id"], prepareSelectedContacts, true, true);
         };
 
         /**
@@ -452,11 +446,26 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
             $(addpeopleSelectedPermissions).die("change").live("change", changePermission);
             $addpeopleFinishAdding.bind("click", finishAdding);
             $addpeopleRemoveSelected.bind("click", removeSelected);
+
+            $(window).bind("usersselected.addpeople.sakai", function(e) {
+                if (permissionsToChange.length) {
+                    $(window).trigger("usersswitchedpermission.addpeople.sakai", [tuid.replace("addpeople", ""), permissionsToChange]);
+                }
+            });
         };
 
-        var loadRoles = function(){
+        var loadRoles = function() {
             currentTemplate = $.extend(true, {}, sakai.api.Groups.getTemplate(widgetData.category, widgetData.id));
-            currentTemplate.roles = sakai.api.Groups.getRoles(currentTemplate, true);
+            if ( $.isEmptyObject( currentTemplate ) && sakai_global.group && sakai_global.group.groupData && sakai_global.group.groupData[ "sakai:roles" ]) {
+                var groupData = $.extend( true, {}, sakai_global.group.groupData );
+                groupData.roles = $.parseJSON(sakai_global.group.groupData[ "sakai:roles" ] );
+                currentTemplate.roles = sakai.api.Groups.getRoles( groupData, true );
+            } else if ( !$.isEmptyObject( currentTemplate ) ){
+                currentTemplate.roles = sakai.api.Groups.getRoles(currentTemplate, true);
+            } else {
+                debug.error( "Unable to find any suitable roles" );
+            }
+
             $("#addpeople_selected_all_permissions", $rootel).html(sakai.api.Util.TemplateRenderer("addpeople_selected_permissions_template", {"roles": currentTemplate.roles,"sakai": sakai}));
         };
 
@@ -525,7 +534,13 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
                     }
                     loadRoles();
                     addBinding();
-                    sakai.api.Util.AutoSuggest.setup($addpeopleMembersAutoSuggestField, {"asHtmlID": tuid,"resultClick":createAutoSuggestedUser},function(){$addpeopleMembersAutoSuggest.show();});
+                    var autoSuggestOpts = {
+                        "asHtmlID": tuid,
+                        "resultClick":createAutoSuggestedUser
+                    };
+                    sakai.api.Util.AutoSuggest.setup($addpeopleMembersAutoSuggestField, autoSuggestOpts, function() {
+                        $addpeopleMembersAutoSuggest.show();
+                    });
                     initializeJQM();
                     hasbeenInit = true;
                 } else {
@@ -543,16 +558,15 @@ require(["jquery", "sakai/sakai.api.core"], function($, sakai) {
             }
         });
 
-
-        if (!hasbeenInit && !sakai_global.group) {
+        if(!hasbeenInit && !sakai_global.group){
             loadRoles();
             var defaultMembers = $.bbq.getState("members") || [];
-            if (defaultMembers.length) {
+            if(defaultMembers.length){
                 defaultMembers = defaultMembers.split(",");
+                defaultMembers = _.without(defaultMembers, sakai.data.me.user.userid);
                 fetchGroupsAndUsersData(defaultMembers);
             }
         }
-
     };
     sakai.api.Widgets.widgetLoader.informOnLoad("addpeople");
 

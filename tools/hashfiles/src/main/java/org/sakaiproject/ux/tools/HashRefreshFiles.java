@@ -255,30 +255,52 @@ public class HashRefreshFiles {
     }
 
     String all = readFile(file);
+    StringBuilder sb = new StringBuilder(all);
+   
     boolean modifiedFlag = false;
     String filePath = file.getAbsolutePath().substring(rootDir.getAbsolutePath().length());
     for (String s : hashedResults.keySet()) {
-      if (all.contains(s)) {
-        System.out.println("processing file: " + filePath);
-        System.out.println("replace path: {" + s + ", " + hashedResults.get(s) + "}");
-        all = all.replaceAll(s, hashedResults.get(s));
-        modifiedFlag = true;
+      if (sb.indexOf(s) >= 0) {
+        int loc = sb.indexOf(s);
+        while (loc >= 0) {
+          char c = sb.charAt(loc + s.length());
+          if ((!s.endsWith("/")) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')
+             || c == '(')) {
+            loc = sb.indexOf(s, loc + s.length());
+            continue;
+          }
+          sb.replace(loc, loc + s.length(), hashedResults.get(s));
+          loc = sb.indexOf(s, loc + s.length());
+          System.out.println("processing file: " + filePath);
+          System.out.println("replace path: {" + s + ", " + hashedResults.get(s) + "}");
+          modifiedFlag = true;
+        }
         continue;
       }
       String relativePath = this.getRelativePath(filePath, s);
-      if (relativePath != null && all.contains(relativePath)) {
+      if (relativePath != null && sb.indexOf(relativePath) >= 0) {
         String newPath = hashedResults.get(s);
         newPath = relativePath.substring(0, relativePath.lastIndexOf("/") + 1) + newPath.substring(newPath.lastIndexOf("/") + 1);
         if (relativePath.equals(newPath))
           continue;
-        System.out.println("processing file: " + filePath);
-        System.out.println("replace relative path: {" + relativePath + ", " + newPath + "}");
-        all = all.replaceAll(relativePath, newPath);
-        modifiedFlag = true;
+        int loc = sb.indexOf(relativePath);
+        while (loc >= 0) {
+          char c = sb.charAt(loc + relativePath.length());
+          if ((!relativePath.endsWith("/")) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')
+              || c == '(')) {
+            loc = sb.indexOf(relativePath, loc + relativePath.length());
+            continue;
+          }
+          sb.replace(loc, loc + relativePath.length(), newPath);
+          loc = sb.indexOf(relativePath, loc + newPath.length());
+          System.out.println("processing file: " + filePath);
+          System.out.println("replace relative path: {" + relativePath + ", " + newPath + "}");
+          modifiedFlag = true;
+        }
       }
     }
     if (modifiedFlag)
-      writeToFile (file, all);
+      writeToFile (file, sb.toString());
   }
 
   public void handleRequireJS () throws Exception{

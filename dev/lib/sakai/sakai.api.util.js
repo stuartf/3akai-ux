@@ -30,13 +30,15 @@ define(
         "jquery",
         "sakai/sakai.api.server",
         "sakai/sakai.api.l10n",
+        "sakai/sakai.api.i18n",
         "config/config_custom",
         "misc/trimpath.template",
         "misc/underscore",
         "jquery-plugins/jquery.ba-bbq",
-        "jquery-plugins/jquery.validate"
+        "jquery-plugins/jquery.validate",
+        "jquery-ui"
     ],
-    function($, sakai_serv, sakai_l10n, sakai_conf) {
+    function($, sakai_serv, sakai_l10n, sakai_i18n, sakai_conf) {
 
     var sakai_util = {
 
@@ -217,95 +219,51 @@ define(
          * @return {Array} Array of formatted tags
          */
         formatTags : function(inputTags){
-            if ($.trim(inputTags) !== "") {
+            if ( $.trim( inputTags ) !== "" || $.isArray( inputTags ) ) {
                 var tags = [];
                 var splitTags = inputTags;
-                if (!$.isArray(inputTags)) {
-                    splitTags = $(inputTags.split(","));
+                if ( !$.isArray( inputTags ) ) {
+                    splitTags = $( inputTags.split( "," ) );
                 }
-                $(splitTags).each(function(index){
-                    if ($.trim(splitTags[index]).length) {
-                        tags.push($.trim(splitTags[index]));
-                    }
-                });
-                tags.sort(sakai_util.Sorting.naturalSort);
-                return tags;
-            } else {
-                return [];
-            }
-        },
-
-        /**
-         * Formats a comma separated string of text to an array of usable tags
-         * Filters out unwanted tags (eg empty tags) and especially location tags (start with "directory/")
-         * Returns the array of tags, if no tags were provided or none were valid an empty array is returned
-         *
-         * Example: inputTags = "tag1, tag2, , , tag3, , tag4" returns ["tag1","tag2","tag3","tag4"]
-         *
-         * @param {String} input Unformatted, comma separated, string of tags put in by a user
-         * @return {Array} Array of formatted tags
-         */
-        formatTagsExcludeLocation : function(input){
-            var item;
-            var inputTags = this.formatTags(input);
-            if (inputTags.length) {
-                var tags = [];
-                $.each(inputTags, function(index, value){
-                    if (value.split("/")[0] !== "directory") {
-                        tags.push(value);
-                    }
-                });
-                tags.sort(sakai_util.Sorting.naturalSort);
-                return tags;
-            } else {
-                return [];
-            }
-        },
-
-        /**
-         * Shorten tags to be displayed in search results
-         * @param {Array} tags The array containing tags.
-         * @return {Object} Object containing the tag and shortened lengths
-         */
-        shortenTags : function(tags) {
-            var tagsObj = {};
-            for (var i in tags) {
-                if (tags.hasOwnProperty(i)) {
-                    tagsObj[i] = {
-                        "tag": tags[i],
-                        "tagShort": sakai_util.applyThreeDots(tags[i], 680, {max_rows: 1, whole_word: true}, ""),
-                        "tagShorter": sakai_util.applyThreeDots(tags[i], 125, {max_rows: 1, whole_word: true}, ""),
-                        "link": "search#q=" + sakai_util.safeURL(tags[i])
-                    };
-                }
-            }
-            return tagsObj;
-        },
-
-        /**
-         * Formats a comma separated string of text to an array of usable directory tags
-         * Returns the array of tags, if no tags were provided or none were valid an empty array is returned
-         *
-         * Example: inputTags = "tag1, directory/tag2, , , tag3, , directory/tag4" returns ["directory/tag2","directory/tag4"]
-         *
-         * @param {String} inputTags Unformatted, comma separated, string of tags put in by a user
-         * @return {Array} Array of formatted tags
-         */
-        getDirectoryTags : function(input, returnFullTag){
-            var item;
-            var inputTags = this.formatTags(input);
-            if (inputTags.length) {
-                var tags = [];
-                for (item in inputTags){
-                    if (inputTags.hasOwnProperty(item) && inputTags[item] && inputTags[item].split("/")[0] === "directory") {
-                        if (returnFullTag){
-                             tags.push(inputTags[item]);
+                var sakai_i18n = require("sakai/sakai.api.i18n");
+                $( splitTags ).each(function( index ) {
+                    var tag = $.trim( splitTags[ index ] );
+                    if ( tag.length ) {
+                        if ( tag.indexOf( "directory/" ) === 0 ) {
+                            var tag_val = sakai_util.getValueForDirectoryTag( tag );
+                            var tagLink = "/category#l=";
+                            $.each(tag.split("/"), function(i,dirPart) {
+                                if ( dirPart !== "directory" ) {
+                                    tagLink += sakai_util.safeURL(dirPart);
+                                    if (i !== tag.split("/").length -1 ) {
+                                        tagLink += "-";
+                                    }
+                                }
+                            });
+                            tag = {
+                                original: tag,
+                                value: sakai_util.Security.safeOutput(tag_val),
+                                tagShort: tag_val,
+                                tagShorter: tag_val,
+                                link: tagLink,
+                                linkTitle: sakai_i18n.getValueForKey("SEARCH_CONTENT_LOCATED_AT") + " " + sakai_util.Security.safeOutput(tag_val)
+                            };
                         } else {
-                             tags.push(inputTags[item].split("directory/")[1].split("/"));
+                            tag = {
+                                original: tag,
+                                value: sakai_util.Security.safeOutput(tag),
+                                tagShort: sakai_util.applyThreeDots(tag, 680, {max_rows: 1, whole_word: true}, ""),
+                                tagShorter: sakai_util.applyThreeDots(tag, 125, {max_rows: 1, whole_word: true}, ""),
+                                link: "/search#q=&refine=" + sakai_util.safeURL(tag),
+                                linkTitle: sakai_i18n.getValueForKey("SEARCH_CONTENT_TAGGED_WITH") + " " + sakai_util.Security.safeOutput(tag)
+                            };
                         }
+                        tags.push( tag );
                     }
-                }
-                tags.sort(sakai_util.Sorting.naturalSort);
+                });
+                tags.sort(function(a,b) {
+                    return sakai_util.Sorting.naturalSort(a.value,b.value);
+                });
                 return tags;
             } else {
                 return [];
@@ -370,8 +328,6 @@ define(
              * @param (Array) tags Array of tags to be deleted from the entity
              * @param (Function) callback The callback function
              */
-
-
             var deleteTags = function(tagLocation, tags, deleteTagsCallback) {
                 if (tags.length) {
                     var requests = [];
@@ -457,19 +413,19 @@ define(
          * @param {String} body String of text to be truncated
          * @param {int} width Width of the parent element
          * @param {Object} params Object containing parameters, Threedots plugin specific. The row limit for widget headers should be 4 rows.
-         * @param {String} Optional class(es) to give container div. Used to give specific mark-up to the content to avoid wrong calculations. e.g. s3d-bold 
+         * @param {String} Optional class(es) to give container div. Used to give specific mark-up to the content to avoid wrong calculations. e.g. s3d-bold
          */
         applyThreeDots : function(body, width, params, optClass, alreadySecure){
             body = sakai_util.Security.safeOutput(body);
             // IE7 and IE6 have trouble with width
-            if(!jQuery.support.leadingWhitespace){
-                width = width - 10;
+            if(!jQuery.support.leadingWhitespace || jQuery.browser.webkit){
+                width = width - 15;
             } else {
                 width = width - 5;
             }
 
             // Create elements to apply threedots
-            $container = $("<div class=\"" + optClass + "\" style=\"width:" + width + "px; ; word-wrap:break-word; visibility:hidden;\"><span style=\"word-wrap:break-word;\" class=\"ellipsis_text\">" + body + "</span></div>");
+            var $container = $("<div class=\"" + optClass + "\" style=\"width:" + width + "px; ; word-wrap:break-word; visibility:hidden;\"><span style=\"word-wrap:break-word;\" class=\"ellipsis_text\">" + body + "</span></div>");
             $("body").append($container);
 
             // There seems to be a race condition where the
@@ -574,7 +530,11 @@ define(
                         picture_name = profile.picture.name;
                     } else {
                         //change string to json object and get name from picture object
-                        picture_name = $.parseJSON(profile.picture).name;
+                        try {
+                            picture_name = $.parseJSON(profile.picture).name;
+                        } catch (e) {
+                            picture_name = profile.picture;
+                        }
                     }
                     imgUrl = "/~" + sakai_util.safeURL(id) + "/public/profile/" + sakai_util.safeURL(picture_name);
                 } else if (profile.basic && profile.basic.elements && profile.basic.elements.picture && profile.basic.elements.picture.value) {
@@ -703,6 +663,48 @@ define(
                  */
                 ERROR : $.extend(true, {}, sakai_conf.notification.type.ERROR)
                 }
+        },
+
+        /**
+         * Allows you to show a progress indicator on the screen. Example of where this is done are the Add Content
+         * and the Create World widgets
+         */
+        progressIndicator: {
+
+            /**
+             * Show the progress indicator on the screen
+             * @param {Object} title    Title of the indicator screen
+             * @param {Object} body     Additional text to be shown in the indicator
+             */
+            showProgressIndicator: function(title, body){
+                // Create the HTML for the progress indicator if it doesn't exist yet
+                if ($("#sakai_progressindicator").length === 0){
+                    var htmlCode = '<div id="sakai_progressindicator" class="s3d-dialog s3d-dialog-container" style="display:none;">';
+                    htmlCode += '<h1 id="sakai_progressindicator_title" class="s3d-dialog-header"></h1><p id="sakai_progressindicator_body"></p>';
+                    htmlCode += '<div class="s3d-inset-shadow-container"><img src="/dev/images/progress_bar.gif"/></div></div>';
+                    var notification = $(htmlCode);
+                    $('body').append(notification);
+                    $("#sakai_progressindicator").jqm({
+                        modal: true,
+                        overlay: 20,
+                        zIndex: 40003,
+                        toTop: true
+                    });
+                }
+                // Fill out the title and the body
+                $("#sakai_progressindicator_title").html(title);
+                $("#sakai_progressindicator_body").html(body);
+                // Show the indicator
+                $("#sakai_progressindicator").jqmShow();
+            },
+
+            /**
+             * Hide the existing progress indicator (if there is one)
+             */
+            hideProgressIndicator: function(){
+                $("#sakai_progressindicator").jqmHide();
+            }            
+
         },
 
         /**
@@ -871,21 +873,6 @@ define(
             return return_string;
         },
 
-
-        /**
-         * Sets the chat bullets after update of status by
-         * adding the right status css class on an element.
-         * @param {Object} element the jquery element you wish to add the class to
-         * @param {Object} status the status
-         */
-        updateChatStatusElement : function(element, chatstatus) {
-            element.removeClass("chat_available_status_online");
-            element.removeClass("chat_available_status_busy");
-            element.removeClass("chat_available_status_offline");
-            element.addClass("chat_available_status_" + chatstatus);
-        },
-
-
         include : {
             /**
              * Generic function that will insert an HTML tag into the head of the document. This
@@ -961,7 +948,7 @@ define(
                     this.insertTag("link", attributes);
                 }
             }
-            
+
         },
 
         /**
@@ -1103,7 +1090,7 @@ define(
              *
              * @return node the json object in the structure necessary to render in jstree
              */
-            var buildNodeRecursive = function(node_id, directory, url){
+            var buildNodeRecursive = function(node_id, directory, url, parent_title){
                 // node title
                 var p_title = directory[node_id].title;
                 // node id
@@ -1124,12 +1111,19 @@ define(
                         title: p_title,
                         attr: {
                             "data-path": url,
+                            "data-id": p_id,
                             "title": p_title
                         }
                     },
                     children: []
                 };
-
+                if ( parent_title ) {
+                    node.data.attr["data-long-title"] = parent_title + " » " + p_title;
+                    node.data.attr["data-parent"] = false;
+                } else {
+                    node.data.attr["data-long-title"] = p_title;
+                    node.data.attr["data-parent"] = true;
+                }
                 // if current node has any children
                 // call buildNoderecursive method create the node structure for
                 // all level of child
@@ -1139,7 +1133,7 @@ define(
                         // pass current child(id), the list of all sibligs(json object) and url append/child
                         // for example first level node /directory#courses/firstyearcourses
                         // for second level node /directory#course/firstyearcourses/chemistry
-                        node.children.push(buildNodeRecursive(child, directory[node_id].children, url + "/" + child));
+                        node.children.push(buildNodeRecursive(child, directory[node_id].children, url + "/" + child, p_title));
                     }
                 }
                 return node;
@@ -1153,21 +1147,20 @@ define(
          * @param {Object} key Key to get title for
          * @param {Object} child Object to check for children next, if not supplied start with first child
          */
-        getValueForDirectoryKey : function(key){
-            var directory = this.getDirectoryStructure();
+        getValueForDirectoryKey : function( key, _directory ) {
+            var directory = _directory ? _directory : this.getDirectoryStructure();
 
             var searchDirectoryForKey = function(key, child){
-                var ret;
+                var ret = false;
 
                 if (key == child.attr.id) {
                     ret = child.data.title;
-                }
-                else {
+                } else {
                     if (child.children) {
                         for (var item in child.children) {
                             if (child.children.hasOwnProperty(item)) {
                                 var result = searchDirectoryForKey(key, child.children[item]);
-                                if(result){
+                                if (result) {
                                     ret = result;
                                 }
                             }
@@ -1186,6 +1179,24 @@ define(
                 }
             }
             return result;
+        },
+
+        /**
+         * Get the string value for a directory tag
+         * directory/medicineanddentistry/clinicalmedicine => Medicine and Dentistry » Clinical Medicine
+         *
+         * @param {String} tag The directory tag
+         * @return {String} The printable tag
+         */
+        getValueForDirectoryTag: function( tag ) {
+            var ret = "";
+            var directoryItems = tag.split("/");
+            for ( var i = 1; i < directoryItems.length; i++ ) {
+                ret += sakai_util.getValueForDirectoryKey( directoryItems[ i ] ) + " » ";
+            }
+            // Remove the trailing »
+            ret = ret.substr( 0, ret.length - 3 );
+            return ret;
         },
 
         Activity : {
@@ -1350,6 +1361,87 @@ define(
          */
         templateCache : [],
 
+        macroCache : { macros: {}},
+        
+        trimpathModifiers : {
+            safeURL: function(str) {
+                return sakai_util.safeURL(str);
+            },
+            escapeHTML: function(str) {
+                return sakai_util.Security.escapeHTML(str);
+            },
+            saneHTML: function(str) {
+                return sakai_util.Security.saneHTML(str);
+            },
+            safeOutput: function(str) {
+                return sakai_util.Security.safeOutput(str);
+            }
+        },
+
+        /**
+          * Process trimpath macros in html file at url, which will then be available 
+          * with the macro function inside regular rendering. The optional asyncreq option allows
+          * the request to be syncronous, which would mostly be for on-demand loading (because
+          * that is happening during rendering and it needs the template to continue. )
+          * @function
+          * @param {String} url with macros to load
+          * @param {Boolean} Optional parameter to distinguish whether the loading should happen
+          * syncronously. Default is true (async)
+          */
+        processMacros : function (url, asyncreq) {
+            var asyncsetting = true;
+            if (asyncreq === false) {
+                asyncsetting = asyncreq;
+            }
+            var mc = this.macroCache;
+            $.ajax({
+                url: url, 
+                async: asyncsetting, // Sometimes we need to immediately return this value for on-demand loading.
+                success: function(data) { 
+                  mc._MODIFIERS = sakai_util.trimpathModifiers; 
+                  sakai_i18n.General.process(data).process(mc);
+                }
+            });
+        },
+
+        /**
+          * While the processMacros function allows a way to make macros that can
+          * be shared and discovered between widgets automatically, this function
+          * allows for a simpler use case where a widget developer may just want some
+          * macros for their specific widget. In this case they can put all their
+          * macros in a template element ( similar to regular template elements),
+          * and then get a macro set back that can be used in between the rest of
+          * the templates they have defined in their page. 
+          *
+          * @param {String|jQuery} Raw String or jQuery element containing the 
+          * text of the macro definitions.
+          * @return An object containing the macro functions. This can be added to the
+          * context of subsequent TemplateRenderers and called like regular trimpath
+          * macros.
+          */
+        processLocalMacros : function(templateElement) {
+            var templateStr = "";
+            if (templateElement instanceof jQuery && templateElement.length){
+                var firstNode = templateElement.contents(":first-child");
+                if (firstNode.length) {
+                    var firstNodeDomElem = firstNode.get(0);
+                    if (firstNodeDomElem.nodeType === 8 || firstNodeDomElem.nodeType === 4) {
+                        templateStr = firstNodeDomElem.data;
+                    }
+                    else {
+                        templateStr = templateElement.html();
+                    }
+                }
+            }
+            else if (_.isString(templateElement)) {
+                templateStr = templateElement;
+            }
+            var contextdata = { macros: {} };
+            contextdata._MODIFIERS = sakai_util.trimpathModifiers;
+            sakai_i18n.General.process(templateStr).process(contextdata);
+            return contextdata.macros;
+        },
+
         /**
         * Trimpath Template Renderer: Renders the template with the given JSON object, inserts it into a certain HTML
         * element if required, and returns the rendered HTML string
@@ -1402,7 +1494,7 @@ define(
                     } catch (e) {
                         debug.error("TemplateRenderer: parsing failed: " + e);
                     }
-                    
+
 
                 }
                 else {
@@ -1416,21 +1508,27 @@ define(
             if (templateData._MODIFIERS) {
                 debug.error("Someone has passed data to sakai.api.util.TemplateRenderer with _MODIFIERS");
             }
-            templateData._MODIFIERS = {
-                safeURL: function(str) {
-                    return sakai_util.safeURL(str);
-                },
-                escapeHTML: function(str) {
-                    return sakai_util.Security.escapeHTML(str);
-                },
-                saneHTML: function(str) {
-                    return sakai_util.Security.saneHTML(str);
-                },
-                safeOutput: function(str) {
-                    return sakai_util.Security.safeOutput(str);
-                },
-                saneHTMLAttribute: function(str) {
-                    return sakai_util.saneHTMLAttribute(str);
+            templateData._MODIFIERS = sakai_util.trimpathModifiers;
+            if (templateData.macro) {
+                debug.error("Someone has passed data to sakai.api.util.TemplateRenderer with macro()");
+            }
+            templateData.macro = function() {
+                var macroname = arguments[0];
+                var args = []; 
+                for (var i = 1; i < arguments.length; i++) {
+                    args.push(arguments[i]);
+                }
+                if (!sakai_util.macroCache.macros[macroname]) {
+                    var dot = macroname.lastIndexOf('.');
+                    if (dot > -1) { 
+                        sakai_util.processMacros('/dev/macros/'+macroname.slice(0,dot)+'.html',false);
+                        if (sakai_util.macroCache.macros[macroname]) {
+                            return sakai_util.macroCache.macros[macroname].apply(this, args);
+                        }
+                    }
+                }
+                else {
+                    return sakai_util.macroCache.macros[macroname].apply(this, args);
                 }
             };
 
@@ -1443,6 +1541,7 @@ define(
             }
 
             delete templateData._MODIFIERS;
+            delete templateData.macro;
 
             // Run the rendered html through the sanitizer
             if (sanitize) {
@@ -1730,7 +1829,7 @@ define(
         },
 
         /**
-        * Runs MathJax over an element replacing any math TeX with rendered 
+        * Runs MathJax over an element replacing any math TeX with rendered
         * formulas
         *
         * @param element {String} The element (or it's id) that should be checked for math
@@ -1862,87 +1961,107 @@ define(
         AutoSuggest: {
             /**
             * Autosuggest for users and groups (for other data override the source parameter). setup method creates a new
-            * autosuggest on the element (a jQuery object or selector string that is passed to jQuery) and also sets a 
+            * autosuggest on the element (a jQuery object or selector string that is passed to jQuery) and also sets a
             * namespace .data() so autosuggest won't be created more than once, with the original element as its value.
             * The original element is retrieved in the destroy method to replace the autosuggest.
-            * 
+            *
             * @param {String|Object} jQuery selection object or selector string.
             * @param {Object} JavaScript object of optional parameters to extend or override defaults
             * @param {function} optional callback to be executed after calling autosuggest plugin
             *
             * @returns {Object} new jQuery object with autosuggest
-            */        
-            setup: function(element,options,callback){
+            */
+            setup: function( element, options, callback, _dataFn ) {
+                // Translate the jquery.autosuggest plugin
+                var sakaii18nAPI = require("sakai/sakai.api.i18n");
+                var user = require("sakai/sakai.api.user");
+                var dataFn = _dataFn || function( query, add ) {
+                    var q = sakai_serv.createSearchString(query);
+                    var searchoptions = {"page": 0, "items": 15};
+                    var searchUrl = sakai_conf.URL.SEARCH_USERS_GROUPS;
+                    if (q === '*' || q === '**') {
+                        searchUrl = sakai_conf.URL.SEARCH_USERS_GROUPS_ALL;
+                    } else {
+                        searchoptions['q'] = q;
+                    }
+                    sakai_serv.loadJSON(searchUrl.replace(".json", ""), function( success, data ){
+                        if ( success ) {
+                            var suggestions = [];
+                            $.each( data.results, function( i ) {
+                                if ( data.results[i]["rep:userId"] && data.results[i]["rep:userId"] !== user.data.me.user.userid ) {
+                                    if ( !options.filterUsersGroups || $.inArray( data.results[i]["rep:userId"], options.filterUsersGroups ) ===-1 ) {
+                                        suggestions.push({
+                                            "value": data.results[i]["rep:userId"],
+                                            "name": user.getDisplayName(data.results[i]),
+                                            "picture": sakai_util.constructProfilePicture(data.results[i], "user"),
+                                            "type": "user"
+                                        });
+                                    }
+                                } else if (data.results[i]["sakai:group-id"]) {
+                                    if ( !options.filterUsersGroups || $.inArray( data.results[i]["sakai:group-id"], options.filterUsersGroups ) ===-1 ) {
+                                        suggestions.push({
+                                            "value": data.results[i]["sakai:group-id"],
+                                            "name": sakai_util.Security.safeOutput(data.results[i]["sakai:group-title"]),
+                                            "picture": sakai_util.constructProfilePicture(data.results[i], "group"),
+                                            "type": "group"
+                                        });
+                                    }
+                                }
+                            });
+                            add( suggestions, query );
+                        }
+                    }, searchoptions);
+                };
+
                 var defaults = {
                     selectedItemProp: "name",
                     searchObjProps: "name",
-                    startText: "Enter name here",
-                    scrollresults:true,
-                    source: function(query, add) {
-                        var sakai_user = require("sakai/sakai.api.user");
-                        var q = sakai_serv.createSearchString(query);
-                        var searchoptions = {"page": 0, "items": 15};
-                        var searchUrl = sakai_conf.URL.SEARCH_USERS_GROUPS;
-                        if (q === '*' || q === '**') {
-                            searchUrl = sakai_conf.URL.SEARCH_USERS_GROUPS_ALL;
-                        } else {
-                            searchoptions['q'] = q;
-                        }
-                        sakai_serv.loadJSON(searchUrl.replace(".json", ""), function(success, data){
-                            if (success) {
-                                var suggestions = [];
-                                $.each(data.results, function(i) {
-                                    if (data.results[i]["rep:userId"] && data.results[i]["rep:userId"] !== sakai_user.data.me.user.userid) {
-                                        if(!options.filterUsersGroups || $.inArray(data.results[i]["rep:userId"],options.filterUsersGroups)===-1){
-                                            suggestions.push({"value": data.results[i]["rep:userId"], "name": sakai_user.getDisplayName(data.results[i]), "firstName": sakai_user.getFirstName(data.results[i]), "picture": sakai_util.constructProfilePicture(data.results[i], "user"), "type": "user"});
-                                    	}
-                                    } else if (data.results[i]["sakai:group-id"]) {
-                                        if(!options.filterUsersGroups || $.inArray(data.results[i]["sakai:group-id"],options.filterUsersGroups)===-1){
-                                            suggestions.push({"value": data.results[i]["sakai:group-id"], "name": sakai_util.Security.safeOutput(data.results[i]["sakai:group-title"]), "picture": sakai_util.constructProfilePicture(data.results[i], "group"), "type": "group"});
-                                        }
-                                    }
-                                });
-                                add(suggestions);
-                            }
-                        }, searchoptions);
-                    }
+                    startText: sakaii18nAPI.getValueForKey("ENTER_NAME_HERE"),
+                    emptyText: sakaii18nAPI.getValueForKey("NO_RESULTS_FOUND"),
+                    limitText: sakaii18nAPI.getValueForKey("NO_MORE_SELECTIONS_ALLOWED"),
+                    scroll: true,
+                    canGenerateNewSelections: false,
+                    usePlaceholder: true,
+                    showResultListWhenNoMatch: true
                 };
-                var opts = $.extend(defaults, options);
+
+                var opts = $.extend( defaults, options );
                 var namespace = opts.namespace || "api_util_autosuggest";
-                element = (element instanceof jQuery) ? element:$(element);
-                
-                if(element.data(namespace)){//already an autosuggest so for now return element, could also call destroy and setup again
+                element = ( element instanceof jQuery ) ? element : $( element );
+
+                if ( element.data( namespace ) ) { // already an autosuggest so for now return element, could also call destroy and setup again
                     return element;
                 }
-                var orig_element = element.clone(true);
-                element.autoSuggest("", opts).data(namespace,orig_element);
-                
-                if ($.isFunction(callback)) {
+
+                var orig_element = element.clone( true );
+                element.autoSuggest( dataFn, opts ).data( namespace, orig_element );
+
+                if ( $.isFunction( callback ) ) {
                     callback();
                 }
-                
+
                 return element;
             },
             /**
-            * Resets the autosuggest without destroying/creating. Use this 
+            * Resets the autosuggest without destroying/creating. Use this
             * when the autosuggest is in an element whose visibility is toggled, e.g. via a "Cancel" button
             * which should have the effect of clearing the autosuggest. The autosuggest plugin has no reset
             * method, and it maintains a "prev" variable that holds the last typed character. Clearing the
             * input field isn't sufficient, if the same character is typed next time it will match the stored
             * character and return false, so the keydown after clearing the input clears the var in the plugin.
             *
-            * @param element {String} The element (or a jQuery selector string) for the text input for the autosuggest
+            * @param {String} $element The element (or a jQuery selector string) for the text input for the autosuggest
             *
             * @returns {Object} the jQuery object created from setup method
             */
-            reset: function(element){
-                element = (element instanceof jQuery) ? element:$(element);
-                element.val("").trigger("keydown");
-                $(".as-close").click(); //created by autosuggest plugin
-                return element;
+            reset: function( $element ){
+                $element = ( $element instanceof jQuery ) ? $element: $( $element );
+                $element.val( "" ).trigger( "keydown" );
+                $element.parents( ".as-selections" ).find( ".as-close" ).click(); // created by autosuggest plugin
+                return $element;
             },
             /**
-            * Removes the autosuggest and replaces it with the original element stored in .data() under the 
+            * Removes the autosuggest and replaces it with the original element stored in .data() under the
             * 'namespace' key when the autosuggest was created. Because it stores the original element, and this isn't
             * a jQuery plugin that iterates over all matching selectors, this method only works if a single element
             * is passed in. In practice it's probably not likely to pass multiple elements in the selector when
@@ -1952,17 +2071,177 @@ define(
             * @param {Object} JavaScript object of optional parameters; currently only the namespace key
             *
             * @returns {Object} original jQuery object without autosuggest
-            */          
-            destroy: function(element,options){
-                var opts = $.extend({}, options);
+            */
+            destroy: function( element, options ){
+                var opts = $.extend( {}, options );
                 var namespace = opts.namespace || "api_util_autosuggest";
-                if(!element || (element.length!==1 && !element.data(namespace)) ){
-                	return false; //may want to return element?
-                } 
-                var ascontainer = $("#as-selections-" + element.attr("id")).replaceWith(element.data(namespace));
-                $("#as-results-" + element.attr("id")).remove();
-                return $(ascontainer);
+                if( !element || ( element.length !== 1 && !element.data( namespace ) ) ){
+                    return false; // may want to return element?
+                }
+                var ascontainer = $( "#as-selections-" + element.attr( "id" ) ).replaceWith( element.data( namespace ) );
+                $( "#as-results-" + element.attr( "id" ) ).remove();
+                return $( ascontainer );
+            },
+
+            /**
+             * Set up the tag + category autosuggest box
+             *
+             * @param {jQuery} $elt The element to set up as the autosuggest box
+             * @param {Object} options Options to pass through to the autoSuggest setup
+             * @param {jQuery} $list_categories_button The button that should trigger the assignlocation overlay
+             * @param {Array} initialSelections The inital selections for the autosuggest, direct from the profile
+             * @param {Function} callback Function to call after setup is complete
+             */
+            setupTagAndCategoryAutosuggest: function( $elt, options, $list_categories_button, initialSelections, callback ) {
+                var sakaii18nAPI = require( "sakai/sakai.api.i18n" );
+                var defaults = {
+                    selectedItemProp: "value",
+                    searchObjProps: "value",
+                    canGenerateNewSelections: true,
+                    scroll: true,
+                    showResultListWhenNoMatch: false,
+                    startText: sakaii18nAPI.getValueForKey( "ENTER_TAGS_OR_CATEGORIES" ),
+                    beforeRetrieve: function( userinput ) {
+                        return $.trim(userinput);
+                    }
+                };
+
+                // Set up the directory structure for autoSuggesting
+                var getTranslatedCategories = function() {
+                    var ret = [];
+                    var directory = sakai_util.getDirectoryStructure();
+                    $.each( directory, function( i, dir ) {
+                        ret.push({
+                            value: dir.data.title,
+                            id: dir.attr.id,
+                            path: dir.attr.id,
+                            parent: true,
+                            category: true
+                        });
+                        $.each( dir.children, function( i, child ) {
+                            ret.push({
+                                value: dir.data.title + " » " + child.data.title,
+                                path: dir.attr.id + "/" + child.attr.id,
+                                id: child.attr.id,
+                                parent: false,
+                                category: true
+                            });
+                        });
+                    });
+                    return ret;
+                };
+
+                // Set up the assignlocation widget
+                var setupAssignLocation = function() {
+                    if ( $( "#assignlocation_container" ).length === 0 ) {
+                        $( "<div id='assignlocation_container'>" ).appendTo( "body" );
+                        $( "<div id='widget_assignlocation' class='widget_inline'/>" ).appendTo( "#assignlocation_container" );
+                        require("sakai/sakai.api.widgets").widgetLoader.insertWidgets( "#assignlocation_container", false );
+                    }
+                    $list_categories_button.off( "click" ).on( "click", function( e ) {
+                        var currentlySelected = sakai_util.AutoSuggest.getTagsAndCategories( $elt, false, true ).categories;
+                        $( window ).trigger( "init.assignlocation.sakai", [ currentlySelected, e, function( categories ) {
+                            // add newly selected categories to the autoSuggest
+                            currentlySelected = sakai_util.AutoSuggest.getTagsAndCategories( $elt, false, true ).categories;
+                            var currentCatIDs = [],
+                                catsFromOverlay = [];
+                            // Get the current category IDs
+                            $.each( currentlySelected, function( i, currentCat ) {
+                                currentCatIDs.push( currentCat.id );
+                            });
+                            // Add new items
+                            $.each( categories, function( i, category ) {
+                                if ( $.inArray( category.id, currentCatIDs ) === -1 ) {
+                                    $elt.autoSuggest( "add_selected_item", category );
+                                }
+                                catsFromOverlay.push( category.id );
+                            });
+                            // Remove items removed in the dialog
+                            $.each( currentlySelected, function( i, currentCat ) {
+                                if ( $.inArray( currentCat.id, catsFromOverlay ) === -1 ) {
+                                    var elt = $elt.parents( ".as-selections" ).find( "li[data-value='" + currentCat.value + "']" );
+                                    $elt.autoSuggest( "remove_item", currentCat.value, elt, $( elt ).data( "data" ) );
+                                }
+                            });
+                        }]);
+                    });
+                };
+
+                // Parse the tags and set them up to be displayed in the autosuggest
+                var setInitialSelections = function() {
+                    var directory = sakai_util.getDirectoryStructure();
+                    var preFill = [];
+                    $.each( initialSelections, function ( idx, tag ) {
+                        var tagObj = {};
+                        if ( tag.indexOf( "directory/" ) === 0 ) {
+                            var tagValue = sakai_util.getValueForDirectoryTag( tag );
+                            var directoryItems = tag.split("/");
+                            tagObj = {
+                                value: tagValue,
+                                id: directoryItems[ directoryItems.length - 1 ],
+                                parent: directoryItems.length > 2,
+                                category: true,
+                                path: tag.replace("directory/", "")
+                            };
+                        } else {
+                            tagObj = {
+                                id: tag,
+                                value: tag
+                            };
+                        }
+                        preFill.push( tagObj );
+                    });
+                    return preFill;
+                };
+
+                if ( initialSelections ) {
+                    defaults.preFill = setInitialSelections();
+                }
+
+                $.extend( defaults, options );
+
+                var data = getTranslatedCategories();
+
+                sakai_util.AutoSuggest.destroy( $elt );
+                sakai_util.AutoSuggest.setup( $elt, defaults, callback, data );
+
+                setupAssignLocation();
+            },
+
+            /**
+             * Get the tags and categories from the autosuggest box
+             *
+             * @param {jQuery} $elt The element which you passed to the autoSuggest setup method
+             * @param {Boolean} merge If the tags and categories should be merged on return
+             * @param {Boolean} longform When true, the categories returned will be the full object
+             *                           instead of just the path string ("directory/category/child")
+             * @return {Object} Two arrays, categories and tags - OR - one array of tags and categories if merge === true
+             */
+            getTagsAndCategories: function( $elt, merge, longform ) {
+                // Add any tags that haven't yet been added to the list
+                $elt.trigger($.Event("keydown", { keyCode: 13 }));
+                var tags_cats = $elt.autoSuggest( "get_selections" );
+                var ret = {
+                    categories: [],
+                    tags: []
+                };
+                $.each(tags_cats, function( i, tc ) {
+                    if ( tc.category ) {
+                        if ( longform ) {
+                            ret.categories.push( tc );
+                        } else {
+                            ret.categories.push( "directory/" + tc.path );
+                        }
+                    } else {
+                        ret.tags.push( tc.value );
+                    }
+                });
+                if ( merge ) {
+                    ret = $.merge(ret.tags, ret.categories);
+                }
+                return ret;
             }
+
         },
 
         Forms : {
@@ -2040,7 +2319,7 @@ define(
                         });
                     }
                     // Get the closest-previous label in the DOM
-                    var $prevLabel = $("label[for='" + $element.attr("id") + "']");
+                    var $prevLabel = $form.find("label[for='" + $element.attr("id") + "']");
                     $error.attr("id", $element.attr("name") + "_error");
                     $element.attr("aria-describedby", $element.attr("name") + "_error");
                     if (insertAfterLabel) {
@@ -2083,6 +2362,7 @@ define(
                 $form.find("*[aria-describedby]").removeAttr("aria-describedby");
             }
         },
+
         Draggable: {
             getDraggableMessage: function(items){
                 var message = "";
@@ -2105,7 +2385,7 @@ define(
                 } else {
                     draggableData.push(helper.children().data());
                 }
-                return [draggableData];
+                return draggableData;
             },
             /**
              * Sets and overrides default parameters for the jQuery Droppable plugin
@@ -2156,16 +2436,18 @@ define(
              * @param {Object} $container Optional container element to add draggables, defaults to $("html") if not set
              */
             setupDraggable: function(params, $container){
-                $.each($(".s3d-draggable-container", $container), function(index, draggable){
-                    if(!$(draggable).hasClass("ui-draggable")){
-                        // HTML overrides default, JS overrides HTML
-                        // Override default parameters with attribute defined parameters
-                        var htmlParams =  $.extend(true, sakai_util.Draggable.setDraggableParameters(), $(draggable).data());
-                        // Override attribute defined parameters with JS defined ones
-                        params = $.extend(true, htmlParams, params);
-                        $(".s3d-draggable-container", $container || $("html")).draggable(params);
-                    }
-                });
+                if (!require("sakai/sakai.api.user").data.me.user.anon) {
+                    $(".s3d-draggable-container", $container).each(function(index, draggable){
+                        if (!$(draggable).hasClass("ui-draggable")) {
+                            // HTML overrides default, JS overrides HTML
+                            // Override default parameters with attribute defined parameters
+                            var htmlParams = $.extend(true, sakai_util.Draggable.setDraggableParameters(), $(draggable).data());
+                            // Override attribute defined parameters with JS defined ones
+                            params = $.extend(true, htmlParams, params);
+                            $(".s3d-draggable-container", $container || $("html")).draggable(params);
+                        }
+                    });
+                }
             }
         },
         Droppable: {
@@ -2180,15 +2462,15 @@ define(
                     drop: function(event, ui) {
                         $(".s3d-draggable-draggingitems").remove();
                         if($(this).data("dropevent")){
-                            $(window).trigger($(this).data("dropevent"), sakai_util.Draggable.getDraggableData(ui.helper));
+                            $(window).trigger($(this).data("dropevent"), [sakai_util.Draggable.getDraggableData(ui.helper), $(this)]);
                         }
                     },
                     over: function(event, ui) {
                         if($(this).data("overdropevent")){
-                            $(window).trigger($(this).data("overdropevent"), sakai_util.Draggable.getDraggableData(ui.helper));
+                            $(window).trigger($(this).data("overdropevent"), [sakai_util.Draggable.getDraggableData(ui.helper), $(this)]);
                         }
                     }
-                }
+                };
             },
             /**
              * Sets up droppables accross the page
@@ -2196,19 +2478,21 @@ define(
              * @param {Object} $container Optional container element to add droppables, defaults to $("html") if not set
              */
             setupDroppable: function(params, $container){
-                $.each($(".s3d-droppable-container", $container), function(index, droppable){
-                    if(!$(droppable).hasClass("ui-droppable")){
-                        // HTML overrides default, JS overrides HTML
-                        // Override default parameters with attribute defined parameters
-                        var htmlParams =  $.extend(true, sakai_util.Droppable.setDroppableParameters(), $(droppable).data());
-                        // Override attribute defined parameters with JS defined ones
-                        params = $.extend(true, htmlParams, params);
-                        $(".s3d-droppable-container", $container || $("html")).droppable(params);
-                    }
-                });
+                if (!require("sakai/sakai.api.user").data.me.user.anon) {
+                    $(".s3d-droppable-container", $container).each(function(index, droppable){
+                        if (!$(droppable).hasClass("ui-droppable")) {
+                            // HTML overrides default, JS overrides HTML
+                            // Override default parameters with attribute defined parameters
+                            var htmlParams = $.extend(true, sakai_util.Droppable.setDroppableParameters(), $(droppable).data());
+                            // Override attribute defined parameters with JS defined ones
+                            params = $.extend(true, htmlParams, params);
+                            $(".s3d-droppable-container", $container || $("html")).droppable(params);
+                        }
+                    });
+                }
             }
         }
     };
-    
+
     return sakai_util;
 });
