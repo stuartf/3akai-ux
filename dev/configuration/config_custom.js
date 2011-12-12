@@ -30,5 +30,27 @@ define(["config/config"], function(config) {
         playerId: 100 //INSERT_YOUR_PLAYER_ID_HERE
     };
 
+    // Hybrid
+    config.showSakai2 = true;
+    config.useLiveSakai2Feeds = true;
+
+    // CAS
+    config.Authentication.allowInternalAccountCreation = false;
+    config.Authentication.internal = false;
+    config.allowPasswordChange = false;
+    config.Authentication.external = [{
+        label: "Log in with your GT Account",
+        url: "/system/sling/cas/login?resource=/me",
+        login_btn: "LOGIN_BTN"
+    }];
+    config.followLogoutRedirects = true;
+
+		config.hybridCasHost="s-square.gatech.edu";
+
+    // Profile
+    //config.Profile.configuration.defaultConfig.basic.elements.firstname["editable"] = false;
+    //config.Profile.configuration.defaultConfig.basic.elements.lastname.editable = false;
+    //config.Profile.configuration.defaultConfig.basic.elements.email.editable = false;
+
     return config;
 });
