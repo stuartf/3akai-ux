@@ -51,6 +51,25 @@ define(["config/config"], function(config) {
     //config.Profile.configuration.defaultConfig.basic.elements.firstname["editable"] = false;
     //config.Profile.configuration.defaultConfig.basic.elements.lastname.editable = false;
     //config.Profile.configuration.defaultConfig.basic.elements.email.editable = false;
+    delete config.Profile.configuration.defaultConfig.basic.elements.email;
+    config.Profile.configuration.defaultConfig.contact = {
+        "label": "Contact information",
+        "required": true,
+        "display": true,
+        "access": "everybody",
+        "modifyacl": true,
+        "permission": "everyone",
+        "order": 1,
+        "elements": {
+            "email": {
+                "label": "__MSG__PROFILE_BASIC_EMAIL_LABEL__",
+                "errorMessage": "__MSG__PROFILE_BASIC_EMAIL_ERROR__",
+                "required": true,
+                "display": true,
+                "validation": "email"
+            }
+        }
+    };
 
     return config;
 });
