@@ -45,7 +45,7 @@ define(["config/config"], function(config) {
     }];
     config.followLogoutRedirects = true;
 
-		config.hybridCasHost="s-square.gatech.edu";
+		config.hybridCasHost="t-square.gatech.edu";
 
     // Profile
     //config.Profile.configuration.defaultConfig.basic.elements.firstname["editable"] = false;
