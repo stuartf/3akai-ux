@@ -9,24 +9,24 @@
 
 /* Layout */
 .o2k7SimpleSkin .mceToolbar .mceToolbarStart span {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
     display: block;
     height: 22px;
     width: 1px;
 }
 .o2k7SimpleSkin .mceToolbar .mceToolbarEnd span {display:block;
-    background: url(/dev/lib/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
     height: 22px;
     width: 1px;
 }
 .o2k7SimpleSkin span.mceIcon, .o2k7SimpleSkin img.mceIcon {display:block; width:20px; height:20px}
 .o2k7SimpleSkin .mceIcon {
-    background: url(/dev/lib/tinymce/themes/advanced/img/icons.gif) no-repeat 20px 20px;
+    background: url(/shared/js/tinymce/themes/advanced/img/icons.gif) no-repeat 20px 20px;
 }
 
 /* Button */
 .o2k7SimpleSkin .mceButton {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/o2k7/img/button_bg.png);
+    background: url(/shared/js/tinymce/themes/advanced/skins/o2k7/img/button_bg.png);
     display: block;
     height: 22px;
     width: 22px;
@@ -38,7 +38,7 @@
 
 /* Separator */
 .o2k7SimpleSkin .mceSeparator {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/o2k7/img/button_bg.png) -22px 0;
     display: block;
     height: 22px;
     width: 5px;

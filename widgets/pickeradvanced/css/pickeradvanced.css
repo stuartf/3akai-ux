@@ -187,7 +187,7 @@
     left: 5px;
 }
 .loadinganim {
-    background: #fff url(/dev/images/ajax_load.gif) center 8px no-repeat;
+    background: #fff url(/ui/images/ajax_load.gif) center 8px no-repeat;
     min-height: 50px;
 }
 #pickeradvanced_container #pickeradvanced_no_results {

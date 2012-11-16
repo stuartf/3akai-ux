@@ -71,7 +71,7 @@ input.checkbox {
     font-weight: bold;
     width: 94px;
     height: 26px;
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -26px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -26px;
     cursor: pointer;
     padding-bottom: 2px;
     float: left;
@@ -89,7 +89,7 @@ a.pickcolor, a.browse {
     text-decoration: none
 }
 a.browse span, a.pickcolor span {
-    background: url(/dev/lib/tinymce/themes/advanced/img/icons.gif);
+    background: url(/shared/js/tinymce/themes/advanced/img/icons.gif);
 }
 a.browse span {
     display: block;
@@ -182,7 +182,7 @@ td.charmap, #charmap a {
 
 /* Tabs classes */
 .tabs, .tabs li, .tabs span, .tabs .current span {
-    background-image: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif);
+    background-image: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif);
 }
 .tabs {
     width: 100%;

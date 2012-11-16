@@ -205,14 +205,14 @@
     margin-left: 7px;
 }
 .s3d-link-button #contentmetadata_show_more_arrow {
-    background: url("/dev/images/arrow_down_square.png") no-repeat top left transparent;
+    background: url("/ui/images/arrow_down_square.png") no-repeat top left transparent;
 }
 .s3d-link-button:hover #contentmetadata_show_more_arrow {
-    background: url("/dev/images/arrow_down_square_hover.png") no-repeat top left transparent;
+    background: url("/ui/images/arrow_down_square_hover.png") no-repeat top left transparent;
 }
 .s3d-link-button #contentmetadata_show_less_arrow {
-    background: url("/dev/images/arrow_up_square.png") no-repeat top left transparent;
+    background: url("/ui/images/arrow_up_square.png") no-repeat top left transparent;
 }
 .s3d-link-button:hover #contentmetadata_show_less_arrow {
-    background: url("/dev/images/arrow_up_square_hover.png") no-repeat top left transparent;
+    background: url("/ui/images/arrow_up_square_hover.png") no-repeat top left transparent;
 }

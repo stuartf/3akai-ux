@@ -122,7 +122,7 @@ strong {
     margin-top: 5px;
 }
 .searchsakai2_result_star {
-    background-image: url(/dev/images//star.png);
+    background-image: url(/ui/images//star.png);
     display: block;
     float: left;
     position: relative;

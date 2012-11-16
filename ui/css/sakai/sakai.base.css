@@ -219,14 +219,14 @@ caption, .caption {
     margin-bottom: 10px;
 }
 .s3d-fixed-container .s3d-container-shadow-left, .s3d-container-shadow-right {
-    background: url("/dev/images/container_shadow_left.png") no-repeat scroll 0 0 transparent;
+    background: url("/ui/images/container_shadow_left.png") no-repeat scroll 0 0 transparent;
     height: 346px;
     position: absolute;
     width: 5px;
     margin-left: -5px;
 }
 .s3d-container-shadow-right {
-    background: url("/dev/images/container_shadow_right.png") no-repeat scroll 0 0 transparent;
+    background: url("/ui/images/container_shadow_right.png") no-repeat scroll 0 0 transparent;
     float: right;
     margin-left: 960px;
 }
@@ -766,7 +766,7 @@ input.fl-icon {
     color: #999;
 }
 .s3d-dropdown-list .s3d-dropdown-list-arrow-up {
-    background: url("/dev/images/dropdown_list_arrow_up.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/dropdown_list_arrow_up.png") no-repeat scroll left top transparent;
     height: 20px;
     margin-top: -20px;
     position: absolute;
@@ -774,7 +774,7 @@ input.fl-icon {
     width: 25px;
 }
 .s3d-dropdown-list .s3d-dropdown-hassubnav {
-    background: url("/dev/images/arrow_right.png") no-repeat right 7px transparent;
+    background: url("/ui/images/arrow_right.png") no-repeat right 7px transparent;
     padding-right: 12px;
 }
 .s3d-dropdown-list .s3d-dropdown-hassubnav:hover ul,
@@ -1030,7 +1030,7 @@ a:hover {
     text-decoration: underline;
 }
 .s3d-add_another_location {
-    background: url(/dev/images/add_blue_icon.png) no-repeat transparent;
+    background: url(/ui/images/add_blue_icon.png) no-repeat transparent;
     clear: both;
     color: #39C;
     display: block;
@@ -1148,7 +1148,7 @@ a.s3d-widget-links, span.s3d-widget-links, .s3d-widget-links a, button.s3d-widge
     float: left;
 }
 .s3d-page-header-bottom-row .s3d-button .s3d-page-header-add-to-icon {
-    background: url("/dev/images/savecontent_button_icon_16x16.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/savecontent_button_icon_16x16.png") no-repeat scroll left center transparent;
     display: block;
     float: right;
     height: 18px;
@@ -1156,10 +1156,10 @@ a.s3d-widget-links, span.s3d-widget-links, .s3d-widget-links a, button.s3d-widge
     width: 16px;
 }
 .s3d-page-header-bottom-row .s3d-button:hover .s3d-page-header-add-to-icon {
-    background: url("/dev/images/savecontent_button_icon_16x16_hover.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/savecontent_button_icon_16x16_hover.png") no-repeat scroll left center transparent;
 }
 .s3d-page-header-bottom-row .s3d-button[disabled]:hover .s3d-page-header-add-to-icon {
-    background: url("/dev/images/savecontent_button_icon_16x16.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/savecontent_button_icon_16x16.png") no-repeat scroll left center transparent;
 }
 
 /* LIST VIEW OPTIONS */
@@ -1336,7 +1336,7 @@ a.s3d-button.s3d-header-button {
 
 /* Left pop out buttons */
 .s3d-popout-button-shadow {
-    background: url("/dev/images/button_popout_border_shadow.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/button_popout_border_shadow.png") no-repeat scroll left top transparent;
     float: left;
     height: 56px;
     margin-left: -10px;
@@ -1706,7 +1706,7 @@ a.s3d-button.s3d-overlay-button {
     display: block;
     width: 16px;
     height: 19px;
-    background: url("/dev/images/search_icon.png") no-repeat top left transparent;
+    background: url("/ui/images/search_icon.png") no-repeat top left transparent;
 }
 .s3d-search-container .s3d-search-result-count {
     color: #666666;
@@ -1718,7 +1718,7 @@ a.s3d-button.s3d-overlay-button {
  * NO RESULTS VIEW (When a widget feed doesn't return any results)
  */
 .s3d-no-results-container {
-    background: url("/dev/images/noresults_bg.png") repeat scroll left top transparent;
+    background: url("/ui/images/noresults_bg.png") repeat scroll left top transparent;
     -moz-border-radius: 5px;
     border-radius: 5px;
     padding: 20px;
@@ -1726,7 +1726,7 @@ a.s3d-button.s3d-overlay-button {
     list-style: none
 }
 .s3d-no-results-container .s3d-no-results-arrow-up {
-    background: url("/dev/images/noresults_arrow_up.png") no-repeat top left transparent;
+    background: url("/ui/images/noresults_arrow_up.png") no-repeat top left transparent;
     position: absolute;
     margin-top: -44px;
     width: 36px;
@@ -1752,67 +1752,67 @@ a.s3d-button.s3d-overlay-button {
     margin: -8px 12px 0 0;
 }
 .s3d-no-results-container .s3d-no-results-magnifier {
-    background: url("/dev/images/magnifier_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/magnifier_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-world {
-    background: url("/dev/images/world_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/world_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-people {
-    background: url("/dev/images/person_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/person_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-content {
-    background: url("/dev/images/content_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/content_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-content-small {
-    background: url("/dev/images/content_icon_42x46.png") no-repeat top left transparent;
+    background: url("/ui/images/content_icon_42x46.png") no-repeat top left transparent;
     width: 46px;
     height: 42px;
 }
 .s3d-no-results-container .s3d-no-results-memberships {
-    background: url("/dev/images/memberships_icon_60x55.png") no-repeat top left transparent;
+    background: url("/ui/images/memberships_icon_60x55.png") no-repeat top left transparent;
     width: 60px;
 }
 .s3d-no-results-container .s3d-no-results-memberships-small {
-    background: url("/dev/images/memberships_icon_42x46.png") no-repeat top left transparent;
+    background: url("/ui/images/memberships_icon_42x46.png") no-repeat top left transparent;
     width: 46px;
     height: 42px;
 }
 .s3d-no-results-container .s3d-no-results-contacts {
-    background: url("/dev/images/contacts_icon_60x55.png") no-repeat top left transparent;
+    background: url("/ui/images/contacts_icon_60x55.png") no-repeat top left transparent;
     width: 60px;
 }
 .s3d-no-results-container .s3d-no-results-contacts-small {
-    background: url("/dev/images/contacts_icon_42x46.png") no-repeat top left transparent;
+    background: url("/ui/images/contacts_icon_42x46.png") no-repeat top left transparent;
     width: 46px;
     height: 42px;
 }
 .s3d-no-results-container .s3d-no-results-replied {
-    background: url("/dev/images/replied_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/replied_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-trash {
-    background: url("/dev/images/trash_icon_55x55.png") no-repeat top left transparent;
+    background: url("/ui/images/trash_icon_55x55.png") no-repeat top left transparent;
 }
 .s3d-no-results-container .s3d-no-results-upload {
-    background: url("/dev/images/upload_icon_42x46.png") no-repeat top left transparent;
+    background: url("/ui/images/upload_icon_42x46.png") no-repeat top left transparent;
     width: 46px;
     height: 42px;
 }
 .s3d-no-results-container .s3d-no-results-search-messages {
-    background: url("/dev/images/no-messages-found-icon.png") no-repeat top left transparent;
+    background: url("/ui/images/no-messages-found-icon.png") no-repeat top left transparent;
     width: 46px;
     height: 42px;
 }
 .s3d-no-results-container .s3d-no-results-search-world {
-    background: url("/dev/images/world_search_icon_55x55.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/world_search_icon_55x55.png") no-repeat scroll left top transparent;
 }
 .s3d-no-results-container .s3d-no-results-search-people {
-    background: url("/dev/images/people_search_icon_55x55.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/people_search_icon_55x55.png") no-repeat scroll left top transparent;
 }
 .s3d-no-results-container .s3d-no-results-search-content {
-    background: url("/dev/images/content_search_icon_55x55.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/content_search_icon_55x55.png") no-repeat scroll left top transparent;
 }
 .s3d-no-results-container .s3d-no-results-sakai2sites {
-    background: url("/dev/images/sakai2_icon_43x40.png") no-repeat top left transparent;
+    background: url("/ui/images/sakai2_icon_43x40.png") no-repeat top left transparent;
     width: 46px;
     height: 45px;
 }
@@ -1832,53 +1832,53 @@ a.s3d-button.s3d-overlay-button {
     display: none;
 }
 .s3d-actions-delete {
-    background: url("/dev/images/delete_icon_default.png") no-repeat top left transparent;
+    background: url("/ui/images/delete_icon_default.png") no-repeat top left transparent;
 }
 .s3d-actions-delete:hover {
-    background: url("/dev/images/delete_icon_hover.png") no-repeat top left transparent;
+    background: url("/ui/images/delete_icon_hover.png") no-repeat top left transparent;
 }
 .s3d-actions-addtolibrary {
-    background: url("/dev/images/addtolibrary_icon_default.png") no-repeat top left transparent;
+    background: url("/ui/images/addtolibrary_icon_default.png") no-repeat top left transparent;
     width: 17px;
     height: 25px;
 }
 .s3d-actions-addtolibrary:hover {
-    background: url("/dev/images/addtolibrary_icon_hover.png") no-repeat top left transparent;
+    background: url("/ui/images/addtolibrary_icon_hover.png") no-repeat top left transparent;
 }
 .s3d-actions-author {
-    background: url("/dev/images/author_icon_default.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/author_icon_default.png") no-repeat scroll left top transparent;
     width: 32px !important;
 }
 .s3d-actions-author:hover {
-    background: url("/dev/images/author_icon_hover.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/author_icon_hover.png") no-repeat scroll left top transparent;
 }
 .s3d-actions-share {
-    background: url("/dev/images/share_icon_default.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/share_icon_default.png") no-repeat scroll left top transparent;
     width: 23px !important;
 }
 .s3d-actions-share:hover {
-    background: url("/dev/images/share_icon_hover.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/share_icon_hover.png") no-repeat scroll left top transparent;
 }
 .s3d-actions-message {
-    background: url("/dev/images/message_icon_default.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_default.png") no-repeat scroll left top transparent;
 }
 .s3d-actions-message:hover {
-    background: url("/dev/images/message_icon_hover.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_hover.png") no-repeat scroll left top transparent;
 }
 .s3d-button:hover .s3d-actions-message {
-    background: url("/dev/images/message_icon_hover.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_hover.png") no-repeat scroll left top transparent;
 }
 .s3d-button:disabled:hover .s3d-actions-message {
-    background: url("/dev/images/message_icon_default.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_default.png") no-repeat scroll left top transparent;
 }
 .s3d-black-check-icon {
-    background: url("/dev/images/black_check_icon.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/black_check_icon.png") no-repeat scroll left top transparent;
 }
 .s3d-above-icon {
-    background: url("/dev/images/above_icon_16x16.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/above_icon_16x16.png") no-repeat scroll left top transparent;
 }
 .s3d-below-icon {
-    background: url("/dev/images/below_icon_16x16.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/below_icon_16x16.png") no-repeat scroll left top transparent;
 }
 
 /*
@@ -2032,7 +2032,7 @@ input[type=text], input[type=password], input[type=email], input[type=url], text
     border: 1px solid #a9a9a9;
 }
 ul.as-selections.loading {
-    background: #fff url(/dev/images/ajax_load.gif) center center no-repeat;
+    background: #fff url(/ui/images/ajax_load.gif) center center no-repeat;
 }
 ul.as-selections li.as-original input {
     border: 0;
@@ -2154,7 +2154,7 @@ ul.as-selections textarea.as-input {
     font-size: 12px;
 }
 .s3d-dialog-container .s3d-dialog-close {
-    background-image: url('/dev/images/dialog_close.png');
+    background-image: url('/ui/images/dialog_close.png');
     background-color: transparent;
     background-repeat: no-repeat;
 }
@@ -2309,7 +2309,7 @@ ul li.s3d-list-item:hover {
 }
 .s3d-taglist li:first-child {
     list-style: none;
-    background: url("/devwidgets/entity/images/entity_tags_icon.png") no-repeat scroll 0 -1px transparent;
+    background: url("/widgets/entity/images/entity_tags_icon.png") no-repeat scroll 0 -1px transparent;
     padding-left: 20px;
 }
 
@@ -2475,10 +2475,10 @@ ul li.s3d-list-item:hover {
 
 /* search results common elements in content people and group results */
 .s3d-search-result-content .searchcontent_result_usedin_icon, .s3d-search-result-group .searchgroups_result_usedin_icon {
-    background: url("/devwidgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
 }
 .s3d-search-result-content .searchcontent_result_comments_icon, .s3d-search-result-group .searchgroups_result_comments_icon {
-    background: url("/devwidgets/entity/images/entity_comment_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_comment_icon.png") no-repeat scroll left top transparent;
 }
 .s3d-search-result-content .searchcontent_result_left_filler, .s3d-search-result-person .searchpeople_result_left_filler, .s3d-search-result-group .searchgroups_result_left_filler {
     margin: 1px 8px 0 0;
@@ -2773,34 +2773,34 @@ ul li.s3d-list-item:hover {
 
 /* Search icons */
 .s3d-search-results-gridview {
-    background: url('/dev/images/search_grid_16x16.png') no-repeat top left transparent;
+    background: url('/ui/images/search_grid_16x16.png') no-repeat top left transparent;
 }
 .s3d-search-results-gridview:hover,
 .s3d-search-results-gridview.selected {
-    background: url('/dev/images/search_grid_16x16_hover.png') no-repeat top left transparent;
+    background: url('/ui/images/search_grid_16x16_hover.png') no-repeat top left transparent;
 }
 .s3d-search-results-listview {
-    background: url('/dev/images/search_list_16x16.png') no-repeat top left transparent;
+    background: url('/ui/images/search_list_16x16.png') no-repeat top left transparent;
 }
 .s3d-search-results-listview:hover,
 .s3d-search-results-listview.selected {
-    background: url('/dev/images/search_list_16x16_hover.png') no-repeat top left transparent;
+    background: url('/ui/images/search_list_16x16_hover.png') no-repeat top left transparent;
 }
 .s3d-search-results-carouselview {
-    background: url('/dev/images/search_carousel_16x16.png') no-repeat top left transparent;
+    background: url('/ui/images/search_carousel_16x16.png') no-repeat top left transparent;
     margin-top: -2px;
 }
 .s3d-search-results-carouselview:hover,
 .s3d-search-results-carouselview.selected {
-    background: url('/dev/images/search_carousel_16x16_hover.png') no-repeat top left transparent;
+    background: url('/ui/images/search_carousel_16x16_hover.png') no-repeat top left transparent;
 }
 .s3d-search-results-blogview {
-    background: url('/dev/images/search_blog_16x16.png') no-repeat top left transparent;
+    background: url('/ui/images/search_blog_16x16.png') no-repeat top left transparent;
     margin-top: -1px;
 }
 .s3d-search-results-blogview:hover,
 .s3d-search-results-blogview.selected {
-    background: url('/dev/images/search_blog_16x16_hover.png') no-repeat top left transparent;
+    background: url('/ui/images/search_blog_16x16_hover.png') no-repeat top left transparent;
 }
 
 /*
@@ -2876,49 +2876,49 @@ ul li.s3d-list-item:hover {
 }
 
 .s3d-icon-audio {
-    background-image: url(/dev/images/mimetypes/small/sound.png);
+    background-image: url(/ui/images/mimetypes/small/sound.png);
 }
 .s3d-icon-collection {
-    background-image: url(/dev/images/mimetypes/small/collection.png);
+    background-image: url(/ui/images/mimetypes/small/collection.png);
 }
 .s3d-icon-doc {
-    background-image: url(/dev/images/mimetypes/small/doc.png);
+    background-image: url(/ui/images/mimetypes/small/doc.png);
 }
 .s3d-icon-html, .s3d-icon-url {
-    background-image: url(/dev/images/mimetypes/small/html.png);
+    background-image: url(/ui/images/mimetypes/small/html.png);
 }
 .s3d-icon-image {
-    background-image: url(/dev/images/mimetypes/small/images.png);
+    background-image: url(/ui/images/mimetypes/small/images.png);
 }
 .s3d-icon-kmultiple {
-    background-image: url(/dev/images/mimetypes/small/kmultiple.png);
+    background-image: url(/ui/images/mimetypes/small/kmultiple.png);
 }
 .s3d-icon-pdf {
-    background-image: url(/dev/images/mimetypes/small/pdf.png);
+    background-image: url(/ui/images/mimetypes/small/pdf.png);
 }
 .s3d-icon-pps {
-    background-image: url(/dev/images/mimetypes/small/pps.png);
+    background-image: url(/ui/images/mimetypes/small/pps.png);
 }
 .s3d-icon-sakaidoc {
-    background-image: url(/dev/images/mimetypes/small/sakaidoc.png);
+    background-image: url(/ui/images/mimetypes/small/sakaidoc.png);
 }
 .s3d-icon-swf {
-    background-image: url(/dev/images/mimetypes/small/swf.png);
+    background-image: url(/ui/images/mimetypes/small/swf.png);
 }
 .s3d-icon-spreadsheet {
-    background-image: url(/dev/images/mimetypes/small/spreadsheet.png);
+    background-image: url(/ui/images/mimetypes/small/spreadsheet.png);
 }
 .s3d-icon-txt {
-    background-image: url(/dev/images/mimetypes/small/txt.png);
+    background-image: url(/ui/images/mimetypes/small/txt.png);
 }
 .s3d-icon-unknown {
-    background-image: url(/dev/images/mimetypes/small/unknown.png);
+    background-image: url(/ui/images/mimetypes/small/unknown.png);
 }
 .s3d-icon-video {
-    background-image: url(/dev/images/mimetypes/small/video.png);
+    background-image: url(/ui/images/mimetypes/small/video.png);
 }
 .s3d-icon-zip {
-    background-image: url(/dev/images/mimetypes/small/zip.png);
+    background-image: url(/ui/images/mimetypes/small/zip.png);
 }
 
 /*

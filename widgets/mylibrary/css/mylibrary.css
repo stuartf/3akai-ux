@@ -54,7 +54,7 @@
     font-size: 0.9em;
 }
 .mylibrary_edit {
-    background: url("/dev/images/imanage.png") no-repeat scroll 0 0 transparent;
+    background: url("/ui/images/imanage.png") no-repeat scroll 0 0 transparent;
     height: 14px;
     width: 54px;
     display: inline-block;
@@ -153,11 +153,11 @@
     width: 15px;
 }
 .mylibrary_item_usedin_icon {
-    background: url("/devwidgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
 }
 .mylibrary_item_comments_icon {
     margin-left: 8px;
-    background: url("/devwidgets/entity/images/entity_comment_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_comment_icon.png") no-repeat scroll left top transparent;
 }
 .mylibrary_item:hover {
     background-color: #f2f9fc;
@@ -237,7 +237,7 @@
 }
 .mylibrary_groupfilter_usedin_arrow_up {
     margin: 1px 0 0 2px;
-    background: url("/devwidgets/mylibrary/images/up_arrow.png") no-repeat scroll left top transparent;
+    background: url("/widgets/mylibrary/images/up_arrow.png") no-repeat scroll left top transparent;
     display: inline;
     float: right;
     height: 17px;
@@ -245,7 +245,7 @@
 }
 .mylibrary_groupfilter_usedin_arrow_down {
     margin: 1px 0 0 2px;
-    background: url("/devwidgets/mylibrary/images/down_arrow.png") no-repeat scroll left top transparent;
+    background: url("/widgets/mylibrary/images/down_arrow.png") no-repeat scroll left top transparent;
     display: inline;
     float: right;
     height: 17px;
@@ -275,7 +275,7 @@
     display: block;
 }
 #mylibrary_content_share.s3d-button .entity_share_content, #mylibrary_content_share.s3d-button:disabled:hover .entity_share_content {
-    background: url("/dev/images/share_icon_default_16x11.png") no-repeat center center transparent;
+    background: url("/ui/images/share_icon_default_16x11.png") no-repeat center center transparent;
     display: block;
     float: right;
     height: 18px;
@@ -283,7 +283,7 @@
     width: 16px;
 }
 #mylibrary_content_share.s3d-button:hover .entity_share_content {
-    background: url("/dev/images/share_icon_hover_16x11.png") no-repeat center center transparent;
+    background: url("/ui/images/share_icon_hover_16x11.png") no-repeat center center transparent;
 }
 #mylibrary_items .s3d-search-result {
     padding: 10px 10px 6px 7px !important;

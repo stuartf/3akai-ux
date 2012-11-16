@@ -10,7 +10,7 @@
 /* Layout */
 .defaultSimpleSkin span.mceIcon, .defaultSimpleSkin img.mceIcon {display:block; width:20px; height:20px}
 .defaultSimpleSkin .mceIcon {
-    background: url(/dev/lib/tinymce/themes/advanced/img/icons.gif) no-repeat 20px 20px;
+    background: url(/shared/js/tinymce/themes/advanced/img/icons.gif) no-repeat 20px 20px;
 }
 
 /* Button */
@@ -21,7 +21,7 @@
 
 /* Separator */
 .defaultSimpleSkin .mceSeparator {
-    background: url(/dev/lib/tinymce/themes/advanced/img/icons.gif) -180px 0;
+    background: url(/shared/js/tinymce/themes/advanced/img/icons.gif) -180px 0;
     display: block;
     height: 20px;
     margin: 0 2px 0 4px;

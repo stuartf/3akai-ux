@@ -38,13 +38,13 @@
     text-decoration: none;
 }
 #permission_error #error_title {
-    background: url(/dev/images/403_slash.png) no-repeat;
+    background: url(/ui/images/403_slash.png) no-repeat;
 }
 #page_not_found_error #error_title {
-    background: url(/dev/images/404_exclamation.png) no-repeat;
+    background: url(/ui/images/404_exclamation.png) no-repeat;
 }
 #internal_user_error #error_title {
-    background: url(/dev/images/500_exclamation.png) no-repeat;
+    background: url(/ui/images/500_exclamation.png) no-repeat;
 }
 .decor {
     padding-bottom: 14px;

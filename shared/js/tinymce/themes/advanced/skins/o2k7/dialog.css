@@ -39,23 +39,23 @@ input.checkbox {border:1px none #000000; background:transparent; vertical-align:
 border:0; margin:0; padding:0;
 font-weight:bold;
 width:94px; height:26px;
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -26px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -26px;
 cursor:pointer;
 padding-bottom:2px;
 float:left;
 }
 
 #insert {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -52px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 -52px;
 }
 #cancel {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/buttons.png) 0 0;
     float:right;
 }
 
 /* Browse */
 a.browse span, a.pickcolor span {
-    background: url(/dev/lib/tinymce/themes/advanced/img/icons.gif);
+    background: url(/shared/js/tinymce/themes/advanced/img/icons.gif);
 }
 a.pickcolor, a.browse {text-decoration:none}
 a.browse span {display:block; width:20px; height:18px; background-position:-860px 0; border:1px solid #FFF; margin-left:1px;}
@@ -82,14 +82,14 @@ td.charmap, #charmap a {width:18px; height:18px; color:#000; border:1px solid #A
 
 /* Tabs classes */
 .tabs {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif) repeat-x 0 -72px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif) repeat-x 0 -72px;
     height: 18px;
     line-height: normal;
     width: 100%;
 }
 .tabs ul {margin:0; padding:0; list-style:none;}
 .tabs li {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat 0 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat 0 0;
     display: block;
     float: left;
     height: 18px;
@@ -100,16 +100,16 @@ td.charmap, #charmap a {width:18px; height:18px; color:#000; border:1px solid #A
 }
 .tabs li.current {
     margin-right: 2px;
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat 0 -18px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat 0 -18px;
 }
 .tabs span {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat right -36px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat right -36px;
     display: block;
     float: left;
     padding: 0 10px 0 0;
 }
 .tabs .current span {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat right -54px;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/tabs.gif) no-repeat right -54px;
 }
 .tabs a {text-decoration:none; font-family:Verdana, Arial; font-size:10px;}
 .tabs a:link, .tabs a:visited, .tabs a:hover {color:black;}

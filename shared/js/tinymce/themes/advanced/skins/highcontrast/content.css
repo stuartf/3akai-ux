@@ -8,7 +8,7 @@ h5 {font-size: .83em}
 h6 {font-size: .75em}
 .mceItemTable, .mceItemTable td, .mceItemTable th, .mceItemTable caption, .mceItemVisualAid {border: 1px dashed #BBB;}
 a.mceItemAnchor {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/items.gif) no-repeat 0 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/items.gif) no-repeat 0 0;
     display: inline-block;
     height: 11px !important;
     width: 11px !important;

@@ -62,14 +62,14 @@
     border-right: 15px solid transparent;
 }
 .personinfo_loading {
-    background: #fff url(/dev/images/ajax_load.gif) center 8px no-repeat;
+    background: #fff url(/ui/images/ajax_load.gif) center 8px no-repeat;
     min-height: 40px;
 }
 .personinfo_close {
     float: right
 }
 #personinfo_close {
-    background: url(/dev/images/close_icon_small.png) no-repeat transparent;
+    background: url(/ui/images/close_icon_small.png) no-repeat transparent;
     height: 16px;
     width: 16px;
 }

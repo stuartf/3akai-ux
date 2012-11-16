@@ -35,7 +35,7 @@
     list-style-type: none;
 }
 .my_groups_widget .mygroup_item .group_icon {
-    background: url(/dev/images/globe_fuge.png) no-repeat transparent;
+    background: url(/ui/images/globe_fuge.png) no-repeat transparent;
     display: block;
     height: 16px;
     margin-right: 5px;

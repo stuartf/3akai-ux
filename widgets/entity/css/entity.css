@@ -210,66 +210,66 @@
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_private {
-    background: url("/devwidgets/entity/images/lock_icon_18x18.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/lock_icon_18x18.png") no-repeat center center transparent;
     border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
     -webkit-border-radius: 3px 0 0 3px;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_private:hover, #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_private.selected {
-    background: url("/devwidgets/entity/images/lock_icon_18x18_hover.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/lock_icon_18x18_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_institution {
-    background: url("/devwidgets/entity/images/institution_icon_18x18.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/institution_icon_18x18.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_institution:hover, #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_institution.selected {
-    background: url("/devwidgets/entity/images/institution_icon_18x18_hover.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/institution_icon_18x18_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_public {
-    background: url("/devwidgets/entity/images/globe_icon_18x18.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/globe_icon_18x18.png") no-repeat center center transparent;
     border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_public:hover, #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_public.selected {
-    background: url("/devwidgets/entity/images/globe_icon_18x18_hover.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/globe_icon_18x18_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_collaborator {
-    background: url("/devwidgets/entity/images/collaborator_icon_20x16.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/collaborator_icon_20x16.png") no-repeat center center transparent;
     border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_collaborator:hover, #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_collaborator.selected {
-    background: url("/devwidgets/entity/images/collaborator_icon_20x16_hover.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/collaborator_icon_20x16_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_share {
-    background: url("/devwidgets/entity/images/share_icon_20x16.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/share_icon_20x16.png") no-repeat center center transparent;
     border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
 }
 
 #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_share:hover, #entity_container .entity_owns_actions_container .entity_owns_actions .entity_owns_actions_share.selected {
-    background: url("/devwidgets/entity/images/share_icon_20x16_hover.png") no-repeat center center transparent;
+    background: url("/widgets/entity/images/share_icon_20x16_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .s3d-button .entity_share_icon {
-    background: url("/dev/images/share_icon_default_16x11.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/share_icon_default_16x11.png") no-repeat scroll left top transparent;
     float: right;
     margin-left: 8px;
     margin-top: 3px;
 }
 
 #entity_container .s3d-button:hover .entity_share_icon {
-    background: url("/dev/images/share_icon_hover_16x11.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/share_icon_hover_16x11.png") no-repeat scroll left top transparent;
 }
 
 #entity_container .entity_owns_actions_container .s3d-dropdown-list-arrow-up {
@@ -341,7 +341,7 @@
 }
 
 #entity_container .entity_change_avatar .s3d-dropdown-menu-arrow {
-    background: url("/devwidgets/entity/images/entity_changepic_arrow.png") no-repeat top left transparent;
+    background: url("/widgets/entity/images/entity_changepic_arrow.png") no-repeat top left transparent;
     height: 6px;
     margin: 45px 1px 0 4px;
     width: 12px;
@@ -349,7 +349,7 @@
 }
 
 #entity_container .entity_change_avatar:hover .s3d-dropdown-menu-arrow, #entity_container .entity_change_avatar.clicked .s3d-dropdown-menu-arrow {
-    background: url("/devwidgets/entity/images/entity_changepic_hover_arrow.png") no-repeat top left transparent;
+    background: url("/widgets/entity/images/entity_changepic_hover_arrow.png") no-repeat top left transparent;
     width: 12px;
     height: 6px;
 }
@@ -375,7 +375,7 @@
 #entity_container .entity_group_image {
     width: 63px;
     height: 46px;
-    background: url("/dev/images/group_icon.png") no-repeat transparent;
+    background: url("/ui/images/group_icon.png") no-repeat transparent;
     float: left;
     margin-right: 10px;
     margin-top: 5px;
@@ -393,7 +393,7 @@
 }
 
 #entity_container #entity_group_image.s3d-dropdown-menu .s3d-dropdown-menu-arrow {
-    background: url("/devwidgets/entity/images/entity_changepic_arrow.png") no-repeat top left transparent;
+    background: url("/widgets/entity/images/entity_changepic_arrow.png") no-repeat top left transparent;
     height: 8px;
     margin-left: 7px;
     margin-top: 40px;
@@ -402,7 +402,7 @@
 }
 
 #entity_container #entity_group_image.s3d-dropdown-menu:hover .s3d-dropdown-menu-arrow {
-    background: url("/devwidgets/entity/images/entity_changepic_hover_arrow.png") no-repeat top left transparent;
+    background: url("/widgets/entity/images/entity_changepic_hover_arrow.png") no-repeat top left transparent;
     width: 12px;
     height: 8px;
 }
@@ -446,15 +446,15 @@
 }
 
 #entity_container .entity_message_icon {
-    background: url("/dev/images/message_icon.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/message_icon.png") no-repeat scroll left center transparent;
 }
 
 #entity_container .entity_add_to_contacts_icon {
-    background: url("/dev/images/opposite_arrows_icon.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/opposite_arrows_icon.png") no-repeat scroll left center transparent;
 }
 
 #entity_container .entity_add_to_contacts_requested_icon {
-    background: url("/dev/images/opposite_arrows_requested_icon.png") no-repeat scroll left center transparent;
+    background: url("/ui/images/opposite_arrows_requested_icon.png") no-repeat scroll left center transparent;
 }
 
 /* Me */
@@ -526,7 +526,7 @@
 }
 
 #entity_container .entity_add_to_library {
-    background: url("/devwidgets/savecontent/images/savecontent_button_icon_16x16.png") no-repeat center center transparent;
+    background: url("/widgets/savecontent/images/savecontent_button_icon_16x16.png") no-repeat center center transparent;
     display: block;
     float: right;
     height: 17px;
@@ -535,11 +535,11 @@
 }
 
 #entity_container .s3d-button:hover .entity_add_to_library {
-    background: url("/devwidgets/savecontent/images/savecontent_button_icon_16x16_hover.png") no-repeat center center transparent;
+    background: url("/widgets/savecontent/images/savecontent_button_icon_16x16_hover.png") no-repeat center center transparent;
 }
 
 #entity_container .entity_download_content {
-    background: url("/dev/images/download_button_image.png") no-repeat;
+    background: url("/ui/images/download_button_image.png") no-repeat;
     display: block;
     float: right;
     height: 12px;
@@ -549,11 +549,11 @@
 }
 
 #entity_container .s3d-button:hover .entity_download_content {
-    background: url("/dev/images/download_button_image_hover.png") no-repeat;
+    background: url("/ui/images/download_button_image_hover.png") no-repeat;
 }
 
 #entity_container #entity_managed_content {
-    background: url("/devwidgets/entity/images/entity_manager_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_manager_icon.png") no-repeat scroll left top transparent;
     height: 18px;
     margin-left: -2px;
     margin-top: 38px;
@@ -568,19 +568,19 @@
 }
 
 #entity_container #entity_used_by_icon {
-    background: url("/devwidgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
 }
 
 #entity_container #entity_public_privacy_icon {
-    background: url("/devwidgets/entity/images/entity_chain_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_chain_icon.png") no-repeat scroll left top transparent;
 }
 
 #entity_container #entity_everyone_privacy_icon {
-    background: url("/devwidgets/entity/images/entity_anyone_lock_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_anyone_lock_icon.png") no-repeat scroll left top transparent;
 }
 
 #entity_container #entity_private_privacy_icon {
-    background: url("/devwidgets/entity/images/entity_private_lock_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_private_lock_icon.png") no-repeat scroll left top transparent;
 }
 
 #entity_container #entity_type {
@@ -675,7 +675,7 @@
 
 /* Widget Popup */
 #entity_container .entity_permissions_icon {
-    background: url("/dev/images/settings_icon_16x16.png") no-repeat left center transparent;
+    background: url("/ui/images/settings_icon_16x16.png") no-repeat left center transparent;
     margin-left: 5px;
     padding: 2px 0 0 20px;
     margin-right: 4px;
@@ -685,7 +685,7 @@
 }
 
 #entity_container .s3d-button:hover .entity_permissions_icon {
-    background: url("/dev/images/settings_icon_16x16_hover.png") no-repeat left center transparent;
+    background: url("/ui/images/settings_icon_16x16_hover.png") no-repeat left center transparent;
 }
 
 #entity_contentsettings_dropdown, #entity_groupsettings_dropdown {

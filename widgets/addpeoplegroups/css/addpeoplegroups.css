@@ -42,7 +42,7 @@
 #addpeoplegroups_widget #addpeoplegroups_select {margin-top:10px;width:220px;border:1px solid #999;height:20px;}
 #addpeoplegroups_widget button{margin:10px 10px 10px 0px;}
 #addpeoplegroups_widget .addpeoplegroups_close{margin-right:20px;padding-top:6px;}
-#addpeoplegroups_widget .addpeoplegroups_header_arrow{background:url("/dev/images/popover_arrowup.png") no-repeat scroll left top transparent;height:13px;margin-left:110px;position:relative;width:33px;}
+#addpeoplegroups_widget .addpeoplegroups_header_arrow{background:url("/ui/images/popover_arrowup.png") no-repeat scroll left top transparent;height:13px;margin-left:110px;position:relative;width:33px;}
 
 #addpeoplegroups_widget #addpeoplegroups_select .addpeoplegroups_listitem_topborder {border-top:1px solid #DBDBDB;}
 #addpeoplegroups_widget #addpeoplegroups_select #addpeoplegroups_mylibrary_option{border-bottom:1px solid #DBDBDB;}

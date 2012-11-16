@@ -124,14 +124,14 @@
     cursor: text;
     width: 18px;
     margin-top: 3px;
-    background: url("/dev/images/message_icon_default_read.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_default_read.png") no-repeat scroll left top transparent;
 }
 #inbox_message_list .inbox_items_container.unread .inbox_item_read_icon {
     display: block;
     width: 18px;
     cursor: text;
     margin-top: 3px;
-    background: url("/dev/images/message_icon_default.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/message_icon_default.png") no-repeat scroll left top transparent;
 }
 
 .inbox_items_container.last {
@@ -226,12 +226,12 @@
     padding: 0 !important;
 }
 .inbox_reply_icon {
-    background: url("/dev/images/inbox_reply_icon_20x20.png") no-repeat scroll 5px top transparent;
+    background: url("/ui/images/inbox_reply_icon_20x20.png") no-repeat scroll 5px top transparent;
     height: 20px;
     width: 30px;
 }
 .inbox_delete_icon {
-    background: url("/dev/images/inbox_trash_icon_20x20.png") no-repeat scroll 3px -1px transparent;
+    background: url("/ui/images/inbox_trash_icon_20x20.png") no-repeat scroll 3px -1px transparent;
     height: 20px;
     width: 24px;
 }

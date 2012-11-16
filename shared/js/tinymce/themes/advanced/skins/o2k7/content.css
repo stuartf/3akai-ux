@@ -9,7 +9,7 @@ h5 {font-size: .83em}
 h6 {font-size: .75em}
 .mceItemTable, .mceItemTable td, .mceItemTable th, .mceItemTable caption, .mceItemVisualAid {border: 1px dashed #BBB;}
 a.mceItemAnchor {
-    background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/items.gif) no-repeat 0 0;
+    background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/items.gif) no-repeat 0 0;
     display: inline-block;
     height: 11px !important;
     width: 11px !important;
@@ -42,28 +42,28 @@ font[face=mceinline] {font-family:inherit !important}
 
 .mceItemMedia {border:1px dotted #cc0000; background-position:center; background-repeat:no-repeat; background-color:#ffffcc}
 .mceItemShockWave {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/shockwave.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/shockwave.gif);
 }
 .mceItemFlash {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/flash.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/flash.gif);
 }
 .mceItemQuickTime {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/quicktime.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/quicktime.gif);
 }
 .mceItemWindowsMedia {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/windowsmedia.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/windowsmedia.gif);
 }
 .mceItemRealMedia {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/realmedia.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/realmedia.gif);
 }
 .mceItemVideo {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/video.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/video.gif);
 }
 .mceItemIframe {
-    background-image:url(/dev/lib/tinymce/themes/advanced/img/iframe.gif);
+    background-image:url(/shared/js/tinymce/themes/advanced/img/iframe.gif);
 }
 .mcePageBreak {
-    background: #fff url(/dev/lib/tinymce/themes/advanced/img/pagebreak.gif) no-repeat center top;
+    background: #fff url(/shared/js/tinymce/themes/advanced/img/pagebreak.gif) no-repeat center top;
     border: 0;
     border-top: 1px dotted #ccc;
     display:block;

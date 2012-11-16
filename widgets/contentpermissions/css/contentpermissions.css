@@ -51,22 +51,22 @@
     float: left;
 }
 #contentpermissions_container .s3d-inset-shadow-container label .label_icon.globe {
-    background: url("/dev/images/globe_icon.png") no-repeat top left transparent;
+    background: url("/ui/images/globe_icon.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-inset-shadow-container label .label_icon.small_institution {
-    background: url("/dev/images/small_institution_icon.png") no-repeat top left transparent;
+    background: url("/ui/images/small_institution_icon.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-inset-shadow-container label .label_icon.lock {
-    background: url("/dev/images/lock_icon.png") no-repeat top left transparent;
+    background: url("/ui/images/lock_icon.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-outer-shadow-container label .label_icon.globe {
-    background: url("/dev/images/globe_icon_black.png") no-repeat top left transparent;
+    background: url("/ui/images/globe_icon_black.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-outer-shadow-container label .label_icon.small_institution {
-    background: url("/dev/images/small_institution_icon_black.png") no-repeat top left transparent;
+    background: url("/ui/images/small_institution_icon_black.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-outer-shadow-container label .label_icon.lock {
-    background: url("/dev/images/lock_icon_black.png") no-repeat top left transparent;
+    background: url("/ui/images/lock_icon_black.png") no-repeat top left transparent;
 }
 #contentpermissions_container .s3d-outer-shadow-container select {
     border: 1px solid #999;

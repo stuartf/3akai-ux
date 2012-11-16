@@ -239,10 +239,10 @@ div.accountpreferences_error {
     width: 15px;
 }
 #accountpreferences_changePrivacyContainer label .label_icon.globe {
-    background: url("/dev/images/globe_icon_black.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/globe_icon_black.png") no-repeat scroll left top transparent;
 }
 #accountpreferences_changePrivacyContainer label .label_icon.small_institution {
-    background: url("/dev/images/small_institution_icon.png") no-repeat scroll left top transparent;
+    background: url("/ui/images/small_institution_icon.png") no-repeat scroll left top transparent;
 }
 #accountpreferences_changePrivacyContainer .accountpreferences_unselected_rbt {
     height: 30px;

@@ -81,7 +81,7 @@
 }
 
 .allcategories_widget .allcategories_item .allcategories_item_header .allcategories_item_raquo {
-    background: url("/devwidgets/allcategories/images/allcategories_item_raquo.png") no-repeat top left transparent;
+    background: url("/widgets/allcategories/images/allcategories_item_raquo.png") no-repeat top left transparent;
     width: 15px;
     height: 22px;
     float: right;
@@ -134,7 +134,7 @@
     display: block;
 }
 .allcategories_widget .allcategories_content_usedin_icon {
-    background: url("/devwidgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/entity/images/entity_used_by_icon.png") no-repeat scroll left top transparent;
 }
 .allcategories_widget .allcategories_content_icon {
     display: inline-block;
@@ -149,7 +149,7 @@
     margin-top: 5px;
 }
 .allcategories_widget .allcategories_content_comments_icon {
-    background: url("/devwidgets/recentactivity/images/recentactivity_comment_icon.png") no-repeat scroll left top transparent;
+    background: url("/widgets/recentactivity/images/recentactivity_comment_icon.png") no-repeat scroll left top transparent;
 }
 .allcategories_widget .allcategories_content_tags {
     font-size: 11px !important;
@@ -158,7 +158,7 @@
     color: #424242;
     padding-left: 20px;
     padding-top: 5px;
-    background: url("/dev/images/tag_icon.png") no-repeat scroll left bottom transparent;
+    background: url("/ui/images/tag_icon.png") no-repeat scroll left bottom transparent;
     clear: both;
 }
 .allcategories_widget .allcategories_content_tags a {

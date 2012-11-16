@@ -33,7 +33,7 @@
     word-wrap: break-word;
 }
 .popularcontent_main_progress {
-    background: url(/dev/images/ajax_load.gif) no-repeat scroll 0 0 transparent;
+    background: url(/ui/images/ajax_load.gif) no-repeat scroll 0 0 transparent;
     clear: both;
     height: 10px;
     width: 40px;

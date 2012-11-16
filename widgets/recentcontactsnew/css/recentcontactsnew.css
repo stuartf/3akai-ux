@@ -89,20 +89,20 @@ p.recentcontactsnew_error_msg {
 .recentcontactsnew_widget .recentcontactsnew_button {
     margin-top: 5px;
     margin-bottom: 10px;
-    background: url("/dev/images/button_large_grey.png") no-repeat right -41px transparent;
+    background: url("/ui/images/button_large_grey.png") no-repeat right -41px transparent;
     width: 100%;
     max-width: 325px;
 }
 .recentcontactsnew_widget .recentcontactsnew_button span {
     line-height: 40px;
     height: 40px;
-    background: url("/dev/images/button_large_grey.png") no-repeat top left transparent !important;
+    background: url("/ui/images/button_large_grey.png") no-repeat top left transparent !important;
 }
 .recentcontactsnew_widget .recentcontactsnew_button:hover {
-    background: url("/dev/images/button_large_grey.png") no-repeat right -41px transparent !important;
+    background: url("/ui/images/button_large_grey.png") no-repeat right -41px transparent !important;
 }
 .recentcontactsnew_widget .recentcontactsnew_button:hover span {
-    background: url("/dev/images/button_large_grey.png") no-repeat top left transparent !important;
+    background: url("/ui/images/button_large_grey.png") no-repeat top left transparent !important;
     color: #333 !important;
 }
 

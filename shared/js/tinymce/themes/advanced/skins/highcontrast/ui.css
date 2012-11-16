@@ -88,7 +88,7 @@
 /* Progress,Resize */
 .highcontrastSkin .mceBlocker {position:absolute; left:0; top:0; z-index:1000; opacity:0.5; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=50); background:#FFF}
 .highcontrastSkin .mceProgress {
-	background: url(/dev/lib/tinymce/themes/advanced/skins/sakai/img/progress.gif) no-repeat;
+	background: url(/shared/js/tinymce/themes/advanced/skins/sakai/img/progress.gif) no-repeat;
 	height: 32px;
 	left: 0;
 	margin: -16px 0 0 -16px;

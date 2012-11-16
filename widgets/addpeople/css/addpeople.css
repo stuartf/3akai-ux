@@ -44,7 +44,7 @@
     border: 1px solid #E7E7E7;
     border-left: none;
     top: 46%;
-    background: url("/devwidgets/addpeople/images/addpeople_raquo.png") no-repeat scroll center center #fff;
+    background: url("/widgets/addpeople/images/addpeople_raquo.png") no-repeat scroll center center #fff;
 }
 
 /* Top tabs */
@@ -86,7 +86,7 @@
     box-shadow: none;
 }
 #addpeople_container #addpeople_members_autosuggest #addpeople_members_autosuggest_search_icon {
-    background: url("/dev/images/search_icon.png") no-repeat scroll right center transparent;
+    background: url("/ui/images/search_icon.png") no-repeat scroll right center transparent;
     width: 16px;
     height: 16px;
     float: right;

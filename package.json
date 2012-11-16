@@ -27,8 +27,9 @@
   "devDependencies": {
     "grunt": "0.3.x",
     "grunt-clean": "0.3.x",
-    "grunt-requirejs": "0.2.x",
     "grunt-hashres": "0.1.x",
+    "grunt-imagine": "0.2.x",
+    "grunt-requirejs": "0.2.x",
     "shelljs": "0.0.8"
   },
   "keywords": []

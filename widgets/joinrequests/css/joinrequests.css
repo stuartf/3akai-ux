@@ -73,5 +73,5 @@ a.joinrequests_username_link {
 p.joinrequests_loading {
     height: 10px;
     margin-top: 12px;
-    background: url(/dev/images/ajax_load.gif) no-repeat scroll 0 0 transparent;
+    background: url(/ui/images/ajax_load.gif) no-repeat scroll 0 0 transparent;
 }
