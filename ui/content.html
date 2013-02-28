@@ -33,12 +33,12 @@
                                     __MSG__SHARE__<div class="oae-action-icon oae-share-icon"></div>
                                 </button>
                             {else}
-                                <button type="button" class="oae-button oae-header-button oae-header-smaller-button oae-trigger-sharecontent oae-force-right" data-contentid="${contentId|safeUserInput}" data-contentname="${displayName|safeUserInput}">
+                                <button type="button" class="oae-button oae-header-button oae-header-smaller-button oae-trigger-sharecontent oae-force-right" data-contentid="${id|safeUserInput}" data-contentname="${displayName|safeUserInput}">
                                     __MSG__SHARE__<div class="oae-action-icon oae-share-icon"></div>
                                 </button>
                             {/if}
                             {if contentType === 'file'}
-                                <a href="${downloadLink}" target="_blank" class="oae-button oae-header-button oae-header-smaller-button oae-force-right">
+                                <a href="${downloadPath}" target="_blank" class="oae-button oae-header-button oae-header-smaller-button oae-force-right">
                                     __MSG__DOWNLOAD__<span class="oae-action-icon oae-download-icon"></span>
                                 </a>
                             {/if}
@@ -70,7 +70,7 @@
         <div data-widget="footer"><!-- --></div>
 
         <!-- DEPENDENCIES -->
-        <script data-main="/shared/oae/api/oae.bootstrap.js" src="/shared/vendor/js/require.js"></script>
+        <script data-main="/shared/oae/api/oae.bootstrap.js" src="/shared/vendor/js/require-jquery.js"></script>
         <!-- PAGE JS -->
         <script>require(['/ui/js/content.js']);</script>  
 
