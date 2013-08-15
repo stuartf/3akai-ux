@@ -297,6 +297,29 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                            {elseif element.type === "oauth2"}
+                                                <div class="control-group">
+                                                    <span>${element.description|encodeForHTML}</span>
+                                                    <div class="controls">
+                                                        <label for="${configPath|encodeForHTMLAttribute}url" class="control-label">URL {if !tenantCanOverride} <span class="text-warning">(Tenant override disabled)</span>{/if}</label>
+                                                        <input type="text" id="${configPath|encodeForHTMLAttribute}url" name="${configPath|encodeForHTMLAttribute}" value="" {if !tenantCanOverride} disabled="disabled"{/if}/>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <label for="${configPath|encodeForHTMLAttribute}key" class="control-label">Key {if !tenantCanOverride} <span class="text-warning">(Tenant override disabled)</span>{/if}</label>
+                                                        <input type="text" id="${configPath|encodeForHTMLAttribute}key" name="${configPath|encodeForHTMLAttribute}" value="" {if !tenantCanOverride} disabled="disabled"{/if}/>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <label for="${configPath|encodeForHTMLAttribute}secret" class="control-label">Secret {if !tenantCanOverride} <span class="text-warning">(Tenant override disabled)</span>{/if}</label>
+                                                        <input type="text" id="${configPath|encodeForHTMLAttribute}secret" name="${configPath|encodeForHTMLAttribute}" value="" {if !tenantCanOverride} disabled="disabled"{/if}/>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <label for="${configPath|encodeForHTMLAttribute}scope" class="control-label">Scope {if !tenantCanOverride} <span class="text-warning">(Tenant override disabled)</span>{/if}</label>
+                                                        <input type="text" id="${configPath|encodeForHTMLAttribute}scope" name="${configPath|encodeForHTMLAttribute}" value="" {if !tenantCanOverride} disabled="disabled"{/if}/>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <button type="button" id="${configPath|encodeForHTMLAttribute} class="btn">Authenticate</button>
+                                                    </div>
+                                                </div>
                                             {/if}
                                         {/for}
                                     {/if}
